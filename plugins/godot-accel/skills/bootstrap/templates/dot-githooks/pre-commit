@@ -1,7 +1,40 @@
-#!/usr/bin/env sh
-# Blocks a commit with unformatted or lint-failing GDScript, Godot's cache staged, or a key-like
-# secret. Catches what the editor hooks miss (edits made from a shell). Enable once per clone:
+#!/usr/bin/env bash
+# Blocks a commit that would leak the owner's identity, or one with unformatted or lint-failing
+# GDScript, Godot's cache staged, or a key-like secret. Catches what the editor hooks miss (edits
+# made from a shell). Enable once per clone -- cloning does NOT activate hooks:
 #   git config core.hooksPath .githooks
+# See .githooks/README.md.
+set -u
+[ "${IDENTITY_GUARD_SKIP:-0}" = "1" ] && exit 0
+
+# ---- identity-guard -------------------------------------------------------
+# The author and committer must be the noreply address of the account that owns
+# `origin`; the account name is derived from the remote URL, so nothing is
+# hard-coded here and a commit from one account is rejected in another's repo.
+# Staged content is scanned against patterns held OUTSIDE the repo; a missing
+# pattern file skips that scan but never the identity check.
+. "$(dirname "$0")/lib.sh"
+IG_PATTERNS="${IDENTITY_GUARD_PATTERNS:-$HOME/.config/identity-guard/patterns}"
+ig_die() { printf '\n[identity-guard] COMMIT BLOCKED: %s\n\n' "$1" >&2; exit 1; }
+ig_own=$(ig_owner "$(git config --get remote.origin.url 2>/dev/null || true)")
+ig_ae=$(git var GIT_AUTHOR_IDENT    | sed -E 's/.*<([^>]*)>.*/\1/')
+ig_ce=$(git var GIT_COMMITTER_IDENT | sed -E 's/.*<([^>]*)>.*/\1/')
+if [ -n "$ig_own" ]; then
+  ig_email_ok "$ig_ae" "$ig_own" || ig_die "author email '$ig_ae' is not the noreply address of '$ig_own'.
+  Fix:  git config user.email '<id>+$ig_own@users.noreply.github.com'"
+  ig_email_ok "$ig_ce" "$ig_own" || ig_die "committer email '$ig_ce' is not the noreply address of '$ig_own'"
+fi
+if ig_pf=$(ig_clean_patterns "$IG_PATTERNS"); then
+  trap 'rm -f "$ig_pf"' EXIT
+  ig_hits=$(git diff --cached --name-only --diff-filter=ACMR | while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    git show ":$f" 2>/dev/null | grep -qIiEf "$ig_pf" && printf '%s\n' "$f"
+  done)
+  [ -n "$ig_hits" ] && ig_die "staged files contain protected identity strings:
+$(printf '%s\n' "$ig_hits" | sed 's/^/    /')"
+fi
+
+# ---- project checks -------------------------------------------------------
 export PATH="$HOME/.local/bin:$PATH"
 files=$(git diff --cached --name-only --diff-filter=d)
 gd=$(echo "$files" | grep '\.gd$' | grep -v '^addons/')

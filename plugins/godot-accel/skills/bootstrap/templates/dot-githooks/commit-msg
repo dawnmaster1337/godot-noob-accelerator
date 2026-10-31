@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# identity-guard: commit-msg -- keeps the real-identity strings out of messages.
+set -u
+[ "${IDENTITY_GUARD_SKIP:-0}" = "1" ] && exit 0
+. "$(dirname "$0")/lib.sh"
+PATTERNS="${IDENTITY_GUARD_PATTERNS:-$HOME/.config/identity-guard/patterns}"
+msg_file="${1:-}"
+[ -n "$msg_file" ] && [ -r "$msg_file" ] || exit 0
+if pf=$(ig_clean_patterns "$PATTERNS"); then
+  trap 'rm -f "$pf"' EXIT
+  if grep -qIiEf "$pf" "$msg_file"; then
+    printf '\n[identity-guard] COMMIT BLOCKED: the commit message contains protected identity strings.\n\n' >&2
+    exit 1
+  fi
+fi
+exit 0

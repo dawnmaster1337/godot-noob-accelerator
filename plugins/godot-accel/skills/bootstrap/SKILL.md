@@ -87,7 +87,7 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
 | `inbox/README.md`, `inbox/.gdignore` | `inbox/` | always |
 | `tools/dev.sh` | `tools/` | always |
 | `tests/example_check.gd`, `.tscn` | `tests/` | plain check scenes |
-| `dot-githooks/pre-commit` | `.githooks/` | pre-commit picked |
+| `dot-githooks/pre-commit`, `commit-msg`, `pre-push`, `lib.sh`, `README.md` | `.githooks/` | always |
 | `gitignore.snippet`, `gitattributes.snippet` | append to `.gitignore`, `.gitattributes` | always (C# lines only for C#) |
 
 ## Placeholders
@@ -99,6 +99,25 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
 | `{{GAME_NAME}}`, `{{PITCH}}` | answers 1, 2 |
 | `{{GODOT_VERSION}}` | from `config/features` (e.g. `4.4`) |
 | `{{LANGUAGE}}` | GDScript / C# / GDScript and C# |
+
+## Git hooks (identity-guard)
+
+The `dot-githooks/` templates are always written. They reject a commit or push
+whose author or committer is not the noreply address of the account that owns
+`origin`, and scan staged content, pushed trees and commit messages for the
+owner's real-identity strings. The account name is derived from the remote URL,
+so the hooks hold no name and are safe in a public repo.
+
+Two things to tell the user after bootstrapping:
+
+1. **Activate them.** `core.hooksPath` is per-clone, so cloning does not activate
+   hooks: `git config core.hooksPath .githooks`, once per clone per machine.
+2. **The pattern files live outside the repo**, at
+   `~/.config/identity-guard/patterns` and `~/.config/identity-guard/handle-patterns`
+   (mode 600, one case-insensitive extended regex per line). If they are absent the
+   content scan is skipped with a note and only the identity check runs. Keeping
+   them out of the repo is deliberate: a public repo must never contain the strings
+   it is scanned for. Do **not** use `\b` in them -- see `.githooks/README.md`.
 | `{{CURRENT_GOAL}}` | "a playable prototype" unless the user said otherwise |
 | `{{PILLAR_1}}` | ask nothing: write "*to be agreed in the first planning session*" |
 | `{{DATE}}` | today, `YYYY-MM-DD` |
