@@ -40,4 +40,12 @@ $(printf '%s\n' "$hits" | sed 's/^/    /')
 else
   printf '[identity-guard] note: no readable pattern file at %s; content scan skipped\n' "$PATTERNS" >&2
 fi
+
+# --- hand over to the project's own hook ----------------------------------
+# install-identity-guard.sh preserves any pre-existing hook as <name>.project
+# rather than overwriting it. Identity runs first because it is cheap and the
+# most important; the project's checks (formatters, linters, secret shapes) run
+# after.
+proj="$(dirname "$0")/pre-commit.project"
+[ -x "$proj" ] && exec "$proj" "$@"
 exit 0

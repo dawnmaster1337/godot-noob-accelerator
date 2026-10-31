@@ -14,4 +14,6 @@ if pf=$(ig_clean_patterns "$PATTERNS"); then
     exit 1
   fi
 fi
+proj="$(dirname "$0")/commit-msg.project"
+[ -x "$proj" ] && exec "$proj" "$@"
 exit 0

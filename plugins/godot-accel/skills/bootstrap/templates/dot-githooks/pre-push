@@ -88,4 +88,13 @@ if command -v git-lfs >/dev/null 2>&1 \
    && [ -n "$(git ls-files ':(attr:filter=lfs)' 2>/dev/null | head -1)" ]; then
   printf '%s\n' "$ig_stdin" | git lfs pre-push "$@" || exit $?
 fi
+
+# --- hand over to the project's own hook ----------------------------------
+# The ref list arrived on stdin and we consumed it, so replay it for the
+# chained hook. A pre-existing pre-push that was only the git-lfs stub is NOT
+# preserved by the installer, since the handover above already covers it.
+proj="$(dirname "$0")/pre-push.project"
+if [ -x "$proj" ]; then
+  printf '%s\n' "$ig_stdin" | "$proj" "$@" || exit $?
+fi
 exit 0

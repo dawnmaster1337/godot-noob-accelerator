@@ -59,4 +59,8 @@ if git diff --cached -U0 | grep -E '^\+' | grep -qE -- '-----BEGIN [A-Z ]*PRIVAT
   echo "pre-commit: something that looks like an API key or private key is staged"
   exit 1
 fi
+# If a project later adds its own hook, keep it as .githooks/pre-commit.project
+# and it runs here, after the identity and project checks above.
+proj="$(dirname "$0")/pre-commit.project"
+[ -x "$proj" ] && exec "$proj" "$@"
 exit 0
