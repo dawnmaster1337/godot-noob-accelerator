@@ -1,0 +1,16 @@
+{
+  "name": "godot-accel",
+  "description": "A process layer for running a Godot 4 game project with Claude Code: sessions, docs, decisions, memory and checks.",
+  "owner": {
+    "name": "dawnmaster1337"
+  },
+  "plugins": [
+    {
+      "name": "godot-accel",
+      "source": "./plugins/godot-accel",
+      "description": "Bootstrap a Godot project's CLAUDE.md, rules and docs, then run it session by session: resume, plan, check, save, trim, audit.",
+      "category": "development",
+      "tags": ["godot", "gamedev", "workflow", "docs", "memory"]
+    }
+  ]
+}

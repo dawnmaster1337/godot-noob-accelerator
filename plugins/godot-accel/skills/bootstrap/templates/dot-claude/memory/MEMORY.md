@@ -1,0 +1,1 @@
+- [Memory format](README.md) — how memories are written; only this index loads at start

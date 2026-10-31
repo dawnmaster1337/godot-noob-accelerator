@@ -1,0 +1,26 @@
+# >>> {{KIT_NAME}} >>>
+# Godot 4
+.godot/
+/android/
+# Export builds and signing secrets
+/build/
+/export/
+*.pck
+export_credentials.cfg
+# C# (only if you use it)
+.mono/
+bin/
+obj/
+# Local, per-machine Claude Code settings and worktrees
+.claude/settings.local.json
+.claude/worktrees/
+# Between-session drop box: only its README and Godot ignore marker are tracked
+/inbox/*
+!/inbox/README.md
+!/inbox/.gdignore
+# Secrets and OS junk
+.env
+.env.*
+.DS_Store
+Thumbs.db
+# <<< {{KIT_NAME}} <<<

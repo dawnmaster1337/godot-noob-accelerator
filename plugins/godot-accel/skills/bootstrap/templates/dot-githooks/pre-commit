@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+# Blocks a commit with unformatted or lint-failing GDScript, Godot's cache staged, or a key-like
+# secret. Catches what the editor hooks miss (edits made from a shell). Enable once per clone:
+#   git config core.hooksPath .githooks
+export PATH="$HOME/.local/bin:$PATH"
+files=$(git diff --cached --name-only --diff-filter=d)
+gd=$(echo "$files" | grep '\.gd$' | grep -v '^addons/')
+if [ -n "$gd" ]; then
+  if command -v gdformat >/dev/null 2>&1; then
+    echo "$gd" | xargs gdformat --check || { echo "pre-commit: run gdformat on the files above"; exit 1; }
+    echo "$gd" | xargs gdlint || exit 1
+  else
+    echo "pre-commit: gdtoolkit not installed, skipping the GDScript checks"
+  fi
+fi
+if echo "$files" | grep -qE '^\.godot/'; then
+  echo "pre-commit: Godot's cache (.godot/) is staged; unstage it"
+  exit 1
+fi
+if echo "$files" | grep -qE '(^|/)\.env($|\.)'; then
+  echo "pre-commit: a .env file is staged"
+  exit 1
+fi
+# Common key shapes: private key blocks, AWS, GitHub, Slack, Anthropic/OpenAI-style "sk-" keys.
+if git diff --cached -U0 | grep -E '^\+' | grep -qE -- '-----BEGIN [A-Z ]*PRIVATE KEY-----|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{36}|xox[baprs]-[A-Za-z0-9-]{10,}|sk-[A-Za-z0-9_-]{20,}'; then
+  echo "pre-commit: something that looks like an API key or private key is staged"
+  exit 1
+fi
+exit 0

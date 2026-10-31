@@ -1,0 +1,6 @@
+# Paths the kit's guard hook refuses to let Claude edit, one glob per line (relative to the
+# project root). Always blocked, whatever this file says: .godot/, *.import, *.uid, .env*.
+# A line starting with ! is an exception (your own editor plugin, for example).
+addons/*
+assets/third_party/*
+# !addons/my_own_tools/*

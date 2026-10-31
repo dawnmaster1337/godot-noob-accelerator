@@ -1,0 +1,64 @@
+name: Learning
+description: A lesson from your project that would help any project using the kit. The harvest-learnings skill fills this in for you.
+labels: ["learning"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Run `/godot-accel:harvest-learnings` in your project to draft this. One lesson per issue.
+        Remove anything specific to your game before posting.
+  - type: input
+    id: version
+    attributes:
+      label: Kit version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - bootstrap
+        - CLAUDE.md template
+        - rules
+        - memory
+        - skills
+        - agents
+        - hooks
+        - docs skeleton
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: now
+    attributes:
+      label: What the kit does now
+      description: One or two lines; name the kit file.
+    validations:
+      required: true
+  - type: textarea
+    id: learned
+    attributes:
+      label: What we changed or learned
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What went wrong without it, in general terms.
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested change to the kit
+      description: The file and the exact text to add, change or remove.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I removed all project-specific content (game names, story, assets, people, paths, keys).
+          required: true

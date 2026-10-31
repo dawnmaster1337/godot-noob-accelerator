@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git ls-files *)",
+      "Bash(git fetch)",
+      "Bash(gdlint *)",
+      "Bash(gdformat *)",
+      "Bash(tools/dev.sh *)",
+      "Bash(godot --headless --path . res://tests/*)",
+      "Bash(godot --headless --editor --quit --path .)"
+    ],
+    "deny": [
+      "Bash(git reset --hard *)",
+      "Bash(git clean *)",
+      "Bash(git push --force *)",
+      "Bash(rm -rf *)",
+      "Bash(sudo *)"
+    ]
+  }
+}

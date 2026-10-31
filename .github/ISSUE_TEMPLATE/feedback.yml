@@ -1,0 +1,55 @@
+name: Feedback
+description: You tried the kit. Tell us what worked, what didn't, and what you changed.
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying the kit. Short answers are fine. Please don't paste private game content,
+        names, keys or paths.
+  - type: input
+    id: version
+    attributes:
+      label: Kit version
+      description: From `/plugin` or `plugins/godot-accel/.claude-plugin/plugin.json`.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: experience
+    attributes:
+      label: Your experience
+      options:
+        - New to coding, Godot and Claude Code
+        - Some coding, new to Godot or Claude Code
+        - Experienced developer
+    validations:
+      required: true
+  - type: input
+    id: setup
+    attributes:
+      label: Setup
+      description: Godot version, GDScript or C#, OS, sessions run with the kit so far.
+      placeholder: "Godot 4.4, GDScript, macOS, ~10 sessions"
+  - type: textarea
+    id: worked
+    attributes:
+      label: What worked
+    validations:
+      required: true
+  - type: textarea
+    id: didnt
+    attributes:
+      label: What didn't work or confused you
+      description: Where you got stuck, what Claude did that you didn't expect, what was too slow or too costly.
+    validations:
+      required: true
+  - type: textarea
+    id: changed
+    attributes:
+      label: What you changed
+      description: Rules, templates or skills you edited, added or deleted, and why.
+  - type: textarea
+    id: wish
+    attributes:
+      label: One thing you'd add
