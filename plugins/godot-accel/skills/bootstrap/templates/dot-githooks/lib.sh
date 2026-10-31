@@ -19,3 +19,31 @@ ig_email_ok() {   # ig_email_ok <email> <owner>
   [ -n "${2:-}" ] || return 1
   printf '%s' "$1" | grep -qiE "^[0-9]+\+$2@users\.noreply\.github\.com\$"
 }
+
+# ---- allow list ------------------------------------------------------------
+# A repo may carry `.identity-guard-allow`: one entry per line, exempting paths
+# from the CONTENT scan only -- never from the author/committer email check.
+#   docs/lore/              a path prefix
+#   *                       the whole repo (for a repo whose content is
+#                           legitimately about the owner, e.g. their own site)
+#   !messages               also skip the commit-message scan
+# Comments (#) and blank lines ignored.
+ig_allow_file() { printf '%s\n' "$(git rev-parse --show-toplevel 2>/dev/null)/.identity-guard-allow"; }
+ig_allow_has() {   # ig_allow_has <token>  -- is this exact token present?
+  local af; af=$(ig_allow_file)
+  [ -r "$af" ] || return 1
+  grep -vE '^[[:space:]]*(#|$)' "$af" 2>/dev/null | grep -qxF "$1"
+}
+ig_allowed() {     # ig_allowed <path> -- exempt from the content scan?
+  local af p; af=$(ig_allow_file)
+  [ -r "$af" ] || return 1
+  while IFS= read -r p; do
+    case "$p" in ''|\#*) continue ;; '!'*) continue ;; esac
+    [ "$p" = '*' ] && return 0
+    case "$1" in
+      "$p"|"$p"*) return 0 ;;
+    esac
+    case "$1" in $p) return 0 ;; esac   # glob
+  done < <(grep -vE '^[[:space:]]*(#|$)' "$af" 2>/dev/null)
+  return 1
+}

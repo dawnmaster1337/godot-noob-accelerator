@@ -6,6 +6,7 @@ set -u
 PATTERNS="${IDENTITY_GUARD_PATTERNS:-$HOME/.config/identity-guard/patterns}"
 msg_file="${1:-}"
 [ -n "$msg_file" ] && [ -r "$msg_file" ] || exit 0
+ig_allow_has "!messages" && exit 0
 if pf=$(ig_clean_patterns "$PATTERNS"); then
   trap 'rm -f "$pf"' EXIT
   if grep -qIiEf "$pf" "$msg_file"; then

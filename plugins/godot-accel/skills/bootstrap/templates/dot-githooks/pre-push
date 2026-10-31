@@ -33,15 +33,26 @@ if src=$(ig_clean_patterns "$HANDLES"); then
   [ -s "$keep" ] && handle_pf="$keep"
 fi
 
+ig_stdin=$(cat)
+# NOTE: a here-string, not a pipe. Piping into `while` puts the loop in a
+# subshell, where die()'s exit would only kill the subshell and the hook would
+# still return 0 -- silently disabling every check below.
 while read -r _lref local_sha _rref remote_sha; do
   [ "$local_sha" = "$ZERO" ] && continue
-  if [ "$remote_sha" = "$ZERO" ]; then
-    range=$(git rev-list "$local_sha" --not --remotes 2>/dev/null)
-    [ -n "$range" ] || range=$(git rev-list "$local_sha")
+  # Fail CLOSED. If the remote tip is absent, empty, or not an object we hold --
+  # exactly the case when force-pushing rewritten history -- then
+  # `rev-list remote..local` errors and would leave $range empty, silently
+  # skipping every check below. Check the whole reachable history instead.
+  if [ -z "$remote_sha" ] || [ "$remote_sha" = "$ZERO" ] \
+     || ! git cat-file -e "${remote_sha}^{commit}" 2>/dev/null; then
+    range=$(git rev-list "$local_sha" 2>/dev/null)
   else
-    range=$(git rev-list "$remote_sha..$local_sha")
+    range=$(git rev-list "${remote_sha}..${local_sha}" 2>/dev/null)
+    [ -n "$range" ] || range=$(git rev-list "$local_sha" 2>/dev/null)
   fi
-  [ -n "$range" ] || continue
+  if [ -z "$range" ]; then
+    die "could not determine which commits are being pushed for '$_lref'; refusing rather than skipping the checks"
+  fi
 
   bad=$(git log --no-walk=unsorted --format='%H %ae %ce' $range | while read -r h a c; do
           for e in "$a" "$c"; do
@@ -54,13 +65,27 @@ $(printf '%s\n' "$bad" | sed 's/^/    /')"
   for pf in "$real_pf" "$handle_pf"; do
     [ -n "$pf" ] || continue
     label="real-identity"; [ "$pf" = "$handle_pf" ] && label="handle"
-    git log --no-walk=unsorted --format='%B' $range | grep -qIiEf "$pf" \
-      && die "a pushed commit MESSAGE contains $label strings"
+    if [ "$label" = "handle" ] || ! ig_allow_has "!messages"; then
+      git log --no-walk=unsorted --format='%B' $range | grep -qIiEf "$pf" \
+        && die "a pushed commit MESSAGE contains $label strings"
+    fi
     f_hits=$(git ls-tree -r --name-only "$local_sha" | while IFS= read -r f; do
+      [ "$label" = "real-identity" ] && ig_allowed "$f" && continue
       git show "$local_sha:$f" 2>/dev/null | grep -qIiEf "$pf" && printf '%s\n' "$f"
     done)
     [ -n "$f_hits" ] && die "files in the pushed tree contain $label strings:
 $(printf '%s\n' "$f_hits" | sed 's/^/    /')"
   done
-done
+done <<< "$ig_stdin"
+
+# --- hand over to git-lfs -------------------------------------------------
+# Setting core.hooksPath makes git ignore .git/hooks entirely, which disables the
+# pre-push hook git-lfs installs there. Without this, a push in an LFS repo
+# succeeds while its large objects are never uploaded -- a broken remote that
+# looks fine. Only runs when the repo actually tracks LFS content.
+if command -v git-lfs >/dev/null 2>&1 \
+   && git rev-parse --git-dir >/dev/null 2>&1 \
+   && [ -n "$(git ls-files ':(attr:filter=lfs)' 2>/dev/null | head -1)" ]; then
+  printf '%s\n' "$ig_stdin" | git lfs pre-push "$@" || exit $?
+fi
 exit 0

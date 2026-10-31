@@ -31,6 +31,7 @@ if pf=$(ig_clean_patterns "$PATTERNS"); then
   trap 'rm -f "$pf"' EXIT
   hits=$(git diff --cached --name-only --diff-filter=ACMR | while IFS= read -r f; do
     [ -n "$f" ] || continue
+    ig_allowed "$f" && continue
     git show ":$f" 2>/dev/null | grep -qIiEf "$pf" && printf '%s\n' "$f"
   done)
   [ -n "$hits" ] && die "staged files contain protected identity strings:
