@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# identity-guard: pre-commit
+#   1. author + committer must belong to the account that owns `origin`
+#      (derived from the remote URL, so no account name is stored here);
+#   2. staged content must not contain the real-identity strings, which live in
+#      an uncommitted file outside every repo. Absent file = scan skipped.
+set -u
+[ "${IDENTITY_GUARD_SKIP:-0}" = "1" ] && exit 0
+. "$(dirname "$0")/lib.sh"
+
+PATTERNS="${IDENTITY_GUARD_PATTERNS:-$HOME/.config/identity-guard/patterns}"
+die() { printf '\n[identity-guard] COMMIT BLOCKED: %s\n\n' "$1" >&2; exit 1; }
+
+owner=$(ig_owner "$(git config --get remote.origin.url 2>/dev/null || true)")
+ae=$(git var GIT_AUTHOR_IDENT    | sed -E 's/.*<([^>]*)>.*/\1/')
+ce=$(git var GIT_COMMITTER_IDENT | sed -E 's/.*<([^>]*)>.*/\1/')
+
+if [ -z "$owner" ]; then
+  case "$ae" in
+    *@users.noreply.github.com|noreply@anthropic.com|noreply@github.com) ;;
+    *) die "no origin remote yet, and author email '$ae' is not a noreply address" ;;
+  esac
+else
+  ig_email_ok "$ae" "$owner" || die "author email '$ae' does not belong to '$owner', the account that owns origin.
+  Fix:  git config user.email '<id>+$owner@users.noreply.github.com'
+  This is also what stops one account's commits leaking into the other's repo."
+  ig_email_ok "$ce" "$owner" || die "committer email '$ce' does not belong to '$owner' (see above)"
+fi
+
+if pf=$(ig_clean_patterns "$PATTERNS"); then
+  trap 'rm -f "$pf"' EXIT
+  hits=$(git diff --cached --name-only --diff-filter=ACMR | while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    git show ":$f" 2>/dev/null | grep -qIiEf "$pf" && printf '%s\n' "$f"
+  done)
+  [ -n "$hits" ] && die "staged files contain protected identity strings:
+$(printf '%s\n' "$hits" | sed 's/^/    /')
+  Remove them, or set IDENTITY_GUARD_SKIP=1 for a genuine false positive."
+else
+  printf '[identity-guard] note: no readable pattern file at %s; content scan skipped\n' "$PATTERNS" >&2
+fi
+exit 0
