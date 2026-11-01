@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: targeted-checks-after-tweak
+description: After a one-number change, only the check covering that system runs, not the whole suite. Needs --allow-tools Bash.
+tags: [checks, cost]
+context:
+  scaffold_script: fixture.sh

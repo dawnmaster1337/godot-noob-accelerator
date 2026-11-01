@@ -42,16 +42,17 @@ It goes from zero to a moving character on screen.
 
    | Hook | When | Does |
    |---|---|---|
-   | session start | start, resume, `/clear`, compaction | Git state (and "this is not a fetch"), inbox, STATUS Next, Godot on PATH, your own standing guard |
+   | session start | start, resume, `/clear`, compaction | Git state (and "this is not a fetch"), your uncommitted scene edits, inbox, STATUS Next and size, Godot on PATH, your own standing guard |
    | path guard | before an edit | Blocks `.godot/`, `*.import`, `*.uid`, `.env`, and paths in `.claude/protected-paths.txt` |
    | format + lint | after editing a `.gd` | `gdformat`, then `gdlint`; a lint failure goes straight back to Claude |
 
 2. **The `bootstrap` skill's templates**, written into your project (plugins can't ship a
    CLAUDE.md or rules, so they're copied in once and become yours):
    `CLAUDE.md`, `AGENTS.md`, `.claude/rules/` (how to write code, scenes, docs; git; working with
-   you; showing work), `.claude/memory/`, `docs/` (STATUS, decisions, plans and roadmap, system
-   pages, guides), `inbox/`, `tools/dev.sh`, an example headless check, git hooks (lint and a
-   secrets scan at commit time, once you turn them on), `.gitignore` lines, and optional extras
+   you; showing work; tuning values and your hand edits), `.claude/memory/`, `docs/` (STATUS,
+   decisions, plans and roadmap, system pages, a bug log, guides), `inbox/`, `tools/dev.sh`, an
+   example headless check, git hooks (lint and a secrets scan at commit time, once you turn them
+   on), `.gitignore` lines, and optional extras
    (canon docs, a standards page, an asset manifest, a paid-tools spend gate, a playtester
    agent for an editor MCP). Every file and why: [docs/structure.md](docs/structure.md).
 

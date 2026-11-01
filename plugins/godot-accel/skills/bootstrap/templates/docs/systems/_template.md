@@ -16,15 +16,25 @@ What the system is for, in two or three lines.
 
 ## 3. Data
 
-Resource types, where their files live, what is safe to edit by hand.
+Resource types and where their files live. Every value the user may tune, so they can change it
+without asking:
+
+| Value | File | Inspector group | Safe range | Does |
+|---|---|---|---|---|
+| | | | | |
 
 ## 4. Checks
 
-Which `tests/*` prove it, and what the live run should show.
+The checks that prove it (`tools/dev.sh check <name>` runs them after a change here), and what
+the live run should show.
+
+Playtest checklist, for the user (tick and date each one when tried):
+
+- [ ] *scenario* — last tried YYYY-MM-DD
 
 ## 5. Open
 
-Known gaps and untested behaviour.
+Known gaps and untested behaviour. Bugs: `docs/known-bugs.md`.
 
 ## 6. Sources (`docs/decisions/`)
 

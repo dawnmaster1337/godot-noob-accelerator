@@ -65,8 +65,9 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
    their keys); write `autoMemoryDirectory` = the absolute path of `.claude/memory` into
    `.claude/settings.local.json` (per machine, git-ignored; makes Claude's own memory land in the
    repo folder too).
-6. **Prove it:** `tools/dev.sh check` (plain checks: the example check passes) and
-   `tools/dev.sh stale` (no dead paths). Quote both outputs. Godot not on PATH → say so and point
+6. **Prove it:** `tools/dev.sh check` (plain checks: the example check passes), `tools/dev.sh
+   lint all`, `stale` (no dead paths) and `budget`. Quote the outputs. All pass → tick roadmap
+   task 0.0 (green baseline). Godot not on PATH → say so and point
    at `docs/guides/setup-new-machine.md`.
 7. **Summary** (short): what was created or appended, what was skipped and why, then next steps:
    read `docs/guides/start-here.md`; say **save work** to commit this setup; describe the first
@@ -78,12 +79,12 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
 | Template | Target | When |
 |---|---|---|
 | `CLAUDE.md`, `AGENTS.md` | same | always |
-| `dot-claude/rules/working-with-user.md`, `git.md`, `showing-work.md`, `docs.md`, `scenes.md` | `.claude/rules/` | always |
+| `dot-claude/rules/working-with-user.md`, `git.md`, `showing-work.md`, `docs.md`, `scenes.md`, `tuning.md` | `.claude/rules/` | always |
 | `dot-claude/rules/gdscript.md` / `csharp.md` | `.claude/rules/` | by language (both: both) |
 | `dot-claude/rules/godot-mcp.md`, `dot-claude/agents/playtester.md` | `.claude/…` | MCP named |
 | `dot-claude/rules/paid-tools.md` | `.claude/rules/` | spend gate picked |
 | `dot-claude/memory/*`, `budgets.md`, `protected-paths.txt`, `start-guard.md` | `.claude/` | always (`start-guard.md` empty unless standards picked) |
-| `docs/STATUS.md`, `decisions/*`, `plans/*`, `systems/_template.md`, `reviews/`, `archive/`, `guides/*` | `docs/` | always |
+| `docs/STATUS.md`, `known-bugs.md`, `decisions/*`, `plans/*`, `systems/_template.md`, `reviews/`, `archive/`, `guides/*` | `docs/` | always |
 | `docs/canon/**` | `docs/canon/` | canon yes |
 | `docs/standards.md`, `docs/production/manifest.md` | `docs/` | if picked |
 | `inbox/README.md`, `inbox/.gdignore` | `inbox/` | always |
@@ -108,7 +109,7 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
 | `{{PUSH_POLICY}}` | push on: "`git push`." · off: "the user pushes (`git push`) when they want." |
 | `{{MCP_SERVER}}` | the server name (`#MCP` on) |
 | `{{RUN_STEP}}` | MCP: "one live run through `{{MCP_SERVER}}` (run, then read the game and editor logs)"; else "one run of the game (`godot --path .`), reading its output" |
-| `{{TEST_COMMAND}}` | checks: "`tools/dev.sh check <name>` runs one check"; GUT: "`godot --headless --path . -s addons/gut/gut_cmdln.gd -gexit` runs the GUT tests"; gdUnit4: "`addons/gdUnit4/runtest.sh -a res://tests` runs the gdUnit4 tests" |
+| `{{TEST_COMMAND}}` | checks: "`tools/dev.sh check <name>` runs one check"; GUT: "`godot --headless --path . -s addons/gut/gut_cmdln.gd -gexit` runs the GUT tests (`-gselect=<file>` only one file)"; gdUnit4: "`addons/gdUnit4/runtest.sh -a res://tests` runs the gdUnit4 tests" |
 | `{{LAYOUT}}` | the real top-level folders, one line each (`scenes/` …); invent none |
 | `{{ENGINE_SETTINGS}}` | viewport size, stretch mode, renderer from `project.godot`, one line each |
 | `{{AUTOLOADS}}` | names from `[autoload]`, or "none yet" |

@@ -21,6 +21,7 @@ when you pick them.
 | `rules/showing-work.md` | Checks before the user sees anything, quoted; show neutrally, never praise |
 | `rules/docs.md` (`paths: docs/**` …) | One home per fact, naming, fixing every copy, budgets, one term per thing |
 | `rules/scenes.md` (`paths: *.tscn, *.tres, project.godot`) | Engine-owned files, third-party plugins, `.tres` diffs, input actions |
+| `rules/tuning.md` (`paths: *.tres, *.tscn, tuning scripts`) | Feel values in `Tuning` Resources; change the preset, not only the default; the user's hand edits are theirs |
 | `rules/gdscript.md` / `csharp.md` (`paths: *.gd` / `*.cs`) | Language rules, loaded only when Claude touches those files |
 | `rules/godot-mcp.md` *(optional)* | "Never work blind" when an editor MCP server is used |
 | `rules/paid-tools.md` *(optional)* | Spend gate for any paid API |
@@ -36,7 +37,8 @@ when you pick them.
 
 | File | Why |
 |---|---|
-| `STATUS.md` | Where work stopped, **Next**, the only open-questions list. Read first on resume; under 5,000 characters |
+| `STATUS.md` | Where work stopped, **Next**, the only open-questions list. Read first on resume; under 5,000 characters; no session logs |
+| `known-bugs.md` | Bugs known and not yet fixed (repro, expected, actual), and the last 20 fixed with their cause |
 | `decisions/README.md`, `_template.md` | Index of decisions with status, and the record shape (Topic \| Decision \| Why, your answers, rejected options) |
 | `plans/roadmap.md`, `_template.md` | The milestones; a plan's shape (Done =, design, ticked tasks) |
 | `systems/_template.md` | "What is true now" page per system, with Sources, Open and doc-vs-code mismatches |
@@ -55,7 +57,7 @@ when you pick them.
 | File | Why |
 |---|---|
 | `inbox/README.md`, `inbox/.gdignore` | The drop box; Godot ignores it, git tracks only the README |
-| `tools/dev.sh` | `check` (refresh + every headless check), `refresh`, `lint`, `stale` |
+| `tools/dev.sh` | `check` (refresh when files changed + every or named headless checks), `refresh`, `lint`, `stale`, `budget` |
 | `tests/example_check.gd`, `.tscn` | The check-scene pattern: exit code = failures. Copy it per system |
 | `.githooks/` | Do nothing until `git config core.hooksPath .githooks` (per clone). `pre-commit`: lint, format, no `.godot/`, `.env` or key-shaped strings. `pre-push`: hands over to git-lfs. Identity checks only where `~/.config/identity-guard/` exists (`.githooks/README.md`) |
 

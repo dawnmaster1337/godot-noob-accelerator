@@ -36,7 +36,8 @@ The repo's own `.githooks/` is a copy of the template: change the template, then
 
 Then try it end to end (the smoke test in [docs/customising.md](docs/customising.md#testing-changes)).
 Evals live in `plugins/godot-accel/evals/`; they make real model calls, so run them only when
-you mean to (`claude plugin eval plugins/godot-accel --max-cost-usd 2`).
+you mean to (`claude plugin eval plugins/godot-accel --scaffold --allow-tools Bash Write Edit --runs 1`;
+cases with a `fixture.sh` need `--scaffold`, or they run in an empty folder).
 
 Add a line to [CHANGELOG.md](CHANGELOG.md) under "Unreleased" and bump the version in
 `plugins/godot-accel/.claude-plugin/plugin.json` when releasing: users only get an update

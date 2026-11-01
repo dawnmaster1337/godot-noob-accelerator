@@ -15,7 +15,8 @@ version: `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`.
 
 1. **Compare** the project with the templates: `CLAUDE.md` (sections added, removed, reworded;
    the Hard rules), each `.claude/rules/*.md`, `.claude/memory/` (every `feedback` and `user`
-   memory), `.claude/budgets.md`, `docs/guides/quirks.md`, project skills and agents in
+   memory), `.claude/budgets.md`, `docs/guides/quirks.md`, the Fixed list in
+   `docs/known-bugs.md` (causes that recur), project skills and agents in
    `.claude/`, and the docs layout. The git log above shows what got corrected over time.
 2. **Keep only lessons that would help any project** using the kit: a rule the user had to ask
    for twice, a step every save needed, a check that caught real bugs, a template section nobody

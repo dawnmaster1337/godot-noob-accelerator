@@ -29,6 +29,9 @@ knows what they mean.
 6. Happy with it? Say **save work** and answer **yes** when it asks to commit.
 7. Done for the day? **wrap up**. Then it's safe to type `/clear` or close the terminal.
 
+**One task per session works best:** resume, one task, save work, `/clear`, resume again. Claude
+stays sharper and each session costs less.
+
 ## Good to know
 
 - **Claude never saves to GitHub without your yes.** If you're unsure, say no and ask what it's
@@ -37,6 +40,9 @@ knows what they mean.
   time.
 - **`/clear`** gives Claude a fresh, empty memory of the chat (its project notes stay). Do it after
   a save, when a task is finished. It makes the next task cheaper and sharper.
+- **Want to change a number yourself** (speed, jump height, a timing)? The system's page in
+  `docs/systems/` says which file and Inspector group it's in. Change it in Godot; Claude keeps
+  your values.
 - **Got an idea or a bug while Claude isn't running?** Write it in a file in `inbox/notes/`
   (`docs/guides/between-sessions.md` has the shapes).
 - **Never paste passwords or API keys into the chat.** If Claude needs one, it will tell you which

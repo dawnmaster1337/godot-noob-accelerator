@@ -4,9 +4,15 @@ The build order. Work follows it; `docs/STATUS.md` says where it stands. Each mi
 a playable build and a review (`workflow-audit` or the adversarial reviewer). Tick tasks off as
 they land; a task with its own plan links to it.
 
+**One task per session.** Each task fits one session: size **S** (under an hour), **M** (a
+session), **L** (too big: split it, or give it a plan with its own tasks). Each has a
+**Done when** a player could check. Shape: `- [ ] 1.2 (M) What. Done when: what the player sees.`
+
 ## M0: foundations (systems and tools; placeholder art)
 
-- [ ] 0.1 Player moves on screen (the first `plan-feature`).
+- [ ] 0.0 (S) Green baseline. Done when: `tools/dev.sh check` and `tools/dev.sh lint all` pass,
+  so every later task can trust the checks.
+- [ ] 0.1 (M) Player moves on screen (the first `plan-feature`). Done when: …
 - [ ] 0.2 …
 
 ## M1: vertical slice (one small area, at final quality)

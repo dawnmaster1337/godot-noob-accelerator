@@ -1,7 +1,8 @@
 # Project status — resume here
 
 Updated {{DATE}} (session 1). Read this first. Keep it under 5,000 characters: finished items are
-deleted (git keeps the history), queues live in the plan.
+deleted (git keeps the history), queues live in the plan, bugs in `docs/known-bugs.md`. No
+session logs: `git log` is the history. `tools/dev.sh budget` checks the size.
 
 ## Resume here
 

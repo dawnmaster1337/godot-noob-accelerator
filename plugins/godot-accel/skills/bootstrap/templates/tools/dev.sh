@@ -7,11 +7,14 @@ cd "$(dirname "$0")/.." || exit 1
 usage() {
 	cat <<'EOF'
 tools/dev.sh <verb> [args]
-  check [name...]     refresh, then every tests/*_check.tscn headless (exit 1 = a failure);
-                      names run only those checks (`dev.sh check player`)
+  check [--refresh] [name...]
+                      refresh if files changed, then every tests/*_check.tscn headless (exit 1 =
+                      a failure); names run only those checks (`dev.sh check player`);
+                      --refresh forces the refresh (after deleting or renaming a class_name)
   refresh             rebuild Godot's class cache and imports (after a new class_name or asset)
   lint [all|file...]  gdlint + gdformat --check on changed .gd files (all: the whole project)
   stale [file...]     backticked paths in the always-read docs that no longer exist
+  budget              files over their .claude/budgets.md budget, lines over 400 characters
 EOF
 }
 
@@ -41,6 +44,19 @@ need_godot() {
 	return 1
 }
 
+# A refresh costs two headless editor runs, so check skips it while nothing it reads has changed.
+STAMP=.godot/dev-refresh.stamp
+
+needs_refresh() {
+	[ -f "$STAMP" ] || return 0
+	[ -n "$(find . \( -path ./.godot -o -path ./.git -o -path ./inbox \) -prune -o -type f -newer "$STAMP" \
+		\( -name '*.gd' -o -name '*.cs' -o -name '*.tscn' -o -name '*.tres' -o -name '*.res' \
+		-o -name '*.gdshader' -o -name '*.png' -o -name '*.jpg' -o -name '*.webp' -o -name '*.svg' \
+		-o -name '*.ogg' -o -name '*.wav' -o -name '*.mp3' -o -name '*.glb' -o -name '*.gltf' \
+		-o -name '*.blend' -o -name '*.ttf' -o -name '*.otf' -o -name '*.csv' -o -name project.godot \) \
+		-print -quit 2>/dev/null)" ]
+}
+
 refresh() {
 	need_godot || return 1
 	local log fail=0 step
@@ -54,6 +70,7 @@ refresh() {
 		fi
 	done
 	rm -f "$log"
+	[ "$fail" = 0 ] && mkdir -p .godot && touch "$STAMP"
 	return $fail
 }
 
@@ -75,7 +92,11 @@ run_check() {
 
 check() {
 	local fail=0 name scene count=0
-	refresh || fail=1
+	if [ "${1:-}" = --refresh ]; then
+		shift
+		rm -f "$STAMP"
+	fi
+	if needs_refresh; then refresh || fail=1; fi
 	if [ $# -gt 0 ]; then
 		for name in "$@"; do
 			scene="tests/${name%_check}_check.tscn"
@@ -125,6 +146,56 @@ stale() {
 		done | sort -u
 }
 
+# budget_rules: "<glob> <characters>" per budgeted file, from .claude/budgets.md (else defaults).
+budget_rules() {
+	if [ -f .claude/budgets.md ]; then
+		awk -F'|' 'NF > 3 && $2 ~ /`/ {
+			n = $3; gsub(/[^0-9]/, "", n); if (n == "") next
+			s = $2
+			while (match(s, /`[^`]+`/)) { print substr(s, RSTART + 1, RLENGTH - 2), n; s = substr(s, RSTART + RLENGTH) }
+		}' .claude/budgets.md
+	else
+		printf '%s\n' "CLAUDE.md 8000" "docs/STATUS.md 5000" ".claude/memory/MEMORY.md 2000" \
+			".claude/memory/*.md 1200" ".claude/rules/*.md 3000"
+	fi
+}
+
+budget() {
+	local seen=" " problems=0 count=0 glob limit f size pass
+	# Pass 1: rows naming one file; pass 2: glob rows, for files no row named. No here-strings or
+	# here-docs: they need a writable temp folder, which a sandbox may not give.
+	for pass in exact glob; do
+		while read -r glob limit; do
+			case "$glob" in *'*'*) [ "$pass" = glob ] || continue ;; *) [ "$pass" = exact ] || continue ;; esac
+			for f in $glob; do
+				[ -f "$f" ] || continue
+				case "$seen" in *" $f "*) continue ;; esac
+				[ "$pass" = glob ] && [ "${f##*/}" = README.md ] && continue
+				seen="$seen$f "
+				count=$((count + 1))
+				size=$(wc -m <"$f" | tr -d ' ')
+				if [ "$size" -gt "$limit" ]; then
+					echo "over budget: $f $size/$limit characters"
+					problems=$((problems + 1))
+				fi
+			done
+		done < <(budget_rules)
+	done
+	local long
+	long=$(awk 'length > 400 {print FILENAME ":" FNR ": " length " characters"}' \
+		CLAUDE.md docs/STATUS.md .claude/rules/*.md .claude/memory/*.md 2>/dev/null)
+	if [ -n "$long" ]; then
+		echo "$long" | sed 's/^/line over 400: /'
+		problems=$((problems + $(echo "$long" | wc -l)))
+	fi
+	if [ "$problems" = 0 ]; then
+		echo "budget: $count file(s) within budget"
+		return 0
+	fi
+	echo "budget: $problems problem(s)"
+	return 1
+}
+
 verb=${1:-help}
 [ $# -gt 0 ] && shift
 case "$verb" in
@@ -132,5 +203,6 @@ case "$verb" in
 	refresh) refresh ;;
 	lint) lint "$@" ;;
 	stale) stale "$@" ;;
+	budget) budget ;;
 	*) usage ;;
 esac

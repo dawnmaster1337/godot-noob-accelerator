@@ -22,7 +22,8 @@ if the user is new to git (`.claude/rules/working-with-user.md`).
 1. **Plan tick:** tick the finished task in its plan (`- [x]`). STATUS waits for the session save.
    If the project keeps `docs/production/manifest.md`: every new placeholder or third-party file
    in the diff has a row.
-2. **Gate:** code or scene changes → `ship-check` steps 1–5. Docs only → `tools/dev.sh stale`.
+2. **Gate:** code or scene changes → `ship-check` steps 1–5; then always `tools/dev.sh stale` and
+   `budget`.
 3. **Secrets:** no API keys, tokens, private keys or `.env` files in the diff or in untracked files
    being added. Found one → stop and say so.
 4. **Commit on the user's yes:** show the files and a proposed message (imperative, ≤ 72
@@ -50,5 +51,5 @@ commit) and push. Lessons wait for the next session save.
 
 ## Last line, always
 
-**"Safe to /clear: yes"** when everything is committed and pushed, or **"Safe to /clear: no,
+**"Safe to /clear: yes"** only when everything is committed and pushed, or **"Safe to /clear: no,
 because …"** (uncommitted files, unpushed commits, a question left open).

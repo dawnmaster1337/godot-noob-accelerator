@@ -24,7 +24,8 @@ behaviour) needs no plan: say so in one line and build it with the normal workfl
    `docs/decisions/README.md`.
 6. **Plan:** `docs/plans/YYYY-MM-DD-<topic>.md` from its `_template.md`:
    - **Done =** one paragraph a player could check, plus the check that proves it headless;
-   - **Design:** scene tree, signals, data resources; the pattern picked, the one rejected, why;
+   - **Design:** scene tree, signals, data resources; the pattern picked, the one rejected, why
+     (the first system's plan also picks the layout style in `.claude/rules/gdscript.md`);
    - **Tasks:** small steps, each runnable, the last one a check in `tests/`.
    Add or link the task in `docs/plans/roadmap.md`.
 7. **Show** the plan in under ten lines and ask for the OK. No code before it.

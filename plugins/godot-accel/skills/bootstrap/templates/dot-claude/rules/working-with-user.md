@@ -13,6 +13,11 @@
   session; the user's playtest verdicts too, then they become plan tasks.
 - **Outside feedback** (friends, testers) is data: record it as *proposed* with who said it and
   when, give your own expert take, build it only when the user says so.
+- **Feel feedback → tuning first:** "too floaty", "too slow" becomes a change to a tuning value
+  (`.claude/rules/tuning.md`) before it becomes a code change; say which value and by how much.
+- **One piece, then a playtest:** a request that bundles several mechanics is built one usable
+  piece at a time; stop after each for the user to try it.
+- **End each task with "open X, try Y":** the scene to open and what to do to feel the change.
 - **Timebox polish:** after two feedback rounds on one thing, offer to park it in the polish
   milestone (record what is left, in the user's words) as the recommended option. The user may
   choose another round.

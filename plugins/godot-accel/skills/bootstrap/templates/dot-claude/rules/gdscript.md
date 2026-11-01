@@ -8,6 +8,11 @@ paths:
 - Static typing everywhere: typed vars, params and returns, `Array[T]`, typed signals.
 - `class_name` for reusable types; `@export` or `%UniqueName` instead of long `get_node()` paths.
 - Signals up, calls down. No global event bus until a truly cross-scene event needs one.
+- **Layout style**, named in the first system's plan: by default, folders by kind (`scenes/`,
+  `scripts/`, `resources/`). For a game with many interacting mechanics, the alternative is
+  `features/<name>/` per mechanic, features never referencing each other, cross-feature events
+  through one events autoload (GodotPrompter `scene-organization`, `event-bus`).
+- A script past ~300 lines: move logic into a helper script, not more into the same file.
 - Data (stats, items, abilities, levels) lives in `Resource` subclasses, not hard-coded.
   `duplicate()` any Resource you change per instance: resources are shared.
 - Game-time logic in `_physics_process` or Timers; UI input in `_unhandled_input` / `_gui_input`,

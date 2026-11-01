@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: bugfix-updates-known-bugs
+description: Fixing a bug listed in docs/known-bugs.md moves it to the Fixed list with its cause, in the same change.
+tags: [bugs, docs]
+context:
+  scaffold_script: fixture.sh

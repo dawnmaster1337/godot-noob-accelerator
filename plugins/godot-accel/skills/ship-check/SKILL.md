@@ -17,7 +17,9 @@ milestone).
 
 1. **Lint:** `tools/dev.sh lint` (gdlint + `gdformat --check` on changed `.gd` files). Fix every
    failure, re-run until clean. C# project: build it (`dotnet build`) and fix every error.
-2. **Checks, then play:** `tools/dev.sh check` (or the project's test command in CLAUDE.md).
+2. **Checks, then play:** every check, `tools/dev.sh check` (or the project's test command in
+   CLAUDE.md); the per-step runs were only the targeted ones. A fixed bug: update
+   `docs/known-bugs.md`.
    Then play-test the change:
    - with a `playtester` agent in `.claude/agents/`: delegate to it with the intent above and a
      concrete scenario that exercises the change;
@@ -34,5 +36,6 @@ milestone).
    LOW you leave: one line on why it's acceptable now. Changed code → repeat steps 1–3 once; a
    second FIX FIRST verdict → stop and show the findings.
 5. **Report and propose:** the reviewer's verdict (or "review skipped: not a milestone"), the
-   play-test result, the checks' last line, and a commit message (imperative, ≤ 72 characters).
+   play-test result, the checks' last line, **To try:** what the user should open and do to feel
+   the change, and a commit message (imperative, ≤ 72 characters).
    Ask whether to commit. Commit only on yes, staged by path; push per `.claude/rules/git.md`.

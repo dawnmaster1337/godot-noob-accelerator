@@ -5,6 +5,33 @@ All notable changes. Versions follow the plugin's `version` in
 
 ## Unreleased
 
+## 0.2.0 — tuning, bugs, budgets, one task per session
+
+From a second project's handover (a game that reached the same process on its own):
+
+- **Tuning and hand edits:** new rule `tuning.md` (feel values in `Tuning` Resources; change the
+  `.tres` preset, not only the script default; the user's uncommitted edits are theirs), a hard
+  rule in CLAUDE.md, and the session-start card lists uncommitted `.tres`/`.tscn` files. System
+  pages say where each value lives (file, Inspector group, safe range).
+- **Bug log:** `docs/known-bugs.md` (Open with repro; Fixed with cause → fix). `resume` sends
+  inbox bugs there, `ship-check` updates it, `harvest-learnings` reads it.
+- **Budgets enforced:** `tools/dev.sh budget` checks `.claude/budgets.md` and the 400-character
+  line limit; `trim-context` and every save run it; the session-start card warns when STATUS is
+  over. STATUS template: no session logs.
+- **Cheaper checks:** `tools/dev.sh check` refreshes Godot's cache only when files changed
+  (`--refresh` forces it); after each small step only the checks covering what changed run, every
+  check still runs in `ship-check`.
+- **One task per session:** roadmap tasks are sized S/M/L with a "Done when" line; task 0.0 is a
+  green baseline that bootstrap ticks; `resume` proposes one task.
+- **Playtests:** feel feedback becomes a tuning change first; bundled requests are built one piece
+  at a time; `ship-check` ends with "To try:"; system pages carry a playtest checklist.
+- **Layout styles:** `gdscript.md` names `features/<name>/` + an events autoload as the
+  alternative for games with many mechanics, and a ~300-line script limit; the first plan picks.
+- Four new evals, built from the real templates (`evals/lib/kit-project.sh`); run with
+  `--scaffold`.
+- Fixed: the `docs.md` rule's example path made `tools/dev.sh stale` report a dead path in every
+  new project.
+
 ## 0.1.1 — fixes
 
 - Install instructions: the marketplace is named `godot-accel`, so the install line is

@@ -22,6 +22,7 @@ Each kind of fact has **one home**; everything else points at it.
 | What each system does now | `docs/systems/<system>.md` |
 | Why it is that way | `docs/decisions/` (index `README.md`; one `YYYY-MM-DD-<topic>.md` per topic) |
 | Engine and tool quirks | `docs/guides/quirks.md` (read before debugging) |
+| Bugs known and not yet fixed | `docs/known-bugs.md` (check it before fixing a bug; update it with the fix) |
 | Rules for code, scenes, docs, git, working with the user | `.claude/rules/` |
 | Working rules learned from the user | `.claude/memory/` (index below) |
 | Another agent taking over | `AGENTS.md`, `docs/guides/llm-handoff.md` |
@@ -50,6 +51,9 @@ The rules that must never be missed. A rule the user makes binding gets one line
   output quoted; show work neutrally, never call it good (`.claude/rules/showing-work.md`).
 - **One question at a time**, each with a recommendation (`.claude/rules/working-with-user.md`).
 - **Never paste or write API keys or tokens**; key commands go in a normal terminal.
+- **The user's hand edits are theirs:** an uncommitted `.tres`, `.tscn` or tuning change you
+  didn't make is never reverted; build on it and ask before changing a value they set
+  (`.claude/rules/tuning.md`).
 {{#MCP}}- **Never work blind:** the `{{MCP_SERVER}}` tools must answer before any code, scene or
   gameplay step; if they don't, stop and fix it first (`.claude/rules/godot-mcp.md`).
 {{/MCP}}{{#CANON}}- **Canon:** run `canon-check` before any new text or name; build sessions never edit the
@@ -75,7 +79,9 @@ Autoloads: {{AUTOLOADS}}.
 1. **New system → plan first** (`plan-feature`): scene tree, signals, data resources, and the
    user's OK before writing code. {{#GODOTPROMPTER}}Load the matching `godot-prompter:*` skill
    first and name the pattern picked and the one rejected.{{/GODOTPROMPTER}}
-2. **Small steps.** After each: lint, `tools/dev.sh check`, {{RUN_STEP}}; fix every error.
+2. **Small steps.** After each: lint, `tools/dev.sh check <name>` for the checks covering what
+   you touched (its system page §4 names them), {{RUN_STEP}}; fix every error. Every check runs
+   in `ship-check`, before a commit.
 3. **Save constantly** (`save-work`): after every finished task a task save (checks, plan tick,
    commit on yes, push); at session end or when switching machines a session save (plus STATUS
    and lessons via `trim-context`). Never end a session with uncommitted work unsaid.
@@ -83,8 +89,10 @@ Autoloads: {{AUTOLOADS}}.
 
 ## Commands
 
-- `tools/dev.sh check` — refresh Godot's cache, run every headless check (exit 1 = a failure).
+- `tools/dev.sh check [name…]` — refresh Godot's cache if files changed, then run the headless
+  checks: all, or only those named (exit 1 = a failure).
 - `tools/dev.sh lint` — gdlint + gdformat on changed `.gd` files.
 - `tools/dev.sh stale` — paths in the always-read docs that no longer exist.
+- `tools/dev.sh budget` — files over their `.claude/budgets.md` budget, lines over 400 characters.
 - {{TEST_COMMAND}}
 - `godot --path . -e` opens the editor; `godot --path .` runs the game.
