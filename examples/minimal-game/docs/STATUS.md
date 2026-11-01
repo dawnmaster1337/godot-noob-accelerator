@@ -15,10 +15,3 @@ Tuning in `resources/hop_tuning.tres`. 3 checks pass.
 1. Should a pad that sinks under the frog end the run at once, or give a 0.2 s jump window?
    Recommendation: the window (pillar 2).
 
-## State of the systems
-
-What each system does now: `docs/systems/`. Why: `docs/decisions/`.
-
-## Quirks
-
-`docs/guides/quirks.md`.

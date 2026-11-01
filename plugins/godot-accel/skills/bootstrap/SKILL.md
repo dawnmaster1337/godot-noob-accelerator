@@ -35,9 +35,12 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
 0. **Is it a Godot project?** No `project.godot` → say so plainly and stop. Tell a beginner how
    to make one (open Godot → **Create** a new project in this folder → close Godot → run this
    again); the kit's beginner's guide walks through it: https://github.com/dawnmaster1337/godot-noob-accelerator/blob/main/docs/beginners-guide.md
+   Already set up (`.claude/budgets.md` exists) → say so and use `update` instead; stop.
 1. **Read what exists:** Godot version (`config/features`), autoloads, top-level folders,
    `.csproj` (C#), test addons (`addons/gut`, `addons/gdUnit4`), `.mcp.json` servers, existing
-   CLAUDE.md / `.claude/` / `docs/`. Say in three lines what you found.
+   CLAUDE.md / `.claude/` / `docs/`, and the project's own docs that already do a kit file's job
+   (a status or to-do file, design notes, a bug list, rules). Say in three lines what you found. Project hooks named like
+   the kit's (`guard-paths.sh`, `gd-format-lint.sh`…): the kit's copies stand down; say so.
 2. **Ask, one at a time** (skip any the request or step 1 already answers; ≤ 8):
    1. The game's name (default: `config/name`).
    2. One line: what is the game? (genre, the hook).
@@ -53,10 +56,15 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
    8. Extras (multi-pick, recommendations marked): Claude pushes after each commit you approve
       (rec) · asset manifest (rec) · standards page · paid-tools
       spend gate (only if you'll use paid image/sound generators).
-3. **Show the file list** (create / append / exists-ask) from the map below and get a yes.
+3. **Show the file list** (create / append / exists-ask / adopt) from the map below and get a
+   yes. **Adopt:** where the project already has its own file for a kit file's job, recommend
+   using it in the kit's place (move or rename it, fixing links, and point CLAUDE.md at it), never
+   a second copy beside it.
 4. **Write** each file: copy, fill the placeholders, keep or delete each `{{#X}}…{{/X}}` block
    (keep the inside when X is on; remove the markers either way). Leave no `{{…}}` behind except
    in `docs/` example rows. The filled CLAUDE.md must stay under 200 lines and 8,000 characters.
+   Write the plugin's version (`${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`) into
+   `.claude/godot-accel/kit-version`, so `update` and the session-start card know it.
 5. **Finish the setup** (ask before each): `chmod +x tools/dev.sh .githooks/pre-commit
    .githooks/commit-msg .githooks/pre-push` (git ignores a hook that isn't executable);
    `git init` if not a repo; turn on the git checks with `git config core.hooksPath .githooks`
@@ -113,7 +121,7 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
 | `{{LAYOUT}}` | the real top-level folders, one line each (`scenes/` …); invent none |
 | `{{ENGINE_SETTINGS}}` | viewport size, stretch mode, renderer from `project.godot`, one line each |
 | `{{AUTOLOADS}}` | names from `[autoload]`, or "none yet" |
-| `{{CANON_READ_LINE}}` | canon on: "8. Before any text or name: `docs/canon/bible.md` (`canon-check`)."; else delete the line |
+| `{{CANON_READ_LINE}}` | canon on: "7. Before any text or name: `docs/canon/bible.md` (`canon-check`)."; else delete the line |
 | `{{BEGINNER_LINE}}` | new: "The user is new to coding and git: explain each step, point at `docs/guides/start-here.md`."; else delete the line |
 | `{{MEMORY_LINK_STEP}}` | "Optional, per machine: set `autoMemoryDirectory` in `.claude/settings.local.json` to its absolute path." |
 | `{{MCP_SETUP_STEP}}` | MCP on: "4. The `{{MCP_SERVER}}` MCP server: see its own install guide; check it with `/mcp`."; else delete |

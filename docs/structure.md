@@ -9,7 +9,7 @@ when you pick them.
 | File | Why it exists |
 |---|---|
 | `CLAUDE.md` | Claude's instructions, loaded every session: pitch and pillars, where each kind of fact lives, the **Hard rules**, layout, engine settings, workflow, commands. Under 200 lines |
-| `AGENTS.md` | The read order for any other AI agent |
+| `AGENTS.md` | The read order and per-task loop for any other AI agent or developer |
 | `.gitignore`, `.gitattributes` | Appended in a `>>> godot-accel >>>` block: Godot's cache, exports, secrets, local Claude settings, the inbox; LF line endings, LFS lines commented out |
 
 ## `.claude/`
@@ -29,6 +29,7 @@ when you pick them.
 | `budgets.md` | Character budgets `trim-context` enforces |
 | `protected-paths.txt` | Extra paths the guard hook blocks (`addons/*` …), with `!` exceptions |
 | `start-guard.md` | A short standing reminder shown at every session start (empty by default) |
+| `godot-accel/kit-version` | The kit version the project was set up or last updated with; `update` and the session-start card compare it with the plugin |
 | `settings.json` | The suggested permissions (`settings.suggested.json`) merged in on your yes |
 | `settings.local.json` | Per machine: `autoMemoryDirectory` pointing at `.claude/memory` (git-ignored) |
 | `agents/playtester.md` *(optional)* | Drives the game through your editor MCP; never edits |
@@ -47,7 +48,6 @@ when you pick them.
 | `guides/between-sessions.md` | What you can do while Claude isn't running: inbox drops, note shapes |
 | `guides/setup-new-machine.md` | Install, clone, hooks path, the daily routine across machines |
 | `guides/quirks.md` | Engine and tool gotchas, one line each |
-| `guides/llm-handoff.md` | Read order and per-task loop for another model |
 | `canon/` *(optional)* | `bible.md`, `README.md` (who owns it), `requests/_template.md` |
 | `standards.md` *(optional)* | Row-by-row standards with status (locked, proved, proposed, open, later) |
 | `production/manifest.md` *(optional)* | Every asset the game needs and where it stands |
@@ -57,12 +57,13 @@ when you pick them.
 | File | Why |
 |---|---|
 | `inbox/README.md`, `inbox/.gdignore` | The drop box; Godot ignores it, git tracks only the README |
-| `tools/dev.sh` | `check` (refresh when files changed + every or named headless checks), `refresh`, `lint`, `stale`, `budget` |
+| `tools/dev.sh` | `check` (refresh when files changed + every or named headless checks), `refresh`, `lint`, `stale`, `budget`, `tidy` |
 | `tests/example_check.gd`, `.tscn` | The check-scene pattern: exit code = failures. Copy it per system |
 | `.githooks/` | Do nothing until `git config core.hooksPath .githooks` (per clone). `pre-commit`: lint, format, no `.godot/`, `.env` or key-shaped strings. `pre-push`: hands over to git-lfs. Identity checks only where `~/.config/identity-guard/` exists (`.githooks/README.md`) |
 
 ## In the plugin (not copied; updated with the plugin)
 
-Skills (`resume`, `plan-feature`, `ship-check`, `save-work`, `trim-context`, `workflow-audit`,
-`canon-check`, `harvest-learnings`, `bootstrap`), agents (`adversarial-reviewer`,
-`design-reviewer`, `canon-reviewer`) and hooks (session start, path guard, format + lint).
+Skills (`resume`, `plan-feature`, `ship-check`, `save-work`, `trim-context`, `project-audit`,
+`canon-check`, `harvest-learnings`, `bootstrap`, `update`), agents (`adversarial-reviewer`,
+`design-reviewer`, `canon-reviewer`) and hooks (session start, path guard for edits and shell writes, format + lint). Project-specific
+steps for a kit skill go in `.claude/godot-accel/<skill>.md` (`docs/customising.md`).

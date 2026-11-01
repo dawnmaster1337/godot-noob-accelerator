@@ -10,6 +10,10 @@ allowed-tools: Read Glob Grep Bash(git status *) Bash(git log *) Bash(git fetch)
 
 !`ls -A inbox 2>/dev/null`
 
+!`cat .claude/godot-accel/resume.md 2>/dev/null; true`
+
+Project steps (from `.claude/godot-accel/resume.md`, shown above if any) run before the report.
+
 1. **Fetch, then ask.** `git fetch`. If the branch has an upstream and is behind
    (`git rev-list --count HEAD..@{u}`), list the incoming commits (`git log --oneline HEAD..@{u}`)
    and ask before `git pull --ff-only`. Never pull with local changes that would conflict: say so
@@ -31,7 +35,8 @@ allowed-tools: Read Glob Grep Bash(git status *) Bash(git log *) Bash(git fetch)
    confirm with the user before acting. Then empty the inbox (keep its README and `.gdignore`).
 5. **Tools:** `godot` on PATH; if CLAUDE.md names an editor MCP server, its tools answer (else
    say code and gameplay steps wait until it's fixed; `.claude/rules/godot-mcp.md`).
-6. **Report** in at most six lines: what came in, half-done work, inbox, tool health, and the
+6. **Report** in at most six lines: what came in, half-done work, inbox, tool health (and a kit
+   update, if the start-up card says one is due: `update`), and the
    next step from STATUS: **one task** that fits this session (a roadmap or plan task, its
    Done-when line). End with one question: start on it (recommended) or something else? A new
    idea mid-task goes to STATUS Next unless the user says now.

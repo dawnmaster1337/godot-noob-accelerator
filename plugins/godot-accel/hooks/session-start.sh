@@ -1,15 +1,36 @@
 #!/usr/bin/env bash
 # SessionStart (startup, resume, /clear, compaction): tells Claude how safe the work is in git,
 # the user's uncommitted scene and resource edits, what waits in inbox/, what STATUS says is next
-# and whether it is over budget, whether Godot is reachable, and the project's own standing guard
-# (.claude/start-guard.md). Read-only: never fetches, pulls or pushes.
-# Silent outside a Godot project or a project set up with the kit.
+# and whether it is over budget, whether the project's kit version is behind the plugin, whether
+# Godot is reachable, and the project's own standing guard (.claude/start-guard.md). Read-only: never fetches, pulls or pushes.
+# Outside a kit project it stays silent, unless one sits just above or below the start folder:
+# then it says where, because every hook, project skill, agent and rule loads from the start
+# folder and would otherwise be off without a word.
 set -u
 # shellcheck source=lib.sh
 . "$(dirname "$0")/lib.sh"
 root=$(project_root)
 cd "$root" 2>/dev/null || exit 0
-is_godot_project || [ -f docs/STATUS.md ] || exit 0
+if ! is_godot_project && [ ! -f docs/STATUS.md ]; then
+	# A kit project is a folder with both project.godot and docs/STATUS.md.
+	found=""
+	dir=$root
+	for _ in 1 2 3; do
+		dir=$(dirname "$dir")
+		[ -f "$dir/project.godot" ] && [ -f "$dir/docs/STATUS.md" ] && found="$dir" && break
+	done
+	if [ -z "$found" ]; then
+		found=$(find . -maxdepth 3 \( -path '*/.*' -o -name node_modules \) -prune -o -name project.godot -print 2>/dev/null |
+			while IFS= read -r p; do
+				d=$(dirname "$p")
+				[ -f "$d/docs/STATUS.md" ] && printf '%s\n' "$root/${d#./}"
+			done)
+	fi
+	# Only one candidate is a clear mistake; several means a workspace folder: stay quiet.
+	[ -n "$found" ] && [ "$(printf '%s\n' "$found" | wc -l)" -eq 1 ] || exit 0
+	printf '%s\n' "[godot-accel] This session started in $root, but the kit project is at $found. The kit's hooks and the project's skills, agents and rules load only from the folder a session starts in, so they are off here. If the user is here to work on that game, tell them first: start Claude Code in $found (desktop app: open that folder), then say resume."
+	exit 0
+fi
 
 msg="[godot-accel] Session start."
 
@@ -44,6 +65,23 @@ if [ -f docs/STATUS.md ]; then
 	size=$(wc -m <docs/STATUS.md | tr -d ' ')
 	[ "$size" -gt "${budget:-5000}" ] 2>/dev/null &&
 		msg="$msg docs/STATUS.md is ${size} characters, over its ${budget:-5000} budget: trim it at the next save (trim-context)."
+fi
+
+# Kit version: the project's stamp (written by bootstrap and update) against this plugin's.
+if [ -f .claude/budgets.md ]; then
+	kit=$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "$(dirname "$0")/../.claude-plugin/plugin.json" | head -1)
+	mine=""
+	[ -f .claude/godot-accel/kit-version ] && mine=$(tr -d '[:space:]' <.claude/godot-accel/kit-version)
+	if [ -z "$mine" ]; then
+		msg="$msg KIT: this project was set up with a kit older than 0.3.0 (no .claude/godot-accel/kit-version); the kit is now ${kit}. Suggest /godot-accel:update to bring in the newer rules and templates."
+	elif [ -n "$kit" ] && [ "$mine" != "$kit" ]; then
+		newest=$(printf '%s\n%s\n' "$mine" "$kit" | sort -V | tail -1)
+		if [ "$newest" = "$kit" ]; then
+			msg="$msg KIT: this project is on kit ${mine}; the kit is now ${kit}. Suggest /godot-accel:update."
+		else
+			msg="$msg KIT: this project was updated with kit ${mine}, but this machine's plugin is ${kit}: suggest /plugin marketplace update godot-accel."
+		fi
+	fi
 fi
 
 if is_godot_project && ! command -v godot >/dev/null 2>&1; then

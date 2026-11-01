@@ -4,6 +4,33 @@ Everything bootstrap writes is yours: edit it freely. The plugin's skills, agent
 with the plugin, so change their behaviour through your project files rather than editing the
 plugin.
 
+## Add your own steps to a kit skill
+
+Don't copy a kit skill into `.claude/skills/` to change it: the copy stops getting kit updates,
+and both versions show up in the skill list. Instead write the extra steps in
+`.claude/godot-accel/<skill>.md`; the skill reads that file and runs its steps at a fixed point:
+
+| File | Its steps run |
+|---|---|
+| `.claude/godot-accel/resume.md` | before the report |
+| `.claude/godot-accel/save-work.md` | before the commit |
+| `.claude/godot-accel/ship-check.md` | after the checks and play-test |
+| `.claude/godot-accel/trim-context.md` | after the stale-paths step |
+
+```markdown
+- Run `tools/dev.sh export-docs` and commit the regenerated `docs/reference/abilities.md`.
+- If `data/levels/` changed, run `tools/dev.sh check levels` too.
+```
+
+*(An example. Plain steps, one per line; the skill quotes them.)* `project-audit` reports a
+project skill that shadows a kit skill.
+
+## Keep `tools/dev.sh`
+
+The kit's skills call `tools/dev.sh <verb>` by that name. If your project's entry point is called
+something else, keep a `tools/dev.sh` that hands over to it (`exec tools/run.sh "$@"`). Without
+it, `trim-context` says its checks did not run rather than passing quietly.
+
 ## Change a rule
 
 Edit the file in `.claude/rules/`. To make a rule load only for some files, give it `paths:`:
@@ -105,10 +132,16 @@ Run bootstrap with the server's name (or add later): it writes `.claude/rules/go
 `.mcp.json` so every machine runs the same one, and approve it per project with
 `enabledMcpjsonServers` in `.claude/settings.json`.
 
+## Your own hooks
+
+If your project's settings already register a hook script with the same name as one of the kit's
+(`guard-paths.sh`, `guard-bash.sh`, `gd-format-lint.sh`, `session-start.sh`), the kit's copy
+stands down, so the same job never runs twice. To use the kit's instead, remove yours.
+
 ## Turn something off
 
-- A hook: disable the whole plugin for a project in `/plugin`, or copy what you want of it into
-  your own settings and disable the plugin.
+- A hook: disable the whole plugin for a project in `/plugin`, or register your own script of
+  the same name (above).
 - A skill: it only runs when asked or matched; rules you don't want can be deleted from
   `.claude/rules/`.
 

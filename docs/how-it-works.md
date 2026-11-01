@@ -13,7 +13,8 @@ resume → ask for something → (plan-feature) → build in small steps → che
 
 ## 1. Starting a session
 
-**What happens:** the session-start hook gives Claude a status card: uncommitted and unpushed
+**What happens:** the session-start hook gives Claude a status card (or, if the session started
+one folder too high or low, where the project really is): uncommitted and unpushed
 work, what's in `inbox/`, STATUS's "Next" paragraph, whether `godot` is reachable, and your own
 standing guard (`.claude/start-guard.md`). You say **resume**; Claude fetches, shows incoming
 commits from your other machine and asks before pulling, reads `docs/STATUS.md`, looks for
@@ -25,6 +26,11 @@ session: roadmap tasks are sized S/M/L, each with a "Done when" line, and the fi
 machine had already pushed. Sessions also end abruptly (usage limits), so resume looks for loose
 ends instead of trusting the last summary. One task per session, then `/clear`, kept another
 project at 22 finished stages in four days.
+
+**Coming back after a while,** or after a plugin update: bootstrap stamps the kit version into
+the project, and the card says when the project is behind. **update the kit** then adds the new
+template files and merges new rule lines into the project's own versions, asking wherever a kit
+line would change something the user wrote.
 
 ## 2. Planning
 
@@ -66,8 +72,10 @@ must never be missed is also copied, in one line, into CLAUDE.md's **Hard rules*
 
 ## 5. Checking before you see anything
 
-- After every `.gd` edit: `gdformat` + `gdlint` (hook); lint failures go straight back to Claude.
-- Before edits: the path guard blocks Godot's cache and generated files.
+- After every `.gd` change, by an editing tool or a shell command: `gdformat` + `gdlint` (hook);
+  lint failures go straight back to Claude.
+- Before edits: the path guard blocks Godot's cache and generated files, including writes made
+  through a shell redirect, `tee` or `sed -i`.
 - After each small step: only the checks covering what changed (`tools/dev.sh check <name>`);
   Godot's cache is refreshed only when files changed.
 - Per task (`ship-check`): lint, every headless check (`tools/dev.sh check`; a check scene's exit
@@ -124,18 +132,26 @@ gamed by 3,000-character lines; characters can't be. And a budget nothing checks
 another project's status file grew to 875 lines of dated session notes, its first table cell one
 paragraph of several hundred words, while its CLAUDE.md said "keep it to a few lines".
 
-## 9. Reviewing the process itself
+## 9. Keeping the project tidy
 
-`workflow-audit` reviews the setup like code: contradictions, rules nothing enforces, hidden
-rules, token cost, bookkeeping-only commits. It writes a ranked report and asks about each fix.
-Run it at the end of a milestone or when sessions feel slow.
+`project-audit` is a health check for the whole project. `tools/dev.sh tidy` finds the mechanical
+drift: files not in git, docs outside `docs/`, code outside the folders CLAUDE.md names, scripts
+and scenes nothing uses, scripts over 300 lines, finished plans not archived. The skill reads
+that, then judges what a script can't: duplicated logic, system pages that disagree with the code,
+rules that clash, token cost. It writes a ranked report in plain words and asks about each fix.
+Run it at the end of a milestone, or whenever the project feels messy or sessions feel slow.
+
+**Why:** across many sessions and cleared contexts, Claude puts things in slightly different
+places each time. Small drift is cheap to fix when it is listed; left alone, it becomes a project
+nobody can find their way around.
 
 ## 10. Working beside other sessions and agents
 
 - The inbox (`inbox/`) is your drop box between sessions: packs, notes, handovers.
 - A canon session (optional) owns `docs/canon/`; build sessions send request files instead of
   editing the bible, so two sessions never overwrite each other.
-- `AGENTS.md` and `docs/guides/llm-handoff.md` let any other AI tool pick the project up.
+- `AGENTS.md` lets any other AI tool or developer pick the project up: the read order and the
+  per-task loop.
 
 ## 11. Feeding back to the kit
 

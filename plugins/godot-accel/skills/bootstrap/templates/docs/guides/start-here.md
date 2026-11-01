@@ -16,10 +16,13 @@ knows what they mean.
 | **save work** | Checks everything still works, then asks to save a snapshot (a *commit*) and upload it |
 | **wrap up** | The end-of-day save: also writes down where you stopped and what it learned |
 | **I'm running out of usage** | A quick save that writes down what's next, so nothing is lost |
+| **audit the project** | A health check when things feel messy: what's out of place or unused, then one question per fix |
 
 ## A normal session
 
-1. Open a terminal in the project folder, type `claude`, then **resume**.
+1. Open a terminal in the project folder (the one with `project.godot` in it), type `claude`, then
+   **resume**. In the desktop app, open that same folder. Opened one folder too high, the kit's
+   checks and rules don't load; its start-up note tells you if that happened.
 2. Ask for one thing. Small is good: "make the player jump", "add a coin that disappears when I
    touch it", "the jump feels floaty, make it snappier".
 3. Answer Claude's questions. If you don't know, say **APR**.
@@ -43,6 +46,8 @@ stays sharper and each session costs less.
 - **Want to change a number yourself** (speed, jump height, a timing)? The system's page in
   `docs/systems/` says which file and Inspector group it's in. Change it in Godot; Claude keeps
   your values.
+- **Claude says the project was set up with an older kit?** Say **update the kit**: it adds
+  what's new and asks before changing anything you wrote.
 - **Got an idea or a bug while Claude isn't running?** Write it in a file in `inbox/notes/`
   (`docs/guides/between-sessions.md` has the shapes).
 - **Never paste passwords or API keys into the chat.** If Claude needs one, it will tell you which

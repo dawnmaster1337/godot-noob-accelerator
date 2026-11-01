@@ -25,7 +25,7 @@ Each kind of fact has **one home**; everything else points at it.
 | Bugs known and not yet fixed | `docs/known-bugs.md` (check it before fixing a bug; update it with the fix) |
 | Rules for code, scenes, docs, git, working with the user | `.claude/rules/` |
 | Working rules learned from the user | `.claude/memory/` (index below) |
-| Another agent taking over | `AGENTS.md`, `docs/guides/llm-handoff.md` |
+| Another agent taking over | `AGENTS.md` |
 | The user's guide | `docs/guides/start-here.md`, `docs/guides/between-sessions.md` (keep them accurate) |
 {{#CANON}}| Story, setting, characters, names, tone | `docs/canon/bible.md` (rules: `docs/canon/README.md`) |
 {{/CANON}}{{#STANDARDS}}| Locked standards | `docs/standards.md` (a locked row beats any plan or STATUS line) |
@@ -82,9 +82,8 @@ Autoloads: {{AUTOLOADS}}.
 2. **Small steps.** After each: lint, `tools/dev.sh check <name>` for the checks covering what
    you touched (its system page §4 names them), {{RUN_STEP}}; fix every error. Every check runs
    in `ship-check`, before a commit.
-3. **Save constantly** (`save-work`): after every finished task a task save (checks, plan tick,
-   commit on yes, push); at session end or when switching machines a session save (plus STATUS
-   and lessons via `trim-context`). Never end a session with uncommitted work unsaid.
+3. **Save constantly** (`save-work`): after every finished task, and at session end. Never end a
+   session with uncommitted work unsaid.
 4. Small commits with imperative messages.
 
 ## Commands
@@ -94,5 +93,6 @@ Autoloads: {{AUTOLOADS}}.
 - `tools/dev.sh lint` — gdlint + gdformat on changed `.gd` files.
 - `tools/dev.sh stale` — paths in the always-read docs that no longer exist.
 - `tools/dev.sh budget` — files over their `.claude/budgets.md` budget, lines over 400 characters.
+- `tools/dev.sh tidy` — what has drifted: unsaved files, docs and code out of place, unused files.
 - {{TEST_COMMAND}}
 - `godot --path . -e` opens the editor; `godot --path .` runs the game.

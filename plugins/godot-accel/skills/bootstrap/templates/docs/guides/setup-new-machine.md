@@ -2,7 +2,8 @@
 
 ## The daily routine (every machine, every session)
 
-1. Open a terminal in the project folder and start `claude`.
+1. Open a terminal in the project folder (the one with `project.godot`) and start `claude`. Not
+   the folder above it: the kit's hooks, rules and agents load only from where a session starts.
 2. Type **resume**. Claude fetches from GitHub, shows anything new from your other machine, and
    pulls only after you say yes.
 3. Work.

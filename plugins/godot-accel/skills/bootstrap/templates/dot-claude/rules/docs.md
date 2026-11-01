@@ -8,11 +8,12 @@ paths:
 
 # Docs rules
 
-- **One home per fact:** rules → CLAUDE.md and `.claude/rules/`; the user's working rules →
-  `.claude/memory/`; where we are + the only open-questions list → `docs/STATUS.md`; what is true
-  now → `docs/systems/`; why → `docs/decisions/` (frozen once decided); what's next →
-  `docs/plans/`; bugs not yet fixed → `docs/known-bugs.md`; engine and tool gotchas →
-  `docs/guides/quirks.md`. Everything else points there.
+- **One home per fact:** the table in CLAUDE.md says where each kind of fact lives; everything
+  else points there. Decision records are frozen once decided.
+- **A doc that mirrors code is generated from it:** once a page lists more than a handful of
+  things the code offers (options, moves, items), a tool verb writes it by calling the code (never
+  by re-parsing the source), and a check fails when the committed page differs from a fresh build.
+  A number in a doc names the command that produces it.
 - **Names:** `YYYY-MM-DD-<topic>.md` for decisions, plans and reviews. Finished plans and old
   reviews move to `docs/archive/` (fix the links).
 - **A decision changed?** Grep `docs/` for the old claim and fix every copy in the same change; add

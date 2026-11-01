@@ -16,11 +16,3 @@ session logs: `git log` is the history. `tools/dev.sh budget` checks the size.
 ## Open questions for the user (the only list; none blocking)
 
 1. …
-
-## State of the systems
-
-What each system does now: `docs/systems/`. Why it is that way: `docs/decisions/`.
-
-## Quirks
-
-Engine, tool and shell quirks: `docs/guides/quirks.md` (read before debugging).

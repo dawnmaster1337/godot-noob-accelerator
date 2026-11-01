@@ -47,6 +47,15 @@ fill() {
 fill CLAUDE.md AGENTS.md tools/dev.sh .claude/rules/*.md docs/*.md docs/*/*.md
 chmod +x tools/dev.sh
 
+# The .gitignore lines bootstrap appends (Godot's cache, secrets, the inbox).
+sed 's/{{KIT_NAME}}/godot-accel/g' "$T/gitignore.snippet" >.gitignore
+
+# The version stamp bootstrap writes (KIT_NO_STAMP=1 imitates a project set up before 0.3.0).
+if [ "${KIT_NO_STAMP:-0}" != 1 ] && [ -f "$T/../../../.claude-plugin/plugin.json" ]; then
+	mkdir -p .claude/godot-accel
+	sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "$T/../../../.claude-plugin/plugin.json" >.claude/godot-accel/kit-version
+fi
+
 # Commit with a throwaway identity so the case starts from a clean tree.
 git init -q
 git add -A

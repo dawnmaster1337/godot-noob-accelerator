@@ -7,6 +7,9 @@
   what the user decided from what they are only leaning towards; confirm a lean before recording it.
 - **Plain words:** explain jargon the first time, with an example in this game's own terms.
   {{BEGINNER_LINE}}
+- **Steps for the user go last:** anything they must do by hand (a login, a download, a setting)
+  goes in the turn's final message, not mid-turn, where it may never be seen (the user may be on a
+  phone). More than a few lines → a file in the repo, its path in that message.
 - **Looks are shown, not described:** for any decision about how something looks, show a mockup
   or screenshot with a recommendation.
 - **Record answers:** design answers go into a decision record (`docs/decisions/`) in the same
@@ -21,9 +24,3 @@
 - **Timebox polish:** after two feedback rounds on one thing, offer to park it in the polish
   milestone (record what is left, in the user's words) as the recommended option. The user may
   choose another round.
-- **Reviews:** the adversarial reviewer runs at the end of a milestone, when merging a branch
-  built by a subagent or worktree, or when the user asks; not after every task. Afterwards fix the
-  obvious findings at once (bugs, crashes, softlocks, lint, docs that contradict code) and ask
-  only about findings that touch a design decision, one at a time.
-- **Trigger words** ("resume", "save work", "wrap up", "running out of usage"…) belong to the
-  kit's skills: follow the skill whose description matches (`resume`, `save-work`).

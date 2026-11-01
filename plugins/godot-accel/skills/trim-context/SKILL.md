@@ -4,9 +4,13 @@ description: End-of-session review — captures the session's lessons into their
 allowed-tools: Read Bash(git diff *) Bash(git log *) Bash(tools/dev.sh stale) Bash(tools/dev.sh budget)
 ---
 
-!`tools/dev.sh budget 2>/dev/null || true`
+!`if [ -x tools/dev.sh ]; then tools/dev.sh budget 2>&1; else echo "BUDGET CHECK DID NOT RUN (no tools/dev.sh): measure each file in .claude/budgets.md with wc -m"; fi; true`
 
-!`tools/dev.sh stale 2>/dev/null`
+!`if [ -x tools/dev.sh ]; then tools/dev.sh stale 2>&1; else echo "STALE CHECK DID NOT RUN (no tools/dev.sh)"; fi; true`
+
+!`cat .claude/godot-accel/trim-context.md 2>/dev/null; true`
+
+Project steps (from `.claude/godot-accel/trim-context.md`, shown above if any) run after step 3.
 
 1. **Lessons.** List what went wrong or cost a lot this session: rework, detours, the user's
    corrections, tool quirks, wasted spend. Each goes to **exactly one** place:
@@ -28,5 +32,7 @@ allowed-tools: Read Bash(git diff *) Bash(git log *) Bash(tools/dev.sh stale) Ba
    oldest. Fix every path `stale` listed. For each decision that changed this session, grep
    `docs/` for the old claim and fix every copy.
 4. **Never trim:** canon, decision records, open questions the user hasn't answered, quirks that
-   still apply.
+   still apply. Over budget with only these left: cut what another home already holds, then
+   stop; tell the user which files are still over and by how much, and make it a STATUS Next
+   task. A budget is a reason to ask, never to delete protected content.
 5. Report in one line: lessons added (where), characters saved, anything still over budget and why.

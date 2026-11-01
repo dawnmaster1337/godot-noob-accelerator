@@ -15,6 +15,8 @@ tools/dev.sh <verb> [args]
   lint [all|file...]  gdlint + gdformat --check on changed .gd files (all: the whole project)
   stale [file...]     backticked paths in the always-read docs that no longer exist
   budget              files over their .claude/budgets.md budget, lines over 400 characters
+  tidy                what has drifted: unsaved files, docs and code out of place, unused
+                      scripts and scenes, long scripts, finished plans (project-audit reads it)
 EOF
 }
 
@@ -135,7 +137,7 @@ lint() {
 }
 
 stale() {
-	[ $# -eq 0 ] && set -- CLAUDE.md AGENTS.md docs/STATUS.md .claude/memory/*.md .claude/rules/*.md docs/guides/llm-handoff.md
+	[ $# -eq 0 ] && set -- CLAUDE.md AGENTS.md docs/STATUS.md .claude/memory/*.md .claude/rules/*.md
 	grep -oHE '`[A-Za-z0-9_./-]+\.(md|gd|cs|py|sh|tscn|tres|json|png|txt|cfg)`' "$@" 2>/dev/null | tr -d '`' |
 		while IFS=: read -r src path; do
 			[ -e "$path" ] && continue
@@ -144,6 +146,62 @@ stale() {
 			git ls-files | grep -qE "(^|/)$path\$" && continue
 			echo "$src: $path"
 		done | sort -u
+}
+
+# used_by <text> <file>: does any scene, resource, script or project.godot other than <file>
+# contain <text>? (Godot's cache and git's folder don't count.)
+used_by() {
+	grep -rlsF --include='*.tscn' --include='*.tres' --include='*.gd' --include='*.cs' \
+		--include=project.godot --exclude-dir=.godot --exclude-dir=.git -e "$1" . |
+		grep -vxF "./$2" | grep -q .
+}
+
+# tidy: things that drift as sessions come and go. It only reports; project-audit decides.
+tidy() {
+	local n=0 layout f cls
+	# section <title> <lines>: print a titled list, count its items.
+	section() {
+		[ -n "$2" ] || return 0
+		printf '%s (%s):\n%s\n' "$1" "$(printf '%s\n' "$2" | wc -l | tr -d ' ')" "$(printf '%s\n' "$2" | sed 's/^/  /')"
+		n=$((n + $(printf '%s\n' "$2" | wc -l)))
+	}
+	section "Not in git yet: commit them (Godot's .uid files belong in git) or add them to .gitignore" \
+		"$(git ls-files --others --exclude-standard 2>/dev/null | grep -v '^inbox/')"
+	section "Docs outside docs/ (each fact has one home: CLAUDE.md's table)" \
+		"$(git ls-files --cached --others --exclude-standard '*.md' 2>/dev/null |
+			grep -vE '^(docs|\.claude|inbox|addons)/|^(README|CLAUDE|AGENTS|CHANGELOG|CONTRIBUTING|LICENSE)[^/]*$|/README\.md$')"
+	# Top-level folders CLAUDE.md's "Project layout" names; code anywhere else has wandered.
+	layout=$(awk '/^## Project layout/{on=1; next} /^## /{on=0} on' CLAUDE.md 2>/dev/null |
+		grep -oE '`[A-Za-z0-9_.-]+/' | tr -d '`/' | sort -u)
+	if [ -n "$layout" ]; then
+		section "Code outside the folders CLAUDE.md's layout names" \
+			"$(git ls-files '*.gd' '*.cs' '*.tscn' '*.tres' 2>/dev/null |
+				grep -vE '^(addons|tests|tools)/' | while IFS= read -r f; do
+					printf '%s\n' "$layout" | grep -qxF "${f%%/*}" || echo "$f"
+				done)"
+	fi
+	# Used = some other scene, resource, script or project.godot names its file or its class_name.
+	section "Never used by any scene, script or project.godot" \
+		"$(git ls-files '*.gd' '*.tscn' 2>/dev/null | grep -vE '^(addons|tests)/' | while IFS= read -r f; do
+			used_by "${f##*/}" "$f" && continue
+			cls=$(sed -n 's/^class_name \([A-Za-z0-9_]*\).*/\1/p' "$f" 2>/dev/null | head -1)
+			[ -n "$cls" ] && used_by "$cls" "$f" && continue
+			echo "$f"
+		done)"
+	section "Scripts over 300 lines (split out a helper)" \
+		"$(git ls-files '*.gd' 2>/dev/null | grep -v '^addons/' | while IFS= read -r f; do
+			[ "$(wc -l <"$f")" -gt 300 ] && echo "$f ($(wc -l <"$f" | tr -d ' ') lines)"
+		done)"
+	section "Finished plans still in docs/plans/ (move them to docs/archive/plans/)" \
+		"$(for f in docs/plans/*.md; do
+			case "$f" in */roadmap.md | */_template.md) continue ;; esac
+			[ -f "$f" ] && grep -q '^- \[x\]' "$f" && ! grep -q '^- \[ \]' "$f" && echo "$f"
+		done)"
+	section "class_name used twice" \
+		"$(git ls-files '*.gd' 2>/dev/null | xargs grep -h '^class_name ' 2>/dev/null |
+			awk '{print $2}' | sort | uniq -d)"
+	echo "tidy: $n item(s) to look at"
+	return 0
 }
 
 # budget_rules: "<glob> <characters>" per budgeted file, from .claude/budgets.md (else defaults).
@@ -204,5 +262,6 @@ case "$verb" in
 	lint) lint "$@" ;;
 	stale) stale "$@" ;;
 	budget) budget ;;
+	tidy) tidy ;;
 	*) usage ;;
 esac

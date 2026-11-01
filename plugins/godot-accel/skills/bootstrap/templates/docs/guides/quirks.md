@@ -17,3 +17,10 @@ arrive):
 ## GDScript and Godot
 
 ## Shell, git, agents
+
+- *Seen 2026-10:* a background wait or kill with `pgrep -f`/`pkill -f '<pattern>'` hangs or kills
+  its own shell (the pattern is in the shell's own command line) → wait on the PID
+  (`while kill -0 $pid`), or write the pattern so it can't match itself (`pgrep -f '[b]uild.py'`).
+- *Seen 2026-10:* `git push` says "Repository not found" with several `gh` accounts logged in →
+  the active account has no access. One push as the owner, without switching accounts:
+  `git -c credential.helper= -c "credential.helper=!f() { echo username=<account>; echo password=\$(gh auth token -u <account>); }; f" push`

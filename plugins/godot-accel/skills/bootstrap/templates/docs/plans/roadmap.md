@@ -1,7 +1,7 @@
 # Roadmap: {{GAME_NAME}}
 
 The build order. Work follows it; `docs/STATUS.md` says where it stands. Each milestone ends with
-a playable build and a review (`workflow-audit` or the adversarial reviewer). Tick tasks off as
+a playable build and a review (`project-audit` or the adversarial reviewer). Tick tasks off as
 they land; a task with its own plan links to it.
 
 **One task per session.** Each task fits one session: size **S** (under an hour), **M** (a

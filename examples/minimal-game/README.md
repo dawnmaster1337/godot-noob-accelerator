@@ -12,3 +12,4 @@ real project and there's no game code here: only the docs layer.
 | `docs/decisions/` | The index and one decision record with the user's answers |
 | `docs/plans/` | The roadmap and one feature plan, half ticked |
 | `docs/systems/hopping.md` | A "what is true now" page |
+| `docs/known-bugs.md` | One open bug with its repro, and one fixed with its cause |
