@@ -138,7 +138,7 @@ Inside Claude Code, type these one at a time and press Enter after each. The lin
 ```
 
 ```
-/plugin install godot-accel@godot-noob-accelerator
+/plugin install godot-accel@godot-accel
 ```
 
 Recommended companion, which gives Claude deep Godot know-how (how to build movement, menus,

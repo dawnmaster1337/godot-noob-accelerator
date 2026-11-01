@@ -1,4 +1,11 @@
 # identity-guard shared helpers. Sourced by the hooks.
+
+# identity-guard is per person, not per repo: its checks run only on a machine
+# that has its config folder. Without the folder the hooks still run the
+# project checks (lint, secrets, the git-lfs handover) and say nothing else.
+IG_DIR="${IDENTITY_GUARD_DIR:-$HOME/.config/identity-guard}"
+ig_active() { [ -d "$IG_DIR" ] && [ "${IDENTITY_GUARD_SKIP:-0}" != "1" ]; }
+
 # Builds a sanitised copy of a pattern file: comments and blank lines removed.
 # A blank line in a `grep -f` file matches EVERYTHING, so this is not optional.
 ig_clean_patterns() {   # ig_clean_patterns <src> -> prints temp path, or nothing

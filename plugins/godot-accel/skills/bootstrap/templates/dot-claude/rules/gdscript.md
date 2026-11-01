@@ -15,6 +15,6 @@ paths:
 - Kill the previous `Tween` before starting a new one on the same property. Check
   `is_instance_valid()` after an `await` that can outlive its node.
 - Code must pass `gdlint`; `gdformat` runs after every edit (the kit's hook) and before every
-  commit (`.githooks/pre-commit`, if enabled).
+  commit (`.githooks/pre-commit`, once turned on).
 - Before implementing a new engine system, load the matching `godot-prompter:*` skill if
   GodotPrompter is installed, and name the pattern you picked and the one you rejected.

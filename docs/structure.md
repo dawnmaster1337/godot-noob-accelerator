@@ -57,7 +57,7 @@ when you pick them.
 | `inbox/README.md`, `inbox/.gdignore` | The drop box; Godot ignores it, git tracks only the README |
 | `tools/dev.sh` | `check` (refresh + every headless check), `refresh`, `lint`, `stale` |
 | `tests/example_check.gd`, `.tscn` | The check-scene pattern: exit code = failures. Copy it per system |
-| `.githooks/pre-commit` *(optional)* | Lint, format, no `.godot/`, no key-shaped strings, at commit time |
+| `.githooks/` | Do nothing until `git config core.hooksPath .githooks` (per clone). `pre-commit`: lint, format, no `.godot/`, `.env` or key-shaped strings. `pre-push`: hands over to git-lfs. Identity checks only where `~/.config/identity-guard/` exists (`.githooks/README.md`) |
 
 ## In the plugin (not copied; updated with the plugin)
 

@@ -11,5 +11,5 @@ main README and `docs/` folder.
 
 ```
 /plugin marketplace add dawnmaster1337/godot-noob-accelerator
-/plugin install godot-accel@godot-noob-accelerator
+/plugin install godot-accel@godot-accel
 ```

@@ -68,8 +68,9 @@ must never be missed is also copied, in one line, into CLAUDE.md's **Hard rules*
   code is its failure count), a play-test, fixes, a proposed commit.
 - At milestones only: the `adversarial-reviewer`, given the intent but never Claude's own
   summary. Obvious fixes happen at once; design questions come to you one at a time.
-- Optional `.githooks/pre-commit`: the same lint plus a secrets scan, catching edits made from a
-  shell that the editor hooks miss.
+- `.githooks/` (on once you run `git config core.hooksPath .githooks`): the same lint plus a
+  secrets scan at commit time, catching edits made from a shell that the editor hooks miss.
+  Optional identity checks run only on a machine set up for them (`.githooks/README.md`).
 - `.claude/rules/showing-work.md`: quote the check output, review every case yourself first, show
   work neutrally, **never call it good**.
 

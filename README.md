@@ -50,10 +50,10 @@ It goes from zero to a moving character on screen.
    CLAUDE.md or rules, so they're copied in once and become yours):
    `CLAUDE.md`, `AGENTS.md`, `.claude/rules/` (how to write code, scenes, docs; git; working with
    you; showing work), `.claude/memory/`, `docs/` (STATUS, decisions, plans and roadmap, system
-   pages, guides), `inbox/`, `tools/dev.sh`, an example headless check, `.gitignore` lines, and
-   optional extras (canon docs, a standards page, an asset manifest, a git pre-commit check, a
-   paid-tools spend gate, a playtester agent for an editor MCP). Every file and why:
-   [docs/structure.md](docs/structure.md).
+   pages, guides), `inbox/`, `tools/dev.sh`, an example headless check, git hooks (lint and a
+   secrets scan at commit time, once you turn them on), `.gitignore` lines, and optional extras
+   (canon docs, a standards page, an asset manifest, a paid-tools spend gate, a playtester
+   agent for an editor MCP). Every file and why: [docs/structure.md](docs/structure.md).
 
 ## Install
 
@@ -61,11 +61,11 @@ Inside Claude Code:
 
 ```
 /plugin marketplace add dawnmaster1337/godot-noob-accelerator
-/plugin install godot-accel@godot-noob-accelerator
+/plugin install godot-accel@godot-accel
 ```
 
 Restart Claude Code (`/exit`, then `claude`). **Updates:** third-party marketplaces don't
-auto-update by default. Run `/plugin marketplace update godot-noob-accelerator`, or turn on
+auto-update by default. Run `/plugin marketplace update godot-accel`, or turn on
 auto-update under `/plugin` → Marketplaces.
 
 **Prerequisites:** Godot 4 callable as `godot` from a terminal, and git. Optional:

@@ -51,14 +51,16 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
    7. How new are you to coding and git? **New** (recommended if unsure: extra plain-words
       explanations, `docs/guides/start-here.md` gets pointed at often) / experienced.
    8. Extras (multi-pick, recommendations marked): Claude pushes after each commit you approve
-      (rec) · git pre-commit check (rec) · asset manifest (rec) · standards page · paid-tools
+      (rec) · asset manifest (rec) · standards page · paid-tools
       spend gate (only if you'll use paid image/sound generators).
 3. **Show the file list** (create / append / exists-ask) from the map below and get a yes.
 4. **Write** each file: copy, fill the placeholders, keep or delete each `{{#X}}…{{/X}}` block
    (keep the inside when X is on; remove the markers either way). Leave no `{{…}}` behind except
    in `docs/` example rows. The filled CLAUDE.md must stay under 200 lines and 8,000 characters.
-5. **Finish the setup** (ask before each): `chmod +x tools/dev.sh .githooks/pre-commit`;
-   `git init` if not a repo; `git config core.hooksPath .githooks`; merge
+5. **Finish the setup** (ask before each): `chmod +x tools/dev.sh .githooks/pre-commit
+   .githooks/commit-msg .githooks/pre-push` (git ignores a hook that isn't executable);
+   `git init` if not a repo; turn on the git checks with `git config core.hooksPath .githooks`
+   (recommended; "Git hooks" below); merge
    `dot-claude/settings.suggested.json` into `.claude/settings.json` (show the diff; never drop
    their keys); write `autoMemoryDirectory` = the absolute path of `.claude/memory` into
    `.claude/settings.local.json` (per machine, git-ignored; makes Claude's own memory land in the
@@ -100,24 +102,6 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
 | `{{GODOT_VERSION}}` | from `config/features` (e.g. `4.4`) |
 | `{{LANGUAGE}}` | GDScript / C# / GDScript and C# |
 
-## Git hooks (identity-guard)
-
-The `dot-githooks/` templates are always written. They reject a commit or push
-whose author or committer is not the noreply address of the account that owns
-`origin`, and scan staged content, pushed trees and commit messages for the
-owner's real-identity strings. The account name is derived from the remote URL,
-so the hooks hold no name and are safe in a public repo.
-
-Two things to tell the user after bootstrapping:
-
-1. **Activate them.** `core.hooksPath` is per-clone, so cloning does not activate
-   hooks: `git config core.hooksPath .githooks`, once per clone per machine.
-2. **The pattern files live outside the repo**, at
-   `~/.config/identity-guard/patterns` and `~/.config/identity-guard/handle-patterns`
-   (mode 600, one case-insensitive extended regex per line). If they are absent the
-   content scan is skipped with a note and only the identity check runs. Keeping
-   them out of the repo is deliberate: a public repo must never contain the strings
-   it is scanned for. Do **not** use `\b` in them -- see `.githooks/README.md`.
 | `{{CURRENT_GOAL}}` | "a playable prototype" unless the user said otherwise |
 | `{{PILLAR_1}}` | ask nothing: write "*to be agreed in the first planning session*" |
 | `{{DATE}}` | today, `YYYY-MM-DD` |
@@ -133,3 +117,12 @@ Two things to tell the user after bootstrapping:
 | `{{MEMORY_LINK_STEP}}` | "Optional, per machine: set `autoMemoryDirectory` in `.claude/settings.local.json` to its absolute path." |
 | `{{MCP_SETUP_STEP}}` | MCP on: "4. The `{{MCP_SERVER}}` MCP server: see its own install guide; check it with `/mcp`."; else delete |
 | `{{#GODOTPROMPTER}}` | on when `godot-prompter:*` skills are available to you |
+
+## Git hooks
+
+`.githooks/` is always written and does nothing until step 5 turns it on. Every machine gets the
+project checks (GDScript lint, `.godot/`, `.env`, key shapes; the git-lfs handover on push). The
+identity checks (commit email, real-identity strings) run only where
+`~/.config/identity-guard/` exists, so a beginner's normal email is never blocked. Tell the user
+`core.hooksPath` is per clone (`docs/guides/setup-new-machine.md` repeats it); details in
+`.githooks/README.md`.

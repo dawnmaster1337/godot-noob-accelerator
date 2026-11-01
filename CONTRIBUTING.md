@@ -28,8 +28,11 @@ Thanks for helping. The kit improves from what real projects run into.
 ```bash
 claude plugin validate plugins/godot-accel --strict
 claude plugin validate .
-for f in plugins/godot-accel/hooks/*.sh; do bash -n "$f"; done
+for f in plugins/godot-accel/hooks/*.sh .githooks/{pre-commit,commit-msg,pre-push,lib.sh}; do bash -n "$f"; done
+diff -r .githooks plugins/godot-accel/skills/bootstrap/templates/dot-githooks
 ```
+
+The repo's own `.githooks/` is a copy of the template: change the template, then copy it over.
 
 Then try it end to end (the smoke test in [docs/customising.md](docs/customising.md#testing-changes)).
 Evals live in `plugins/godot-accel/evals/`; they make real model calls, so run them only when

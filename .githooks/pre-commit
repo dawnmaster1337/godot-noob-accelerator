@@ -1,51 +1,72 @@
 #!/usr/bin/env bash
-# identity-guard: pre-commit
-#   1. author + committer must belong to the account that owns `origin`
-#      (derived from the remote URL, so no account name is stored here);
-#   2. staged content must not contain the real-identity strings, which live in
-#      an uncommitted file outside every repo. Absent file = scan skipped.
+# Blocks a commit with unformatted or lint-failing GDScript, Godot's cache staged, a .env file
+# or a key-like secret; on a machine with identity-guard set up, also one that would leak the
+# owner's identity. Catches what the editor hooks miss (edits made from a shell). Enable once
+# per clone -- cloning does NOT activate hooks:
+#   git config core.hooksPath .githooks
+# See .githooks/README.md.
 set -u
-[ "${IDENTITY_GUARD_SKIP:-0}" = "1" ] && exit 0
 . "$(dirname "$0")/lib.sh"
 
-PATTERNS="${IDENTITY_GUARD_PATTERNS:-$HOME/.config/identity-guard/patterns}"
-die() { printf '\n[identity-guard] COMMIT BLOCKED: %s\n\n' "$1" >&2; exit 1; }
-
-owner=$(ig_owner "$(git config --get remote.origin.url 2>/dev/null || true)")
-ae=$(git var GIT_AUTHOR_IDENT    | sed -E 's/.*<([^>]*)>.*/\1/')
-ce=$(git var GIT_COMMITTER_IDENT | sed -E 's/.*<([^>]*)>.*/\1/')
-
-if [ -z "$owner" ]; then
-  case "$ae" in
-    *@users.noreply.github.com|noreply@anthropic.com|noreply@github.com) ;;
-    *) die "no origin remote yet, and author email '$ae' is not a noreply address" ;;
-  esac
-else
-  ig_email_ok "$ae" "$owner" || die "author email '$ae' does not belong to '$owner', the account that owns origin.
-  Fix:  git config user.email '<id>+$owner@users.noreply.github.com'
-  This is also what stops one account's commits leaking into the other's repo."
-  ig_email_ok "$ce" "$owner" || die "committer email '$ce' does not belong to '$owner' (see above)"
+# ---- identity-guard (only where $IG_DIR exists) ---------------------------
+# The author and committer must be the noreply address of the account that owns
+# `origin`; the account name is derived from the remote URL, so nothing is
+# hard-coded here and a commit from one account is rejected in another's repo.
+# Staged content is scanned against patterns held OUTSIDE the repo; a missing
+# pattern file skips that scan but never the identity check.
+if ig_active; then
+  IG_PATTERNS="${IDENTITY_GUARD_PATTERNS:-$IG_DIR/patterns}"
+  ig_die() { printf '\n[identity-guard] COMMIT BLOCKED: %s\n\n' "$1" >&2; exit 1; }
+  ig_own=$(ig_owner "$(git config --get remote.origin.url 2>/dev/null || true)")
+  ig_ae=$(git var GIT_AUTHOR_IDENT    | sed -E 's/.*<([^>]*)>.*/\1/')
+  ig_ce=$(git var GIT_COMMITTER_IDENT | sed -E 's/.*<([^>]*)>.*/\1/')
+  if [ -n "$ig_own" ]; then
+    ig_email_ok "$ig_ae" "$ig_own" || ig_die "author email '$ig_ae' is not the noreply address of '$ig_own'.
+  Fix:  git config user.email '<id>+$ig_own@users.noreply.github.com'"
+    ig_email_ok "$ig_ce" "$ig_own" || ig_die "committer email '$ig_ce' is not the noreply address of '$ig_own'"
+  fi
+  if ig_pf=$(ig_clean_patterns "$IG_PATTERNS"); then
+    trap 'rm -f "$ig_pf"' EXIT
+    ig_hits=$(git diff --cached --name-only --diff-filter=ACMR | while IFS= read -r f; do
+      [ -n "$f" ] || continue
+      ig_allowed "$f" && continue
+      git show ":$f" 2>/dev/null | grep -qIiEf "$ig_pf" && printf '%s\n' "$f"
+    done)
+    [ -n "$ig_hits" ] && ig_die "staged files contain protected identity strings:
+$(printf '%s\n' "$ig_hits" | sed 's/^/    /')
+  Remove them, or add the path to .identity-guard-allow for a genuine false positive."
+  else
+    printf '[identity-guard] note: no readable pattern file at %s; content scan skipped\n' "$IG_PATTERNS" >&2
+  fi
 fi
 
-if pf=$(ig_clean_patterns "$PATTERNS"); then
-  trap 'rm -f "$pf"' EXIT
-  hits=$(git diff --cached --name-only --diff-filter=ACMR | while IFS= read -r f; do
-    [ -n "$f" ] || continue
-    ig_allowed "$f" && continue
-    git show ":$f" 2>/dev/null | grep -qIiEf "$pf" && printf '%s\n' "$f"
-  done)
-  [ -n "$hits" ] && die "staged files contain protected identity strings:
-$(printf '%s\n' "$hits" | sed 's/^/    /')
-  Remove them, or set IDENTITY_GUARD_SKIP=1 for a genuine false positive."
-else
-  printf '[identity-guard] note: no readable pattern file at %s; content scan skipped\n' "$PATTERNS" >&2
+# ---- project checks -------------------------------------------------------
+export PATH="$HOME/.local/bin:$PATH"
+files=$(git diff --cached --name-only --diff-filter=d)
+gd=$(echo "$files" | grep '\.gd$' | grep -v '^addons/')
+if [ -n "$gd" ]; then
+  if command -v gdformat >/dev/null 2>&1; then
+    echo "$gd" | xargs gdformat --check || { echo "pre-commit: run gdformat on the files above"; exit 1; }
+    echo "$gd" | xargs gdlint || exit 1
+  else
+    echo "pre-commit: gdtoolkit not installed, skipping the GDScript checks"
+  fi
 fi
-
-# --- hand over to the project's own hook ----------------------------------
-# install-identity-guard.sh preserves any pre-existing hook as <name>.project
-# rather than overwriting it. Identity runs first because it is cheap and the
-# most important; the project's checks (formatters, linters, secret shapes) run
-# after.
+if echo "$files" | grep -qE '^\.godot/'; then
+  echo "pre-commit: Godot's cache (.godot/) is staged; unstage it"
+  exit 1
+fi
+if echo "$files" | grep -qE '(^|/)\.env($|\.)'; then
+  echo "pre-commit: a .env file is staged"
+  exit 1
+fi
+# Common key shapes: private key blocks, AWS, GitHub, Slack, Anthropic/OpenAI-style "sk-" keys.
+if git diff --cached -U0 | grep -E '^\+' | grep -qE -- '-----BEGIN [A-Z ]*PRIVATE KEY-----|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{36}|xox[baprs]-[A-Za-z0-9-]{10,}|sk-[A-Za-z0-9_-]{20,}'; then
+  echo "pre-commit: something that looks like an API key or private key is staged"
+  exit 1
+fi
+# If a project later adds its own hook, keep it as .githooks/pre-commit.project
+# and it runs here, after the identity and project checks above.
 proj="$(dirname "$0")/pre-commit.project"
 [ -x "$proj" ] && exec "$proj" "$@"
 exit 0

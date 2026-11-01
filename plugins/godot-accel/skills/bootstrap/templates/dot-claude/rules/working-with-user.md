@@ -20,5 +20,5 @@
   built by a subagent or worktree, or when the user asks; not after every task. Afterwards fix the
   obvious findings at once (bugs, crashes, softlocks, lint, docs that contradict code) and ask
   only about findings that touch a design decision, one at a time.
-- **Trigger words:** "resume" → `resume`; "save work" / "commit" → task save; "wrap up" / "I'm
-  done" / "switching machines" / "running out of usage" → session save (`save-work`).
+- **Trigger words** ("resume", "save work", "wrap up", "running out of usage"…) belong to the
+  kit's skills: follow the skill whose description matches (`resume`, `save-work`).
