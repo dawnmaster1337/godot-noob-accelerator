@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 958" width="1280" height="958" role="img" aria-labelledby="t d">
 <title id="t">What went wrong without the kit</title>
-<desc id="d">A test that could never fail: A check pressed a button inside a two-frame window, missed it on every run, and still called that a pass. Now: A new check must prove the thing it measures really happened. The notes that ate the session: A status file Claude reads every session grew to 875 lines, while the rules said “keep it to a few lines”. Now: Size limits, checked every time you save. Finished, and never used: 74 effect presets were made, tested and passed every check. Only 6 were used by anything in the game. Now: A check proves new data is used, not only that it is right. Three projects, three layouts: Every project used the kit, yet each kept its own kind of notes, so no two looked the same. Now: One layout for every project. A 125-file project went from 29 problems to 0. Too many builders at once: Several Claudes built the game at once, ran out of memory and crashed the session. Now: Big jobs now take turns: one Claude at a time. Too big, saved anyway: A file over its size limit was saved three times in one session, and nothing stopped it. Now: Saving now refuses a file that is over its size limit.</desc>
+<desc id="d">“It works!” It didn’t.: Claude’s test said a button worked. The test never actually pressed it, and nobody noticed for weeks. Now: Claude must show a test really tried, before trusting it. The notes got huge: Claude’s notes about the game grew to 875 lines, and it read all of them every session. Slow, and costly. Now: Notes have a size limit. Old stuff gets cleared out. Made it, never used it: Claude made 74 special effects for the game. Only 6 of them ever showed up when you played. Now: Claude checks that new things really appear in the game. Every game, a different mess: Three of our games each kept their notes a different way. Nothing was where you’d look for it. Now: Same places for notes in every game. One went from 29 problems to 0. Too many cooks: Several Claudes worked at once. The computer ran out of memory, and everything crashed. Now: Big jobs now take turns: one Claude at a time. Work done twice: One computer redid work that another computer had already finished. Now: Every session starts by checking for work from your other computers.</desc>
 <rect width="1280" height="958" rx="36" fill="#FFF8EE"/>
 <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
 <text x="40" y="66" font-size="38" font-weight="800" fill="#1E2A44">Real things that went wrong</text>
@@ -8,59 +8,58 @@
 <rect x="32" y="124" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M32 148 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#EF7FA0"/>
 <text x="56" y="186" font-size="38" font-weight="800" fill="#4A1024">for weeks</text>
-<text x="56" y="248" font-size="22" font-weight="800" fill="#1E2A44">A test that could never fail</text>
-<text x="56" y="282" font-size="17.5" fill="#3A4766">A check pressed a button inside a two-</text>
-<text x="56" y="307" font-size="17.5" fill="#3A4766">frame window, missed it on every run,</text>
-<text x="56" y="332" font-size="17.5" fill="#3A4766">and still called that a pass.</text>
+<text x="56" y="248" font-size="22" font-weight="800" fill="#1E2A44">“It works!” It didn’t.</text>
+<text x="56" y="282" font-size="17.5" fill="#3A4766">Claude’s test said a button worked.</text>
+<text x="56" y="307" font-size="17.5" fill="#3A4766">The test never actually pressed it,</text>
+<text x="56" y="332" font-size="17.5" fill="#3A4766">and nobody noticed for weeks.</text>
 <line x1="56" y1="360" x2="397" y2="360" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="70" cy="380" r="14" fill="#EF7FA0"/><path d="M63 380 l5 5 9 -10" fill="none" stroke="#4A1024" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="94" y="385" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
-<text x="56" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">A new check must prove the thing it</text>
-<text x="56" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">measures really happened.</text>
+<text x="56" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">Claude must show a test really</text>
+<text x="56" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">tried, before trusting it.</text>
 <rect x="445" y="124" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M445 148 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#F6C453"/>
 <text x="469" y="186" font-size="38" font-weight="800" fill="#4A3300">875 lines</text>
-<text x="469" y="248" font-size="22" font-weight="800" fill="#1E2A44">The notes that ate the session</text>
-<text x="469" y="282" font-size="17.5" fill="#3A4766">A status file Claude reads every</text>
-<text x="469" y="307" font-size="17.5" fill="#3A4766">session grew to 875 lines, while the</text>
-<text x="469" y="332" font-size="17.5" fill="#3A4766">rules said “keep it to a few lines”.</text>
+<text x="469" y="248" font-size="22" font-weight="800" fill="#1E2A44">The notes got huge</text>
+<text x="469" y="282" font-size="17.5" fill="#3A4766">Claude’s notes about the game grew to</text>
+<text x="469" y="307" font-size="17.5" fill="#3A4766">875 lines, and it read all of them</text>
+<text x="469" y="332" font-size="17.5" fill="#3A4766">every session. Slow, and costly.</text>
 <line x1="469" y1="360" x2="810" y2="360" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="483" cy="380" r="14" fill="#F6C453"/><path d="M476 380 l5 5 9 -10" fill="none" stroke="#4A3300" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="507" y="385" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
-<text x="469" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">Size limits, checked every time you</text>
-<text x="469" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">save.</text>
+<text x="469" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">Notes have a size limit. Old stuff</text>
+<text x="469" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">gets cleared out.</text>
 <rect x="858" y="124" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M858 148 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#5CC8A8"/>
 <text x="882" y="186" font-size="38" font-weight="800" fill="#123B33">6 of 74</text>
-<text x="882" y="248" font-size="22" font-weight="800" fill="#1E2A44">Finished, and never used</text>
-<text x="882" y="282" font-size="17.5" fill="#3A4766">74 effect presets were made, tested</text>
-<text x="882" y="307" font-size="17.5" fill="#3A4766">and passed every check. Only 6 were</text>
-<text x="882" y="332" font-size="17.5" fill="#3A4766">used by anything in the game.</text>
+<text x="882" y="248" font-size="22" font-weight="800" fill="#1E2A44">Made it, never used it</text>
+<text x="882" y="282" font-size="17.5" fill="#3A4766">Claude made 74 special effects for the</text>
+<text x="882" y="307" font-size="17.5" fill="#3A4766">game. Only 6 of them ever showed up</text>
+<text x="882" y="332" font-size="17.5" fill="#3A4766">when you played.</text>
 <line x1="882" y1="360" x2="1223" y2="360" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="896" cy="380" r="14" fill="#5CC8A8"/><path d="M889 380 l5 5 9 -10" fill="none" stroke="#123B33" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="920" y="385" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
-<text x="882" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">A check proves new data is used, not</text>
-<text x="882" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">only that it is right.</text>
+<text x="882" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">Claude checks that new things really</text>
+<text x="882" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">appear in the game.</text>
 <rect x="32" y="520" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M32 544 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#5FA3D6"/>
 <text x="56" y="582" font-size="38" font-weight="800" fill="#0F2A45">29 → 0</text>
-<text x="56" y="644" font-size="22" font-weight="800" fill="#1E2A44">Three projects, three layouts</text>
-<text x="56" y="678" font-size="17.5" fill="#3A4766">Every project used the kit, yet each</text>
-<text x="56" y="703" font-size="17.5" fill="#3A4766">kept its own kind of notes, so no two</text>
-<text x="56" y="728" font-size="17.5" fill="#3A4766">looked the same.</text>
+<text x="56" y="644" font-size="22" font-weight="800" fill="#1E2A44">Every game, a different mess</text>
+<text x="56" y="678" font-size="17.5" fill="#3A4766">Three of our games each kept their</text>
+<text x="56" y="703" font-size="17.5" fill="#3A4766">notes a different way. Nothing was</text>
+<text x="56" y="728" font-size="17.5" fill="#3A4766">where you’d look for it.</text>
 <line x1="56" y1="756" x2="397" y2="756" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="70" cy="776" r="14" fill="#5FA3D6"/><path d="M63 776 l5 5 9 -10" fill="none" stroke="#0F2A45" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="94" y="781" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
-<text x="56" y="816" font-size="17.5" font-weight="600" fill="#1E2A44">One layout for every project. A</text>
-<text x="56" y="840" font-size="17.5" font-weight="600" fill="#1E2A44">125-file project went from 29</text>
-<text x="56" y="864" font-size="17.5" font-weight="600" fill="#1E2A44">problems to 0.</text>
+<text x="56" y="816" font-size="17.5" font-weight="600" fill="#1E2A44">Same places for notes in every game.</text>
+<text x="56" y="840" font-size="17.5" font-weight="600" fill="#1E2A44">One went from 29 problems to 0.</text>
 <rect x="445" y="520" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M445 544 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#D97757"/>
 <text x="469" y="582" font-size="38" font-weight="800" fill="#3D1608">crash</text>
-<text x="469" y="644" font-size="22" font-weight="800" fill="#1E2A44">Too many builders at once</text>
-<text x="469" y="678" font-size="17.5" fill="#3A4766">Several Claudes built the game at</text>
-<text x="469" y="703" font-size="17.5" fill="#3A4766">once, ran out of memory and crashed</text>
-<text x="469" y="728" font-size="17.5" fill="#3A4766">the session.</text>
+<text x="469" y="644" font-size="22" font-weight="800" fill="#1E2A44">Too many cooks</text>
+<text x="469" y="678" font-size="17.5" fill="#3A4766">Several Claudes worked at once. The</text>
+<text x="469" y="703" font-size="17.5" fill="#3A4766">computer ran out of memory, and</text>
+<text x="469" y="728" font-size="17.5" fill="#3A4766">everything crashed.</text>
 <line x1="469" y1="756" x2="810" y2="756" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="483" cy="776" r="14" fill="#D97757"/><path d="M476 776 l5 5 9 -10" fill="none" stroke="#3D1608" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="507" y="781" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
@@ -68,15 +67,14 @@
 <text x="469" y="840" font-size="17.5" font-weight="600" fill="#1E2A44">at a time.</text>
 <rect x="858" y="520" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M858 544 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#8E7CC3"/>
-<text x="882" y="582" font-size="38" font-weight="800" fill="#21163F">3 times</text>
-<text x="882" y="644" font-size="22" font-weight="800" fill="#1E2A44">Too big, saved anyway</text>
-<text x="882" y="678" font-size="17.5" fill="#3A4766">A file over its size limit was saved</text>
-<text x="882" y="703" font-size="17.5" fill="#3A4766">three times in one session, and</text>
-<text x="882" y="728" font-size="17.5" fill="#3A4766">nothing stopped it.</text>
+<text x="882" y="582" font-size="38" font-weight="800" fill="#21163F">twice</text>
+<text x="882" y="644" font-size="22" font-weight="800" fill="#1E2A44">Work done twice</text>
+<text x="882" y="678" font-size="17.5" fill="#3A4766">One computer redid work that another</text>
+<text x="882" y="703" font-size="17.5" fill="#3A4766">computer had already finished.</text>
 <line x1="882" y1="756" x2="1223" y2="756" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="896" cy="776" r="14" fill="#8E7CC3"/><path d="M889 776 l5 5 9 -10" fill="none" stroke="#21163F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="920" y="781" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
-<text x="882" y="816" font-size="17.5" font-weight="600" fill="#1E2A44">Saving now refuses a file that is</text>
-<text x="882" y="840" font-size="17.5" font-weight="600" fill="#1E2A44">over its size limit.</text>
+<text x="882" y="816" font-size="17.5" font-weight="600" fill="#1E2A44">Every session starts by checking for</text>
+<text x="882" y="840" font-size="17.5" font-weight="600" fill="#1E2A44">work from your other computers.</text>
 <text x="640" y="928" text-anchor="middle" font-size="19" fill="#6B5F4A">Every rule in the kit says which failure it prevents.</text>
 </g></svg>
