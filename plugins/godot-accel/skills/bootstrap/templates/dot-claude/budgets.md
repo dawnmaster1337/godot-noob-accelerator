@@ -4,7 +4,8 @@ Checked by `tools/dev.sh budget` (from `trim-context` and every save). Files rea
 cost tokens in every session: keep them under budget. Over budget → trim now (move detail into
 the doc it points to), unless what is left is protected (`trim-context` step 4): then it
 becomes a task, never a deletion. A file named in its own row uses that row; a glob row skips `README.md`.
-Any line over 400 characters fails too (a long table cell is a long line).
+Any line over 400 characters fails too (a long table cell is a long line), except table rows in
+docs read only when needed (research, registers).
 
 | File | Budget | Trim by |
 |---|---|---|

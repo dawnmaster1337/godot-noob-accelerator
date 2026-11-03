@@ -29,9 +29,14 @@ home's form, is `.claude/godot-accel/shape.md` (`tools/dev.sh conform` checks it
 | Working rules learned from the user | `.claude/memory/` (index below) |
 | Another agent taking over | `AGENTS.md` |
 | The user's guide | `docs/guides/start-here.md`, `docs/guides/between-sessions.md` (keep them accurate) |
-{{#CANON}}| Story, setting, characters, names, tone | `docs/canon/bible.md` (rules: `docs/canon/README.md`) |
-{{/CANON}}{{#STANDARDS}}| Locked standards | `docs/standards.md` (a locked row beats any plan or STATUS line) |
-{{/STANDARDS}}{{#MANIFEST}}| Every asset and its status | `docs/production/manifest.md` |
+{{#CANON}}
+| Story, setting, characters, names, tone | `docs/canon/bible.md` (rules: `docs/canon/README.md`) |
+{{/CANON}}
+{{#STANDARDS}}
+| Locked standards | `docs/standards.md` (a locked row beats any plan or STATUS line) |
+{{/STANDARDS}}
+{{#MANIFEST}}
+| Every asset and its status | `docs/production/manifest.md` |
 {{/MANIFEST}}
 
 Read the relevant decision record before designing or changing a system; never contradict it
@@ -56,11 +61,16 @@ The rules that must never be missed. A rule the user makes binding gets one line
 - **The user's hand edits are theirs:** an uncommitted `.tres`, `.tscn` or tuning change you
   didn't make is never reverted; build on it and ask before changing a value they set
   (`.claude/rules/tuning.md`).
-{{#MCP}}- **Never work blind:** the `{{MCP_SERVER}}` tools must answer before any code, scene or
+{{#MCP}}
+- **Never work blind:** the `{{MCP_SERVER}}` tools must answer before any code, scene or
   gameplay step; if they don't, stop and fix it first (`.claude/rules/godot-mcp.md`).
-{{/MCP}}{{#CANON}}- **Canon:** run `canon-check` before any new text or name; build sessions never edit the
+{{/MCP}}
+{{#CANON}}
+- **Canon:** run `canon-check` before any new text or name; build sessions never edit the
   bible, they send request files (`docs/canon/README.md`).
-{{/CANON}}{{#PAID}}- **Spend gate:** never spend paid credit without the user's OK on what it makes, the
+{{/CANON}}
+{{#PAID}}
+- **Spend gate:** never spend paid credit without the user's OK on what it makes, the
   estimate and the balance (`.claude/rules/paid-tools.md`).
 {{/PAID}}
 

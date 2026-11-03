@@ -4,13 +4,25 @@
 set -u
 cd "$(dirname "$0")/.." || exit 1
 
+# GAME: the folder holding project.godot: the repo root, or the one folder below it that holds
+# one (a game/ beside other work). res://, tests/, addons/ and .godot/ live inside it; G is its
+# prefix in repo paths ("" at the root).
+GAME=.
+if [ ! -f project.godot ]; then
+	found=$(ls -d -- */project.godot 2>/dev/null)
+	[ "$(printf '%s\n' "$found" | grep -c .)" = 1 ] && GAME=${found%/project.godot}
+fi
+G=""
+[ "$GAME" = . ] || G="$GAME/"
+
 usage() {
 	cat <<'EOF'
 tools/dev.sh <verb> [args]
   check [--refresh] [name...]
-                      refresh if files changed, then every tests/*_check.tscn headless (exit 1 =
-                      a failure); names run only those checks (`dev.sh check player`);
-                      --refresh forces the refresh (after deleting or renaming a class_name)
+                      refresh if files changed, then every tests/*_check.tscn headless, or the
+                      GUT tests when addons/gut is installed (exit 1 = a failure); names run only
+                      those (`dev.sh check player`); --refresh forces the refresh (after deleting
+                      or renaming a class_name)
   refresh             rebuild Godot's class cache and imports (after a new class_name or asset)
   lint [all|file...]  gdlint + gdformat --check on changed .gd files (all: the whole project)
   stale [file...]     backticked paths in the live docs (the shape's live rows) that no longer
@@ -41,7 +53,7 @@ limit() {
 headless() {
 	local seconds=$1
 	shift
-	limit "$seconds" godot --headless --path . "$@" </dev/null
+	limit "$seconds" godot --headless --path "$GAME" "$@" </dev/null
 }
 
 need_godot() {
@@ -51,11 +63,11 @@ need_godot() {
 }
 
 # A refresh costs two headless editor runs, so check skips it while nothing it reads has changed.
-STAMP=.godot/dev-refresh.stamp
+STAMP="$GAME/.godot/dev-refresh.stamp"
 
 needs_refresh() {
 	[ -f "$STAMP" ] || return 0
-	[ -n "$(find . \( -path ./.godot -o -path ./.git -o -path ./inbox \) -prune -o -type f -newer "$STAMP" \
+	[ -n "$(find "$GAME" \( -path "$GAME/.godot" -o -path ./.git -o -path ./inbox \) -prune -o -type f -newer "$STAMP" \
 		\( -name '*.gd' -o -name '*.cs' -o -name '*.tscn' -o -name '*.tres' -o -name '*.res' \
 		-o -name '*.gdshader' -o -name '*.png' -o -name '*.jpg' -o -name '*.webp' -o -name '*.svg' \
 		-o -name '*.ogg' -o -name '*.wav' -o -name '*.mp3' -o -name '*.glb' -o -name '*.gltf' \
@@ -76,7 +88,7 @@ refresh() {
 		fi
 	done
 	rm -f "$log"
-	[ "$fail" = 0 ] && mkdir -p .godot && touch "$STAMP"
+	[ "$fail" = 0 ] && mkdir -p "$GAME/.godot" && touch "$STAMP"
 	return $fail
 }
 
@@ -96,23 +108,53 @@ run_check() {
 	return 0
 }
 
+# gut_check [name...]: the GUT tests (all, or the files whose names match), one headless run each.
+# A .gutconfig.json in the game folder sets where the tests are; else res://tests.
+gut_check() {
+	local log code fail=0 sel args=(-s addons/gut/gut_cmdln.gd -gexit)
+	[ -f "$GAME/.gutconfig.json" ] || args+=(-gdir=res://tests)
+	log=$(mktemp)
+	[ $# -gt 0 ] || set -- ""
+	for sel in "$@"; do
+		if [ -n "$sel" ]; then
+			headless 600 "${args[@]}" "-gselect=$sel" >"$log" 2>&1
+		else
+			headless 600 "${args[@]}" >"$log" 2>&1
+		fi
+		code=$?
+		if [ "$code" -ne 0 ] || grep -q "SCRIPT ERROR" "$log"; then
+			echo "FAIL GUT ${sel:-all tests} (exit $code)"
+			grep -E "\[Failed\]|FAILED|SCRIPT ERROR|Failing" "$log" | head -8
+			fail=1
+		fi
+	done
+	rm -f "$log"
+	[ "$fail" = 0 ] && echo "GUT: all tests passed"
+	return $fail
+}
+
 check() {
-	local fail=0 name scene count=0
+	local fail=0 name scene f count=0
 	if [ "${1:-}" = --refresh ]; then
 		shift
 		rm -f "$STAMP"
 	fi
 	if needs_refresh; then refresh || fail=1; fi
+	if [ -f "$GAME/addons/gut/gut_cmdln.gd" ]; then
+		gut_check "$@" || fail=1
+		return $fail
+	fi
 	if [ $# -gt 0 ]; then
 		for name in "$@"; do
 			scene="tests/${name%_check}_check.tscn"
-			[ -e "$scene" ] || { echo "no check $scene"; fail=1; continue; }
+			[ -e "$GAME/$scene" ] || { echo "no check $G$scene"; fail=1; continue; }
 			run_check "$scene" || fail=1
 			count=$((count + 1))
 		done
 	else
-		for scene in tests/*_check.tscn; do
-			[ -e "$scene" ] || continue
+		for f in "$GAME"/tests/*_check.tscn; do
+			[ -e "$f" ] || continue
+			scene=${f#"$GAME"/}
 			run_check "$scene" || fail=1
 			count=$((count + 1))
 		done
@@ -125,7 +167,7 @@ lint() {
 	command -v gdlint >/dev/null 2>&1 || { echo "gdtoolkit missing: pipx install 'gdtoolkit==4.*'"; return 1; }
 	local files=()
 	if [ "${1:-}" = all ]; then
-		while IFS= read -r f; do files+=("$f"); done < <(git ls-files '*.gd' | grep -v '^addons/')
+		while IFS= read -r f; do files+=("$f"); done < <(git ls-files '*.gd' | grep -v "^${G}addons/")
 	elif [ $# -gt 0 ]; then
 		files=("$@")
 	else
@@ -134,7 +176,7 @@ lint() {
 		done < <({
 			git diff --name-only --diff-filter=d HEAD 2>/dev/null
 			git ls-files --others --exclude-standard
-		} | grep '\.gd$' | grep -v '^addons/' | sort -u)
+		} | grep '\.gd$' | grep -v "^${G}addons/" | sort -u)
 	fi
 	[ ${#files[@]} -gt 0 ] || { echo "no .gd files to lint"; return 0; }
 	gdlint "${files[@]}" && gdformat --check "${files[@]}"
@@ -166,7 +208,7 @@ live_docs() {
 }
 
 stale() {
-	local docs=() f found
+	local docs=() f found known
 	if [ $# -eq 0 ]; then
 		if [ -f "$SHAPE" ]; then
 			while IFS= read -r f; do docs+=("$f"); done < <(live_docs)
@@ -176,12 +218,14 @@ stale() {
 		[ ${#docs[@]} -gt 0 ] || return 0
 		set -- "${docs[@]}"
 	fi
+	# Files on disk count, git-ignored ones too (a data folder named in a doc); Godot's cache doesn't.
+	known=$(git ls-files --cached --others 2>/dev/null | grep -v '\.godot/')
 	found=$(grep -oHE '`[A-Za-z0-9_./-]+\.(md|gd|cs|py|sh|tscn|tres|json|png|svg|txt|cfg|csv|gdshader|glb|ogg|wav)`' "$@" 2>/dev/null | tr -d '`' |
 		while IFS=: read -r src path; do
-			[ -e "$path" ] && continue
-			case "$path" in -* | *YYYY* | *'<'*) continue ;; esac
-			# A shortened path only has to end a tracked path.
-			git ls-files | grep -qE "(^|/)$path\$" && continue
+			[ -e "$path" ] || [ -e "$GAME/$path" ] && continue
+			case "$path" in /* | -* | *YYYY* | *'<'*) continue ;; esac
+			# A shortened path only has to end a known path.
+			printf '%s\n' "$known" | grep -qE "(^|/)$path\$" && continue
 			echo "$src: $path"
 		done | sort -u)
 	[ -z "$found" ] && return 0
@@ -204,13 +248,16 @@ shape_headings() {
 }
 
 # shape_tasks <roadmap>: `- [ ] 1.2 (M) What. Done when: …` (a letter may follow the number:
-# `1.2b`); a ticked task also says `Done YYYY-MM-DD.` Every fault of a task is reported at once.
+# `1.2b`); a ticked task also says `Done YYYY-MM-DD.` A finished task moved from an old log is
+# `(old)` and needs no Done when. Every fault of a task is reported at once.
 shape_tasks() {
-	awk -v f="$1" 'function flush(   miss) {
+	awk -v f="$1" 'function flush(   miss, old) {
 			if (t == "" || t ~ /^- \[.\] [0-9.]+[a-z]? *(…|\.\.\.) *$/) { t = ""; return }
 			if (t !~ /^- \[[ xX]\] [0-9]+\.[0-9]+[a-z]? /) miss = miss "; a number (1.2)"
-			if (t !~ /^- \[[ xX]\] [0-9]+\.[0-9]+[a-z]? \([SML]\) /) miss = miss "; a size (S/M/L)"
-			if (t !~ /Done +when/) miss = miss "; a Done when"
+			if (t !~ /^- \[[ xX]\] [0-9]+\.[0-9]+[a-z]? \(([SML]|old)\) /) miss = miss "; a size (S/M/L, or old)"
+			old = t ~ /^- \[[ xX]\] [0-9]+\.[0-9]+[a-z]? \(old\) /
+			if (!old && t !~ /Done +when/) miss = miss "; a Done when"
+			if (old && t ~ /^- \[ \]/) miss = miss "; a tick (old is only for finished tasks)"
 			if (t ~ /^- \[[xX]\]/ && t !~ /Done [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/) miss = miss "; its Done date (Done YYYY-MM-DD.)"
 			if (miss != "") print f ":" ln ": task without " substr(miss, 3) ": " substr(t, 1, 60)
 			t = ""
@@ -252,7 +299,10 @@ shape_decisions() {
 		[ -f "$f" ] || continue
 		echo "$base" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}-.+\.md$' ||
 			echo "$f: name is not YYYY-MM-DD-<topic>.md"
-		status=$(sed -n 's/.*\*\*Status: *\([A-Za-z]*\).*/\1/p' "$f" | head -1 | tr 'A-Z' 'a-z')
+		# `**Status: decided**` or `**Status:** Accepted`; "accepted" is read as decided.
+		status=$(sed -n -e 's/.*\*\*Status:\*\* *\([A-Za-z][A-Za-z]*\).*/\1/p;t' \
+			-e 's/.*\*\*Status: *\([A-Za-z][A-Za-z]*\).*/\1/p' "$f" | head -1 | tr 'A-Z' 'a-z')
+		[ "$status" = accepted ] && status=decided
 		case "$status" in
 		proposed | decided | binding | superseded) ;;
 		'') echo "$f: no **Status: <word>** line" ;;
@@ -265,6 +315,7 @@ shape_decisions() {
 		fi
 		rdate=$(echo "$row" | awk -F'|' '{ gsub(/[ *]/, "", $2); print $2 }')
 		rstatus=$(echo "$row" | awk -F'|' '{ gsub(/[*`]/, "", $4); split($4, w, " "); print tolower(w[1]) }')
+		[ "$rstatus" = accepted ] && rstatus=decided
 		[ "$rdate" = "${base:0:10}" ] || echo "$dir/README.md: row for $base has date '$rdate'"
 		[ -z "$status" ] || [ "$rstatus" = "$status" ] ||
 			echo "$dir/README.md: row for $base says '$rstatus', the record says '$status'"
@@ -316,6 +367,9 @@ conform() {
 		*) report "$SHAPE: $path has entries '$entries' (task, bug or decision)" ;;
 		esac
 	done < <(shape_rows)
+	# A kit placeholder ({{NAME}}) left unfilled in a live doc.
+	report "$(live_docs | while IFS= read -r f; do grep -nHE '\{\{[#/]?[A-Z_]+\}\}' "$f"; done |
+		cut -c1-120 | sed 's/$/ … (an unfilled kit placeholder)/')"
 	# A doc no row covers is drift: its content belongs in the home that does its job.
 	while IFS= read -r f; do
 		case "$f" in README.md | CHANGELOG.md | CONTRIBUTING.md | LICENSE.md | CODE_OF_CONDUCT.md | SECURITY.md) continue ;; esac
@@ -345,7 +399,7 @@ used_by() {
 
 # tidy: things that drift as sessions come and go. It only reports; project-audit decides.
 tidy() {
-	local n=0 layout f cls
+	local n=0 layout f cls top
 	# section <title> <lines>: print a titled list, count its items.
 	section() {
 		[ -n "$2" ] || return 0
@@ -360,20 +414,21 @@ tidy() {
 	if [ -n "$layout" ]; then
 		section "Code outside the folders CLAUDE.md's layout names" \
 			"$(git ls-files '*.gd' '*.cs' '*.tscn' '*.tres' 2>/dev/null |
-				grep -vE '^(addons|tests|tools)/' | while IFS= read -r f; do
-					printf '%s\n' "$layout" | grep -qxF "${f%%/*}" || echo "$f"
+				grep -vE "^(${G}addons|${G}tests|tools)/" | while IFS= read -r f; do
+					top=${f#"$G"}
+					printf '%s\n' "$layout" | grep -qxF "${top%%/*}" || echo "$f"
 				done)"
 	fi
 	# Used = some other scene, resource, script or project.godot names its file or its class_name.
 	section "Never used by any scene, script or project.godot" \
-		"$(git ls-files '*.gd' '*.tscn' 2>/dev/null | grep -vE '^(addons|tests)/' | while IFS= read -r f; do
+		"$(git ls-files '*.gd' '*.tscn' 2>/dev/null | grep -vE "^(${G}addons|${G}tests)/" | while IFS= read -r f; do
 			used_by "${f##*/}" "$f" && continue
 			cls=$(sed -n 's/^class_name \([A-Za-z0-9_]*\).*/\1/p' "$f" 2>/dev/null | head -1)
 			[ -n "$cls" ] && used_by "$cls" "$f" && continue
 			echo "$f"
 		done)"
 	section "Scripts over 300 lines (split out a helper as its own change: lint fails at 1000)" \
-		"$(git ls-files '*.gd' 2>/dev/null | grep -v '^addons/' | while IFS= read -r f; do
+		"$(git ls-files '*.gd' 2>/dev/null | grep -v "^${G}addons/" | while IFS= read -r f; do
 			[ "$(wc -l <"$f")" -gt 300 ] && echo "$f ($(wc -l <"$f" | tr -d ' ') lines)"
 		done)"
 	section "Finished plans still in docs/plans/ (move them to docs/archive/plans/)" \
@@ -382,7 +437,7 @@ tidy() {
 			[ -f "$f" ] && grep -q '^- \[x\]' "$f" && ! grep -q '^- \[ \]' "$f" && echo "$f"
 		done)"
 	section "Scenes where a [node header doesn't start a line (a hand edit merged two lines)" \
-		"$(git ls-files '*.tscn' 2>/dev/null | grep -v '^addons/' | xargs grep -nE '[^[:space:]]\[node name=' 2>/dev/null)"
+		"$(git ls-files '*.tscn' 2>/dev/null | grep -v "^${G}addons/" | xargs grep -nE '[^[:space:]]\[node name=' 2>/dev/null)"
 	section "class_name used twice" \
 		"$(git ls-files '*.gd' 2>/dev/null | xargs grep -h '^class_name ' 2>/dev/null |
 			awk '{print $2}' | sort | uniq -d)"
@@ -435,7 +490,9 @@ budget() {
 	fi
 	long=""
 	[ ${#docs[@]} -gt 0 ] &&
-		long=$(awk 'length > 400 {print FILENAME ":" FNR ": " length " characters"}' "${docs[@]}" 2>/dev/null)
+		long=$(awk 'FNR == 1 { always = FILENAME == "CLAUDE.md" || FILENAME == "docs/STATUS.md" || FILENAME ~ /^\.claude\/(rules|memory)\// }
+			# Table rows are exempt in docs read only on demand (registers, research).
+			length > 400 && (always || $0 !~ /^\|/) { print FILENAME ":" FNR ": " length " characters" }' "${docs[@]}" 2>/dev/null)
 	if [ -n "$long" ]; then
 		echo "$long" | sed 's/^/line over 400: /'
 		problems=$((problems + $(echo "$long" | wc -l)))

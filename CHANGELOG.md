@@ -5,6 +5,35 @@ All notable changes. Versions follow the plugin's `version` in
 
 ## Unreleased
 
+## 0.4.2 — fixes from the second real realign
+
+From running `realign` on an established project with its Godot project in a subfolder, GUT tests
+and numbered ADRs:
+
+- **A Godot project in a subfolder** (`game/` beside other work) now works. `tools/dev.sh` finds
+  the one folder below the root that holds `project.godot` and uses it for headless runs, tests,
+  `addons/` and `.godot/`. The hooks treat such a repo as a Godot project (before, the path guard
+  and lint hooks stayed silent there), and the session-start card says so when a session starts
+  inside the game folder instead of the repo root.
+- **`tools/dev.sh check` runs GUT** when `addons/gut` is installed (`-gselect=` for named tests,
+  `.gutconfig.json` respected). Tested with a stand-in runner, not yet with real GUT.
+- **Decisions:** `**Status:** Accepted` is read (as decided); a number may follow the date in a
+  record's name (`YYYY-MM-DD-adr-0003-<topic>.md`).
+- **Roadmap:** a finished task brought in from an old log is `(old)` and needs no size or Done
+  when; nothing has to be invented.
+- **`stale`** counts files on disk, git-ignored ones included (a data folder named in a doc), and
+  skips paths starting with `/` (URL parts).
+- **`budget`'s 400-character line check** skips table rows in docs read only when needed
+  (research, registers); the always-read files are still checked line by line.
+- **`conform` lists kit placeholders left unfilled** (`{{NAME}}`) in any live doc.
+- **The shape and CLAUDE.md templates put each option marker on its own line**, so deleting an
+  unpicked block can't take a table row with it.
+- **`realign`:** runs `lint all` first and makes a failing baseline roadmap task 0.0 before the
+  commit hook is turned on; writes an archived file's first line before moving it; leaves out kit
+  rule lines that contradict the project's own way and says so; checks
+  `git diff --cached --name-status` before each commit (`git mv` stages renames itself), as
+  `save-work` now does too.
+
 ## 0.4.1 — fixes from the first real realign
 
 From running `realign` on a 125-doc project:

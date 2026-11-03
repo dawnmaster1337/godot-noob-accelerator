@@ -5,9 +5,10 @@ a playable build and a review (`project-audit` or the adversarial reviewer). A t
 plan links to it.
 
 **This is also the build log.** Tick a task when it lands and add the date:
-`- [x] 1.2 (M) What. Done when: … Done 2026-03-14.` A finished milestone moves to
-`docs/archive/` with its dates. No separate log: the why is in `docs/decisions/`, the bugs in
-`docs/known-bugs.md`, every change in `git log`.
+`- [x] 1.2 (M) What. Done when: … Done 2026-03-14.` A finished task brought in from an old log is
+`- [x] 0.12 (old) What. Done 2026-03-14.`, with no size or Done when invented. A finished
+milestone moves to `docs/archive/` with its dates. No separate log: the why is in
+`docs/decisions/`, the bugs in `docs/known-bugs.md`, every change in `git log`.
 
 **One task per session.** Each task fits one session: size **S** (under an hour), **M** (a
 session), **L** (too big: split it, or give it a plan with its own tasks). Each has a

@@ -17,18 +17,28 @@ if ! is_godot_project && [ ! -f docs/STATUS.md ]; then
 	dir=$root
 	for _ in 1 2 3; do
 		dir=$(dirname "$dir")
-		[ -f "$dir/project.godot" ] && [ -f "$dir/docs/STATUS.md" ] && found="$dir" && break
+		[ -f "$dir/docs/STATUS.md" ] && { [ -f "$dir/project.godot" ] || [ -d "$dir/.claude/godot-accel" ]; } &&
+			found="$dir" && break
 	done
 	if [ -z "$found" ]; then
 		found=$(find . -maxdepth 3 \( -path '*/.*' -o -name node_modules \) -prune -o -name project.godot -print 2>/dev/null |
 			while IFS= read -r p; do
 				d=$(dirname "$p")
+				# The kit files sit beside project.godot, or one folder up (a game/ subfolder).
+				[ -f "$d/docs/STATUS.md" ] || d=$(dirname "$d")
 				[ -f "$d/docs/STATUS.md" ] && printf '%s\n' "$root/${d#./}"
 			done)
 	fi
 	# Only one candidate is a clear mistake; several means a workspace folder: stay quiet.
 	[ -n "$found" ] && [ "$(printf '%s\n' "$found" | wc -l)" -eq 1 ] || exit 0
 	printf '%s\n' "[godot-accel] This session started in $root, but the kit project is at $found. The kit's hooks and the project's skills, agents and rules load only from the folder a session starts in, so they are off here. If the user is here to work on that game, tell them first: start Claude Code in $found (desktop app: open that folder), then say resume."
+	exit 0
+fi
+
+# Started in the game/ folder of a project whose kit files sit one folder up.
+if [ ! -f docs/STATUS.md ] && [ -f ../docs/STATUS.md ] && [ -d ../.claude/godot-accel ]; then
+	up=$(cd .. && pwd)
+	printf '%s\n' "[godot-accel] This session started in the game folder $root, but the kit project is $up. The kit's hooks and the project's skills, agents and rules load only from the folder a session starts in. Tell the user first: start Claude Code in $up (desktop app: open that folder), then say resume."
 	exit 0
 fi
 

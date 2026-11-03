@@ -6,9 +6,14 @@ project_root() {
 	printf '%s' "${CLAUDE_PROJECT_DIR:-$PWD}"
 }
 
-# is_godot_project: true when the project root holds project.godot.
+# is_godot_project: true when the project root holds project.godot, or is a git repo with exactly
+# one folder below it that does (a game/ beside other work). A folder of several games is not.
 is_godot_project() {
-	[ -f "$(project_root)/project.godot" ]
+	local root
+	root=$(project_root)
+	[ -f "$root/project.godot" ] && return 0
+	[ -e "$root/.git" ] || return 1
+	[ "$(ls -d -- "$root"/*/project.godot 2>/dev/null | grep -c .)" = 1 ]
 }
 
 # json_field <key> <json>: one string field from the hook input, via jq or python3.

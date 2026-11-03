@@ -12,8 +12,8 @@ of the shape, an undeclared doc is drift. Never a second file doing a row's job.
   written yet) · `history` (frozen records: may name files since deleted).
 - **Must have:** the `##` headings each file has, in this order (a heading may say more after
   these words). A folder row applies them to each page in it, except `README.md` and `_template.md`.
-- **Entries:** the line format `conform` checks: `task` (roadmap), `bug` (known bugs),
-  `decision` (records and their index).
+- **Entries:** the line format `conform` checks: `task` (roadmap; `(old)` for a finished task
+  from an old log), `bug` (known bugs), `decision` (records and their index).
 
 | Home | Path | Kind | Must have | Entries |
 |---|---|---|---|---|
@@ -30,10 +30,16 @@ of the shape, an undeclared doc is drift. Never a second file doing a row's job.
 | Reference works, and what the project holds | `docs/research/` | live | | |
 | Audit and review reports | `docs/reviews/` | history | | |
 | Finished plans, old reviews, retired docs | `docs/archive/` | history | | |
-{{#CANON}}| Story, setting, characters, names | `docs/canon/` | live | | |
-{{/CANON}}{{#STANDARDS}}| Locked standards | `docs/standards.md` | live | | |
-{{/STANDARDS}}{{#MANIFEST}}| Every asset and its status | `docs/production/manifest.md` | live | | |
-{{/MANIFEST}}| Rules | `.claude/rules/` | live | | |
+{{#CANON}}
+| Story, setting, characters, names | `docs/canon/` | live | | |
+{{/CANON}}
+{{#STANDARDS}}
+| Locked standards | `docs/standards.md` | live | | |
+{{/STANDARDS}}
+{{#MANIFEST}}
+| Every asset and its status | `docs/production/manifest.md` | live | | |
+{{/MANIFEST}}
+| Rules | `.claude/rules/` | live | | |
 | Working rules learned from the user | `.claude/memory/` | live | | |
 | Context budgets | `.claude/budgets.md` | live | | |
 | Rules the user has had to repeat | `.claude/reminder.md` | live | | |

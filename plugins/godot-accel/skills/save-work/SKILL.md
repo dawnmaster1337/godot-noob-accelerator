@@ -22,14 +22,14 @@ running out of usage → **quick save**; otherwise **task save**. Project steps 
 ## Task save
 
 1. **Plan tick:** tick the finished task in its plan (`- [x]`). STATUS waits for the session save.
-   If the project keeps `docs/production/manifest.md`: every new placeholder or third-party file
-   in the diff has a row.
+   A manifest (`docs/production/manifest.md`)? Each new placeholder or third-party file has a row.
 2. **Gate:** code or scene changes → `ship-check` steps 1–5; then always `tools/dev.sh stale` and
    `budget`.
 3. **Secrets:** no API keys, tokens, private keys or `.env` files in the diff or in untracked files
    being added. Found one → stop and say so.
 4. **Commit on the user's yes:** show the files and a proposed message (imperative, ≤ 72
-   characters); stage **by path**; commit only after yes.
+   characters); stage **by path**, then `git diff --cached --name-status` holds only those (a
+   `git mv` stages itself); commit only after yes.
 5. **Push** if the project's git rule says so (`.claude/rules/git.md`), and report it.
 6. One line: what is saved, what is pushed, what is next.
 
@@ -38,9 +38,9 @@ running out of usage → **quick save**; otherwise **task save**. Project steps 
 1. **STATUS:** rewrite `docs/STATUS.md`: done (short), **Next** in the user's order, open questions
    (the only list). Under 5,000 characters.
 2. **Lessons and budgets:** run `trim-context`.
-3. **Handoff check:** could another agent or machine pick this up from the repo alone? STATUS Next
-   is concrete; new decisions are in `docs/decisions/README.md`; new setup steps are in
-   `docs/guides/setup-new-machine.md`; nothing important lives only in this chat. Fix gaps now.
+3. **Handoff check:** could another machine pick this up from the repo alone? STATUS Next is
+   concrete; decisions indexed; new setup steps in `docs/guides/setup-new-machine.md`; nothing
+   important only in this chat. Fix gaps now.
 4. Gate, secrets, commit on yes, push, as in the task save.
 5. Switching machines: "on the other machine, start `claude` in the project folder: **resume**".
 

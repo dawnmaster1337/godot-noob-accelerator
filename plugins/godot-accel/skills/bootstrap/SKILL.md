@@ -61,7 +61,7 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
       spend gate (only if you'll use paid image/sound generators).
 3. **Show the file list** (create / append / exists-ask) from the map below and get a yes.
 4. **Write** each file: copy, fill the placeholders, keep or delete each `{{#X}}…{{/X}}` block
-   (keep the inside when X is on; remove the markers either way). Leave no `{{…}}` behind except
+   (keep the inside when X is on; delete the marker lines either way: each marker has a line of its own). Leave no `{{…}}` behind except
    in `docs/` example rows. The filled CLAUDE.md must stay under 200 lines and 8,000 characters.
    Write the plugin's version (`${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`) into
    `.claude/godot-accel/kit-version`, so `update` and the session-start card know it.
