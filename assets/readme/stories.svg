@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 958" width="1280" height="958" role="img" aria-labelledby="t d">
 <title id="t">What went wrong without the kit</title>
-<desc id="d">You became the tester: Claude kept handing over broken work. We found the bugs ourselves, round after round. Now: Claude tests its own work before you ever see it. The notes got huge: Claude’s notes about the game grew to 875 lines, and it read all of them every session. Slow, and costly. Now: Notes have a size limit. Old stuff gets cleared out. Made it, never used it: Claude made 74 special effects for the game. Only 6 of them ever showed up when you played. Now: Claude checks that new things really appear in the game. Every game, a different mess: Three of our games each kept their notes a different way. Nothing was where you’d look for it. Now: Same places for notes in every game. One went from 29 problems to 0. Your tweaks, gone: We tuned a jump by hand in Godot. Claude quietly undid it. Now: Your own changes are never undone. Claude builds on them. Work done twice: One computer redid work that another computer had already finished. Now: Every session starts by checking for work from your other computers.</desc>
+<desc id="d">Bugs it should have caught: Claude kept handing over work that didn’t run. We found obvious bugs a quick test would have caught. Now: Claude checks its own work first. You still play-test it. The notes got huge: Claude’s notes about the game grew to 875 lines, and it read all of them every session. Slow, and costly. Now: Notes have size limits, and a script warns when they grow too long. It forgot what we decided: We agreed how something should work. Weeks later, in a fresh session, Claude did it differently. Now: Decisions are written down, and Claude reads them first. Every game, a different mess: Three of our games each kept their notes a different way. Nothing was where you’d look for it. Now: Same places for notes in every game. One went from 29 problems to 0. Your tweaks, gone: We tuned a jump by hand in Godot. Claude quietly undid it. Now: Claude is told to keep your changes, and to ask before touching them. Work done twice: One computer redid work that another computer had already finished. Now: Each session starts by checking for work from your other computers.</desc>
 <rect width="1280" height="958" rx="36" fill="#FFF8EE"/>
 <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
 <text x="40" y="66" font-size="38" font-weight="800" fill="#1E2A44">Real things that went wrong</text>
@@ -8,15 +8,15 @@
 <rect x="32" y="124" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M32 148 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#EF7FA0"/>
 <text x="56" y="186" font-size="38" font-weight="800" fill="#4A1024">again &amp; again</text>
-<text x="56" y="248" font-size="22" font-weight="800" fill="#1E2A44">You became the tester</text>
-<text x="56" y="282" font-size="17.5" fill="#3A4766">Claude kept handing over broken work.</text>
-<text x="56" y="307" font-size="17.5" fill="#3A4766">We found the bugs ourselves, round</text>
-<text x="56" y="332" font-size="17.5" fill="#3A4766">after round.</text>
+<text x="56" y="248" font-size="22" font-weight="800" fill="#1E2A44">Bugs it should have caught</text>
+<text x="56" y="282" font-size="17.5" fill="#3A4766">Claude kept handing over work that</text>
+<text x="56" y="307" font-size="17.5" fill="#3A4766">didn’t run. We found obvious bugs a</text>
+<text x="56" y="332" font-size="17.5" fill="#3A4766">quick test would have caught.</text>
 <line x1="56" y1="360" x2="397" y2="360" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="70" cy="380" r="14" fill="#EF7FA0"/><path d="M63 380 l5 5 9 -10" fill="none" stroke="#4A1024" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="94" y="385" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
-<text x="56" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">Claude tests its own work before you</text>
-<text x="56" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">ever see it.</text>
+<text x="56" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">Claude checks its own work first.</text>
+<text x="56" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">You still play-test it.</text>
 <rect x="445" y="124" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M445 148 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#F6C453"/>
 <text x="469" y="186" font-size="38" font-weight="800" fill="#4A3300">875 lines</text>
@@ -27,20 +27,20 @@
 <line x1="469" y1="360" x2="810" y2="360" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="483" cy="380" r="14" fill="#F6C453"/><path d="M476 380 l5 5 9 -10" fill="none" stroke="#4A3300" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="507" y="385" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
-<text x="469" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">Notes have a size limit. Old stuff</text>
-<text x="469" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">gets cleared out.</text>
+<text x="469" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">Notes have size limits, and a script</text>
+<text x="469" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">warns when they grow too long.</text>
 <rect x="858" y="124" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M858 148 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#5CC8A8"/>
-<text x="882" y="186" font-size="38" font-weight="800" fill="#123B33">6 of 74</text>
-<text x="882" y="248" font-size="22" font-weight="800" fill="#1E2A44">Made it, never used it</text>
-<text x="882" y="282" font-size="17.5" fill="#3A4766">Claude made 74 special effects for the</text>
-<text x="882" y="307" font-size="17.5" fill="#3A4766">game. Only 6 of them ever showed up</text>
-<text x="882" y="332" font-size="17.5" fill="#3A4766">when you played.</text>
+<text x="882" y="186" font-size="38" font-weight="800" fill="#123B33">forgot</text>
+<text x="882" y="248" font-size="22" font-weight="800" fill="#1E2A44">It forgot what we decided</text>
+<text x="882" y="282" font-size="17.5" fill="#3A4766">We agreed how something should work.</text>
+<text x="882" y="307" font-size="17.5" fill="#3A4766">Weeks later, in a fresh session,</text>
+<text x="882" y="332" font-size="17.5" fill="#3A4766">Claude did it differently.</text>
 <line x1="882" y1="360" x2="1223" y2="360" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="896" cy="380" r="14" fill="#5CC8A8"/><path d="M889 380 l5 5 9 -10" fill="none" stroke="#123B33" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="920" y="385" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
-<text x="882" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">Claude checks that new things really</text>
-<text x="882" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">appear in the game.</text>
+<text x="882" y="420" font-size="17.5" font-weight="600" fill="#1E2A44">Decisions are written down, and</text>
+<text x="882" y="444" font-size="17.5" font-weight="600" fill="#1E2A44">Claude reads them first.</text>
 <rect x="32" y="520" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M32 544 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#5FA3D6"/>
 <text x="56" y="582" font-size="38" font-weight="800" fill="#0F2A45">29 → 0</text>
@@ -62,8 +62,8 @@
 <line x1="469" y1="756" x2="810" y2="756" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="483" cy="776" r="14" fill="#D97757"/><path d="M476 776 l5 5 9 -10" fill="none" stroke="#3D1608" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="507" y="781" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
-<text x="469" y="816" font-size="17.5" font-weight="600" fill="#1E2A44">Your own changes are never undone.</text>
-<text x="469" y="840" font-size="17.5" font-weight="600" fill="#1E2A44">Claude builds on them.</text>
+<text x="469" y="816" font-size="17.5" font-weight="600" fill="#1E2A44">Claude is told to keep your changes,</text>
+<text x="469" y="840" font-size="17.5" font-weight="600" fill="#1E2A44">and to ask before touching them.</text>
 <rect x="858" y="520" width="389" height="372" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
 <path d="M858 544 a24 24 0 0 1 24 -24 h341 a24 24 0 0 1 24 24 v66 h-389 z" fill="#8E7CC3"/>
 <text x="882" y="582" font-size="38" font-weight="800" fill="#21163F">twice</text>
@@ -73,7 +73,7 @@
 <line x1="882" y1="756" x2="1223" y2="756" stroke="#EFE6D6" stroke-width="2"/>
 <circle cx="896" cy="776" r="14" fill="#8E7CC3"/><path d="M889 776 l5 5 9 -10" fill="none" stroke="#21163F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="920" y="781" font-size="14" font-weight="800" fill="#8A7A60" letter-spacing="1.2">NOW THE KIT</text>
-<text x="882" y="816" font-size="17.5" font-weight="600" fill="#1E2A44">Every session starts by checking for</text>
+<text x="882" y="816" font-size="17.5" font-weight="600" fill="#1E2A44">Each session starts by checking for</text>
 <text x="882" y="840" font-size="17.5" font-weight="600" fill="#1E2A44">work from your other computers.</text>
-<text x="640" y="928" text-anchor="middle" font-size="19" fill="#6B5F4A">Every rule in the kit says which failure it prevents.</text>
+<text x="640" y="928" text-anchor="middle" font-size="19" fill="#6B5F4A">These help a lot. They don’t make Claude perfect: you’re still the one who plays and decides.</text>
 </g></svg>

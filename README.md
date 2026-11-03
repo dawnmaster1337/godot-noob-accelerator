@@ -26,7 +26,7 @@ No coding experience needed.
 Claude Code can make a game. On its own, it also forgets things, guesses, and makes a mess. This
 is what went wrong for us:
 
-<img src="assets/readme/stories.svg?v=3" alt="Six real problems from our games: Claude kept handing over broken work and we found the bugs; notes grew to 875 lines; 74 effects made but only 6 used; three games with three different note layouts; Claude undid a jump we had tuned by hand; one computer redid work another had finished. Each is now a rule or a check in the kit." width="100%">
+<img src="assets/readme/stories.svg?v=4" alt="Six real problems from our games: Claude handed over work that did not run; notes grew to 875 lines; Claude forgot what we had decided; three games with three different note layouts; Claude undid a jump we had tuned by hand; one computer redid work another had finished. Each is now a rule or a check in the kit. They help, but they do not make Claude perfect: you still play and decide." width="100%">
 
 ## 🙋 The honest bit
 
