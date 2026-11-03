@@ -1,6 +1,0 @@
-schema_version: "1.1"
-name: save-work-after-code-change
-description: "save work" after a code change runs ship-check (the gate) instead of stalling on it, then runs the checks and asks before committing. Needs --scaffold --allow-tools Bash; run once with --runs 1.
-tags: [save-work, ship-check, checks]
-context:
-  scaffold_script: fixture.sh

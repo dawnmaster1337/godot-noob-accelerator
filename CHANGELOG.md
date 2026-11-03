@@ -84,7 +84,10 @@ more of its promises are enforced by a check, a setting or a hook instead of a s
   plugin's hooks and the git hooks on root and `game/` layouts, failure cases included. **CI**
   (`.github/workflows/tests.yml`) runs it on every push with real Godot 4.7.2, gdtoolkit,
   shellcheck, GUT 9.6.1 and gdUnit4 6.2.2.
-- Two new evals: `save-work-after-code-change` and `resume-in-empty-repo`.
+- New eval `resume-in-empty-repo` (passes). A save-work eval was dropped: the eval runner's
+  read-only temp folder and blocked git stop that skill before it can show anything.
+- **The session-start card in a repo with no commits** says so, and no longer calls every new
+  scene "likely the user's own edits".
 - The README says who the kit is for, what it adds, which install scope to pick, and how to get an
   update that seems stuck. The beginner's guide warns that Windows and macOS are untested.
 - `examples/minimal-game` is on 0.5.0 and its docs pass `conform`.
