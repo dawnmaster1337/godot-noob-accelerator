@@ -60,6 +60,11 @@ Claude to "explain that like I've never coded".
 
 ## 3. Install the tools
 
+> [!NOTE]
+> The kit is only tested on **Linux** so far. The Windows and macOS steps below are the usual
+> ones for each tool, but nobody has run the whole kit there yet. If something breaks, please
+> [tell us](https://github.com/dawnmaster1337/godot-noob-accelerator/issues/new/choose).
+
 ### 3.1 Open a terminal
 
 | System | How |
@@ -121,7 +126,8 @@ Ask Claude to install these later: "install gdtoolkit for me", "install jq for m
 - **gdtoolkit** tidies and checks GDScript code automatically.
 - **jq** helps the kit's automatic checks read their input.
 
-The kit works without them; it skips those checks and tells you.
+The kit works without them, but those checks are then off. Claude's start-up note says which
+one is missing, so you know.
 
 ✅ **Check:** in a terminal, `git --version` and `claude --version` each print a version number.
 
@@ -174,6 +180,9 @@ are Claude Code commands, not messages to Claude.
 /plugin install godot-accel@godot-accel
 ```
 
+It asks where to install. Pick **this repository (project scope)**, so the kit loads only in this
+game.
+
 Recommended companion, which gives Claude deep Godot know-how (how to build movement, menus,
 saving and so on the right way):
 
@@ -210,7 +219,9 @@ Type **APR** ("as per recommendation") and it takes its suggestion. It asks:
 8. A few extras (**APR**).
 
 Then it shows the list of files it will create and waits for your **yes**. It never overwrites a
-file you already have. At the end it runs its checks and tells you what it made.
+file you already have. At the end it runs its checks and tells you what it made. One check, the
+smoke test, fails at first on purpose: it plays your game's main scene, and there isn't one yet.
+Your first feature makes one.
 
 <details>
 <summary>What it just made (you don't need to read these now)</summary>
@@ -221,17 +232,20 @@ file you already have. At the end it runs its checks and tells you what it made.
 | `.claude/rules/` | Rules Claude follows: how to write code, talk to you, save |
 | `.claude/memory/` | Things Claude learns about how you like to work |
 | `docs/STATUS.md` | Where you stopped and what's next. **The most important file** |
-| `docs/decisions/` | Every decision you make, and why, so nobody forgets |
 | `docs/plans/` | The plan for your game, one task per session, and a plan for each big feature |
 | `docs/known-bugs.md` | Bugs found and not fixed yet |
 | `docs/guides/start-here.md` | The short version of this guide, for every day |
 | `inbox/` | Your drop box: downloads, notes and ideas between sessions |
 | `tools/dev.sh`, `tests/` | Automatic checks Claude runs to prove things still work |
 
+More appear when your game needs them: `docs/decisions/` (every decision and why) with your first
+decision, a page per system once it's built, and so on.
+
 </details>
 
-✅ **Check:** Claude's summary says the checks passed (or tells you `godot` isn't set up yet;
-see [when something goes wrong](#when-something-goes-wrong)).
+✅ **Check:** Claude's summary lists the checks: they pass, apart from the smoke test waiting for
+a main scene (or it tells you `godot` isn't set up yet; see
+[when something goes wrong](#when-something-goes-wrong)).
 
 ## 8. Back it up on GitHub
 
@@ -241,8 +255,8 @@ Ask Claude:
 Make a private GitHub repo for this project and push it. Explain each step.
 ```
 
-It shows each command and asks before running anything that changes things. From now on, every
-**save work** backs your project up there.
+It shows each command, and Claude Code asks you before each commit and push (the kit's settings
+make it ask). From now on, every **save work** backs your project up there.
 
 ✅ **Check:** your repository appears at `https://github.com/<your-username>`.
 
@@ -344,5 +358,5 @@ Your project's own `docs/guides/start-here.md` has this table too.
 - [How it works](how-it-works.md): how the kit runs a project, and the failure behind each habit.
 - [Structure](structure.md): every file the kit creates, and why.
 - [Customising](customising.md): change the rules to fit how you work, as you grow.
-- Found something confusing? That's useful feedback: see "Feedback" in the
-  [README](../README.md#feedback-and-contributing).
+- Found something confusing? That's useful feedback: see "Tell us how it went" in the
+  [README](../README.md#-tell-us-how-it-went).

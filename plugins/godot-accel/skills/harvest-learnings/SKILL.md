@@ -11,7 +11,7 @@ Focus: $ARGUMENTS
 Kit templates: `${CLAUDE_SKILL_DIR}/../bootstrap/templates/` (`dot-claude/` = `.claude/`). Kit
 version: `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`.
 
-!`git log --oneline -- CLAUDE.md .claude docs/guides docs/decisions/README.md 2>/dev/null | head -30`
+!`git log --oneline -- CLAUDE.md .claude docs/guides docs/decisions/README.md 2>/dev/null | head -30; true`
 
 0. **Off the shape?** No `.claude/godot-accel/shape.md`, or `tools/dev.sh conform` fails: say so
    first and recommend `/godot-accel:realign`, then harvest anyway. "Never set up with the kit"

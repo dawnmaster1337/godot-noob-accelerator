@@ -1,8 +1,8 @@
 ---
 name: design-reviewer
-description: Reviews a game mechanic, level or system for fun and clarity, not code bugs — does it read, reward and teach? Use when the user asks whether something is fun, why a mechanic feels off, or for a design review at the end of a milestone. Read-only; returns ranked, concrete changes with the player experience each one fixes.
+description: Reviews a game mechanic, level or system for fun and clarity, not code bugs — does it read, reward and teach? Use when the user asks whether something is fun, why a mechanic feels off, or for a design review at the end of a milestone. Never edits (it may run git and the checks); returns ranked, concrete changes with the player experience each one fixes.
 tools: Read, Grep, Glob, Bash
-model: opus
+model: inherit
 color: yellow
 ---
 

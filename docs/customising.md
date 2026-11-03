@@ -49,7 +49,10 @@ A rule that must never be missed: add one line to CLAUDE.md "Hard rules" too.
 
 ## Protect more paths
 
-Add globs to `.claude/protected-paths.txt` (one per line). `!` before a glob makes an exception,
+Godot's own files (`.godot/`, `*.import`, `*.uid`) and secrets are protected by deny rules in
+`.claude/settings.json`, which cover shell commands too. For third-party folders, add globs to
+`.claude/protected-paths.txt` (one per line): the guard stops Claude's editing tools there, while
+copying a new pack in with a shell command still works. `!` before a glob makes an exception,
 for your own editor plugin for example:
 
 ```
@@ -135,7 +138,7 @@ Run bootstrap with the server's name (or add later): it writes `.claude/rules/go
 ## Your own hooks
 
 If your project's settings already register a hook script with the same name as one of the kit's
-(`guard-paths.sh`, `guard-bash.sh`, `gd-format-lint.sh`, `session-start.sh`), the kit's copy
+(`guard-paths.sh`, `gd-format-lint.sh`, `stop-check.sh`, `session-start.sh`, `prompt-reminder.sh`), the kit's copy
 stands down, so the same job never runs twice. To use the kit's instead, remove yours.
 
 ## Turn something off

@@ -29,7 +29,8 @@ checks above find the mechanical problems; you judge what they mean.
    hook); a project skill named like a kit skill (a fork: use `.claude/godot-accel/<skill>.md`).
 5. **Cost:** what loads every session (CLAUDE.md and imports, rules without `paths:`, the memory
    index, hook output); over-budget files (`budget`); commits that are only bookkeeping.
-6. **Report:** `docs/reviews/YYYY-MM-DD-audit.md`: a five-line summary for the user; a ranked
+6. **Report:** `docs/reviews/YYYY-MM-DD-audit.md` (no `docs/reviews/` yet: start it with the kit's
+   `${CLAUDE_SKILL_DIR}/../bootstrap/templates/docs/reviews/README.md`): a five-line summary for the user; a ranked
    top-10 table (problem, one-line fix, effort S/M/L); detail by section with `file:line`
    evidence; "Keep as is".
 7. **Ask** the decisions one at a time, each with a recommendation; record the answers in a

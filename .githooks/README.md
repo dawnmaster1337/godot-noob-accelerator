@@ -12,7 +12,7 @@ Check it took: `git config --get core.hooksPath` prints `.githooks`.
 
 | Hook | Always checks | With identity-guard set up, also checks |
 |---|---|---|
-| `pre-commit` | GDScript passes `gdformat --check` and `gdlint` (skipped without gdtoolkit); no `.godot/`, no `.env`, nothing key-shaped staged | author and committer; staged files carry no real-identity strings |
+| `pre-commit` | GDScript passes `gdformat --check` and `gdlint` (skipped without gdtoolkit; `addons/` never); no `.godot/`, no `.env`, nothing key-shaped staged; a file read every session not over its budget (others: a warning) | author and committer; staged files carry no real-identity strings |
 | `commit-msg` | nothing | the message carries no real-identity strings |
 | `pre-push` | hands the push over to git-lfs when the repo uses it | every commit being pushed: identity, plus real-identity and handle strings in the pushed tree and messages |
 
@@ -23,9 +23,10 @@ Skip every check for one commit or push: `git commit --no-verify`, `git push --n
 
 ## identity-guard (optional, per person)
 
-For anyone who keeps an account's real identity separate from its public handle. It is **off
+The kit maintainer's own tool, shipped because it is inert for everyone else: it is **off
 unless the folder `~/.config/identity-guard/` exists** on this machine (another folder:
-set `IDENTITY_GUARD_DIR`). Without that folder you can ignore this section.
+set `IDENTITY_GUARD_DIR`). Without that folder you can ignore this section. It checks emails and
+strings only; it is not full anonymity (a commit still records its time zone, for example).
 
 When it is on:
 

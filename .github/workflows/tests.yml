@@ -1,0 +1,48 @@
+# The kit's tests (tests/run.sh) against a real Godot, gdtoolkit, GUT and gdUnit4, on every push
+# and pull request. Nothing here makes a model call: the evals stay a manual, paid run.
+name: tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      GODOT_VERSION: 4.7.2
+      GUT_TAG: v9.6.1
+      GDUNIT_TAG: v6.2.2
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Godot
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/godot.zip" \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot"
+          sudo install -m 755 "$RUNNER_TEMP/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64" /usr/local/bin/godot
+          godot --version
+
+      - name: gdtoolkit, shellcheck, jq
+        run: |
+          pipx install "gdtoolkit==4.*"
+          sudo apt-get install -y -qq shellcheck jq
+
+      - name: Claude Code (for claude plugin validate)
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: GUT and gdUnit4
+        run: |
+          git clone -q --depth 1 --branch "$GUT_TAG" https://github.com/bitwes/Gut.git "$RUNNER_TEMP/gut"
+          git clone -q --depth 1 --branch "$GDUNIT_TAG" https://github.com/MikeSchulze/gdUnit4.git "$RUNNER_TEMP/gdunit"
+
+      - name: tests/run.sh
+        run: tests/run.sh
+        env:
+          GUT_DIR: ${{ runner.temp }}/gut
+          GDUNIT_DIR: ${{ runner.temp }}/gdunit

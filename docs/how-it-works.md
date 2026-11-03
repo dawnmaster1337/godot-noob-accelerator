@@ -82,14 +82,19 @@ must never be missed is also copied, in one line, into CLAUDE.md's **Hard rules*
 
 ## 5. Checking before you see anything
 
-- After every `.gd` change, by an editing tool or a shell command: `gdformat` + `gdlint` (hook);
-  lint failures go straight back to Claude.
-- Before edits: the path guard blocks Godot's cache and generated files, including writes made
-  through a shell redirect, `tee` or `sed -i`.
+- After every `.gd` change: `gdformat` + `gdlint` for an editing tool's change, `gdlint` only for
+  a shell command's (it may have been a `git pull`, or your own save in Godot); lint failures go
+  straight back to Claude.
+- Before edits: the path guard blocks Godot's cache and generated files for the editing tools,
+  and the project's deny rules (`.claude/settings.json`) block them for shell commands too
+  (redirects, `tee`, `sed`). The same settings make every commit ask you first.
+- Before Claude finishes a turn in which it changed game files: the stop hook asks it to run the
+  checks covering them, or to say why they can't run (once per batch of changes).
 - After each small step: only the checks covering what changed (`tools/dev.sh check <name>`);
   Godot's cache is refreshed only when files changed.
-- Per task (`ship-check`): lint, every headless check (`tools/dev.sh check`; a check scene's exit
-  code is its failure count), a play-test, fixes, "To try:" for you, a proposed commit.
+- Per task (`ship-check`): lint, every headless check (`tools/dev.sh check`: the smoke check loads
+  every script and plays the main scene; a run where no check ran fails), a play-test, fixes,
+  "To try:" for you, a proposed commit.
 - At milestones only: the `adversarial-reviewer`, given the intent but never Claude's own
   summary. Obvious fixes happen at once; design questions come to you one at a time.
 - `.githooks/` (on once you run `git config core.hooksPath .githooks`): the same lint plus a

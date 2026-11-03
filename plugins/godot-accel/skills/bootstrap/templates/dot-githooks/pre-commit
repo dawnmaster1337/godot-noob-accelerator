@@ -43,7 +43,8 @@ fi
 # ---- project checks -------------------------------------------------------
 export PATH="$HOME/.local/bin:$PATH"
 files=$(git diff --cached --name-only --diff-filter=d)
-gd=$(echo "$files" | grep '\.gd$' | grep -v '^addons/')
+# Third-party addons are never linted, wherever the game folder is (a game/ beside other work).
+gd=$(echo "$files" | grep '\.gd$' | grep -vE '(^|/)addons/')
 if [ -n "$gd" ]; then
   if command -v gdformat >/dev/null 2>&1; then
     echo "$gd" | xargs gdformat --check || { echo "pre-commit: run gdformat on the files above"; exit 1; }
@@ -52,7 +53,7 @@ if [ -n "$gd" ]; then
     echo "pre-commit: gdtoolkit not installed, skipping the GDScript checks"
   fi
 fi
-if echo "$files" | grep -qE '^\.godot/'; then
+if echo "$files" | grep -qE '(^|/)\.godot/'; then
   echo "pre-commit: Godot's cache (.godot/) is staged; unstage it"
   exit 1
 fi
@@ -65,15 +66,20 @@ if git diff --cached -U0 | grep -E '^\+' | grep -qE -- '-----BEGIN [A-Z ]*PRIVAT
   echo "pre-commit: something that looks like an API key or private key is staged"
   exit 1
 fi
-# Character budgets (.claude/budgets.md): a staged file over its budget stops the commit. Read
-# the output, not the exit code: other files may be over budget without being staged.
-if [ -x tools/dev.sh ] && [ -f .claude/budgets.md ]; then
+# Character budgets (.claude/budgets.md, else tools/dev.sh's defaults). A staged file Claude reads
+# every session (CLAUDE.md, STATUS, memory, rules, reminder) over its budget stops the commit:
+# its size costs every session. Any other staged file over budget is only a warning. Read the
+# output, not the exit code: other files may be over budget without being staged.
+if [ -x tools/dev.sh ]; then
   over=$(tools/dev.sh budget 2>/dev/null | sed -n 's/^over budget: \([^ ]*\) .*/\1/p')
   for f in $over; do
-    if echo "$files" | grep -qxF "$f"; then
-      echo "pre-commit: $f is over its .claude/budgets.md budget; trim it (trim-context)"
-      exit 1
-    fi
+    echo "$files" | grep -qxF "$f" || continue
+    case "$f" in
+      CLAUDE.md | docs/STATUS.md | .claude/memory/* | .claude/rules/* | .claude/reminder.md | .claude/start-guard.md)
+        echo "pre-commit: $f is over its budget (.claude/budgets.md) and is read every session; trim it (trim-context)"
+        exit 1 ;;
+      *) echo "pre-commit: warning: $f is over its budget (.claude/budgets.md); trim it when you can (trim-context)" ;;
+    esac
   done
 fi
 # A staged decision record or index: the index must still agree with the records.

@@ -4,11 +4,11 @@ description: Start a work session on a project set up with this kit — when the
 allowed-tools: Read Glob Grep Bash(git status *) Bash(git log *) Bash(git fetch) Bash(git fetch *) Bash(git rev-list *) Bash(git diff *) Bash(ls *) Bash(godot --version)
 ---
 
-!`git status --short 2>/dev/null | head -20`
+!`git status --short 2>/dev/null | head -20; true`
 
-!`git log --oneline -5 2>/dev/null`
+!`git log --oneline -5 2>/dev/null || echo "no commits yet"`
 
-!`ls -A inbox 2>/dev/null`
+!`ls -A inbox 2>/dev/null || echo "no inbox/ folder"`
 
 !`cat .claude/godot-accel/resume.md 2>/dev/null; true`
 

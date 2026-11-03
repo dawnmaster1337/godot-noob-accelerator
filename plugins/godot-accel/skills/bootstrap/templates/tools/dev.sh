@@ -19,10 +19,10 @@ usage() {
 	cat <<'EOF'
 tools/dev.sh <verb> [args]
   check [--refresh] [name...]
-                      refresh if files changed, then every tests/*_check.tscn headless, or the
-                      GUT tests when addons/gut is installed (exit 1 = a failure); names run only
-                      those (`dev.sh check player`); --refresh forces the refresh (after deleting
-                      or renaming a class_name)
+                      refresh if files changed, then every tests/*_check.tscn headless (the smoke
+                      check among them), and the GUT or gdUnit4 tests when that addon is
+                      installed (exit 1 = a failure, or no checks at all); names run only those
+                      (`dev.sh check player`); --refresh forces the refresh
   refresh             rebuild Godot's class cache and imports (after a new class_name or asset)
   lint [all|file...]  gdlint + gdformat --check on changed .gd files (all: the whole project)
   stale [file...]     backticked paths in the live docs (the shape's live rows) that no longer
@@ -62,7 +62,7 @@ need_godot() {
 	return 1
 }
 
-# A refresh costs two headless editor runs, so check skips it while nothing it reads has changed.
+# A refresh costs a headless import run, so check skips it while nothing it reads has changed.
 STAMP="$GAME/.godot/dev-refresh.stamp"
 
 needs_refresh() {
@@ -77,16 +77,14 @@ needs_refresh() {
 
 refresh() {
 	need_godot || return 1
-	local log fail=0 step
+	local log fail=0
 	log=$(mktemp)
-	for step in "--editor --quit" "--import"; do
-		# shellcheck disable=SC2086
-		if ! headless 300 $step >"$log" 2>&1 || grep -q "SCRIPT ERROR\|Parse Error" "$log"; then
-			echo "FAIL godot --headless $step"
-			grep -E "SCRIPT ERROR|Parse Error|ERROR" "$log" | head -5
-			fail=1
-		fi
-	done
+	# --import also rebuilds the class_name cache, a renamed or deleted class included (4.7.2).
+	if ! headless 300 --import >"$log" 2>&1 || grep -q "SCRIPT ERROR\|Parse Error" "$log"; then
+		echo "FAIL godot --headless --import"
+		grep -E "SCRIPT ERROR|Parse Error|ERROR" "$log" | head -5
+		fail=1
+	fi
 	rm -f "$log"
 	[ "$fail" = 0 ] && mkdir -p "$GAME/.godot" && touch "$STAMP"
 	return $fail
@@ -133,24 +131,61 @@ gut_check() {
 	return $fail
 }
 
+# gdunit4_check [name...]: the gdUnit4 tests (all of tests/, or tests/<name>_test.gd), through the
+# addon's own runner, which needs GODOT_BIN and refuses headless mode unless told (tests that send
+# input events need a window). Exit 0 passes; 101 is warnings only (gdUnit4 6.2).
+gdunit4_check() {
+	local log code fail=0 sel target
+	need_godot || return 1
+	log=$(mktemp)
+	[ $# -gt 0 ] || set -- ""
+	for sel in "$@"; do
+		target=res://tests
+		[ -n "$sel" ] && target="res://tests/${sel%_test}_test.gd"
+		(cd "$GAME" && GODOT_BIN=$(command -v godot) limit 600 bash addons/gdUnit4/runtest.sh \
+			--headless --ignoreHeadlessMode -a "$target") >"$log" 2>&1 </dev/null
+		code=$?
+		if { [ "$code" -ne 0 ] && [ "$code" -ne 101 ]; } || grep -q "SCRIPT ERROR" "$log"; then
+			echo "FAIL gdUnit4 ${sel:-all tests} (exit $code)"
+			grep -E "FAILED|SCRIPT ERROR|Failed|ERROR" "$log" | head -8
+			fail=1
+		fi
+	done
+	rm -f "$log"
+	[ "$fail" = 0 ] && echo "gdUnit4: all tests passed"
+	return $fail
+}
+
 check() {
 	local fail=0 name scene f count=0
 	if [ "${1:-}" = --refresh ]; then
 		shift
 		rm -f "$STAMP"
 	fi
+	# The kit's stop hook asks for a check after Claude changes game files; this run answers it.
+	rm -f "$GAME/.godot/godot-accel-touched" "$GAME/.godot/godot-accel-touched.asked"
 	if needs_refresh; then refresh || fail=1; fi
-	if [ -f "$GAME/addons/gut/gut_cmdln.gd" ]; then
-		gut_check "$@" || fail=1
-		return $fail
-	fi
+	local framework=""
+	[ -f "$GAME/addons/gut/gut_cmdln.gd" ] && framework=gut
+	[ -f "$GAME/addons/gdUnit4/runtest.sh" ] && framework=gdunit4
 	if [ $# -gt 0 ]; then
+		local picked=()
 		for name in "$@"; do
 			scene="tests/${name%_check}_check.tscn"
-			[ -e "$GAME/$scene" ] || { echo "no check $G$scene"; fail=1; continue; }
-			run_check "$scene" || fail=1
-			count=$((count + 1))
+			if [ -e "$GAME/$scene" ]; then
+				run_check "$scene" || fail=1
+				count=$((count + 1))
+			elif [ -n "$framework" ]; then
+				picked+=("$name")
+			else
+				echo "no check $G$scene"
+				fail=1
+			fi
 		done
+		if [ ${#picked[@]} -gt 0 ]; then
+			"${framework}_check" "${picked[@]}" || fail=1
+			count=$((count + ${#picked[@]}))
+		fi
 	else
 		for f in "$GAME"/tests/*_check.tscn; do
 			[ -e "$f" ] || continue
@@ -158,8 +193,17 @@ check() {
 			run_check "$scene" || fail=1
 			count=$((count + 1))
 		done
+		if [ -n "$framework" ]; then
+			"${framework}_check" || fail=1
+			count=$((count + 1))
+		fi
 	fi
-	[ "$fail" = 0 ] && echo "all $count check(s) passed"
+	# Nothing ran is not a pass: a green run must have checked something.
+	if [ "$count" = 0 ]; then
+		echo "FAIL no checks ran: tests/ has no *_check.tscn (bootstrap writes tests/smoke_check.tscn) and no GUT or gdUnit4"
+		return 1
+	fi
+	[ "$fail" = 0 ] && echo "all $count check run(s) passed"
 	return $fail
 }
 
@@ -184,21 +228,24 @@ lint() {
 
 SHAPE=.claude/godot-accel/shape.md
 
-# shape_rows: "<path>|<kind>|<headings>|<entries>" for each row of the shape file.
+# shape_rows: "<path>|<kind>|<headings>|<entries>|<made>" for each row of the shape file. Made is
+# "setup" (bootstrap writes it) or "first use" (made when first needed); a row without that
+# column (an older shape) counts as setup.
 shape_rows() {
 	awk -F'|' 'NF > 5 && $3 ~ /`/ {
 		p = $3; sub(/^[^`]*`/, "", p); sub(/`.*/, "", p)
 		k = $4; gsub(/[ `]/, "", k)
 		h = $5; gsub(/^ +| +$/, "", h)
 		e = $6; gsub(/[ `]/, "", e)
-		print p "|" k "|" h "|" e
+		m = (NF > 7) ? $7 : ""; gsub(/^ +| +$/, "", m); if (m == "") m = "setup"
+		print p "|" k "|" h "|" e "|" m
 	}' "$SHAPE"
 }
 
 # live_docs: every file of a live row (the markdown pages, for a folder row).
 live_docs() {
-	local path kind heads entries
-	while IFS='|' read -r path kind heads entries; do
+	local path kind heads entries made
+	while IFS='|' read -r path kind heads entries made; do
 		[ "$kind" = live ] || continue
 		case "$path" in
 		*/) [ -d "$path" ] && find "$path" -type f -name '*.md' | sort ;;
@@ -220,10 +267,21 @@ stale() {
 	fi
 	# Files on disk count, git-ignored ones too (a data folder named in a doc); Godot's cache doesn't.
 	known=$(git ls-files --cached --others 2>/dev/null | grep -v '\.godot/')
+	# A first-use home not made yet may be named before it exists.
+	local later="" path kind heads entries made
+	if [ -f "$SHAPE" ]; then
+		while IFS='|' read -r path kind heads entries made; do
+			[ "$made" = "first use" ] && [ ! -e "$path" ] && later="$later$path
+"
+		done < <(shape_rows)
+	fi
 	found=$(grep -oHE '`[A-Za-z0-9_./-]+\.(md|gd|cs|py|sh|tscn|tres|json|png|svg|txt|cfg|csv|gdshader|glb|ogg|wav)`' "$@" 2>/dev/null | tr -d '`' |
 		while IFS=: read -r src path; do
 			[ -e "$path" ] || [ -e "$GAME/$path" ] && continue
 			case "$path" in /* | -* | *YYYY* | *'<'*) continue ;; esac
+			printf '%s' "$later" | while IFS= read -r p; do
+				case "$path" in "$p" | "${p%/}"/*) echo y ;; esac
+			done | grep -q y && continue
 			# A shortened path only has to end a known path.
 			printf '%s\n' "$known" | grep -qE "(^|/)$path\$" && continue
 			echo "$src: $path"
@@ -333,7 +391,7 @@ shape_decisions() {
 
 # conform [decisions]: does the project match the shape file? Exit 1 on any problem.
 conform() {
-	local n=0 homes=0 path kind heads entries paths="" f p ok
+	local n=0 homes=0 later=0 path kind heads entries made paths="" f p ok
 	report() {
 		[ -n "$1" ] || return 0
 		printf '%s\n' "$1" | sed 's/^/conform: /'
@@ -349,13 +407,19 @@ conform() {
 		return 1
 	fi
 	[ -f .claude/godot-accel/kit-version ] || report "no .claude/godot-accel/kit-version (bootstrap, realign and update write it)"
-	while IFS='|' read -r path kind heads entries; do
+	while IFS='|' read -r path kind heads entries made; do
 		homes=$((homes + 1))
 		paths="$paths$path
 "
 		case "$kind" in live | plan | history) ;; *) report "$SHAPE: $path has kind '$kind' (live, plan or history)" ;; esac
+		case "$made" in setup | "first use") ;; *) report "$SHAPE: $path has made '$made' (setup or first use)" ;; esac
 		if [ ! -e "$path" ]; then
-			report "$path: missing (a home in $SHAPE)"
+			# A first-use home appears when the game first needs it (from the kit's template).
+			if [ "$made" = "first use" ]; then
+				later=$((later + 1))
+			else
+				report "$path: missing (a home in $SHAPE)"
+			fi
 			continue
 		fi
 		[ -n "$heads" ] && report "$(shape_headings "$path" "$heads")"
@@ -382,7 +446,7 @@ conform() {
 	done < <(git ls-files --cached --others --exclude-standard 2>/dev/null |
 		grep -E '^docs/.*\.md$|^[^/]+\.md$|^\.claude/[^/]+\.md$' | sort -u)
 	if [ "$n" = 0 ]; then
-		echo "conform: matches $SHAPE ($homes homes)"
+		echo "conform: matches $SHAPE ($homes homes, $later not needed yet)"
 		return 0
 	fi
 	echo "conform: $n problem(s); /godot-accel:realign moves a project onto the shape"

@@ -12,13 +12,27 @@
       "Bash(gdformat *)",
       "Bash(tools/dev.sh *)",
       "Bash(godot --headless --path . res://tests/*)",
-      "Bash(godot --headless --editor --quit --path .)"
+      "Bash(godot --headless --import --path .)"
+    ],
+    "ask": [
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ],
     "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(export_credentials.cfg)",
+      "Edit(.env)",
+      "Edit(.env.*)",
+      "Edit(.godot/**)",
+      "Edit(*.import)",
+      "Edit(*.uid)",
       "Bash(git reset --hard *)",
       "Bash(git clean *)",
       "Bash(git push --force *)",
+      "Bash(git push -f *)",
       "Bash(rm -rf *)",
+      "Bash(rm -fr *)",
       "Bash(sudo *)"
     ]
   }

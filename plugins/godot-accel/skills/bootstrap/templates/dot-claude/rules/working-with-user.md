@@ -13,7 +13,8 @@
 - **The final message stands alone:** what changed, what failed or is unverified, and the one
   question with its choices. Never rely on a summary box or a mid-turn message being seen.
 - **Said twice → reminder:** a rule the user has to repeat goes into `.claude/reminder.md` (shown
-  with every message) as well as into `.claude/memory/`.
+  with every message; the first one starts from the kit's template, in the folder the
+  session-start card names) as well as into `.claude/memory/`.
 - **Looks are shown, not described:** for any decision about how something looks, show a mockup
   or screenshot with a recommendation.
 - **Use what's held first:** before making a look, an asset or a placeholder, list what the project

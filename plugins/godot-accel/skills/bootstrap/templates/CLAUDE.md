@@ -14,20 +14,22 @@ What makes this game this game. Every design decision is checked against these.
 ## How this project is run
 
 Each kind of fact has **one home**; everything else points at it. The full list, with each
-home's form, is `.claude/godot-accel/shape.md` (`tools/dev.sh conform` checks it).
+home's form, is `.claude/godot-accel/shape.md` (`tools/dev.sh conform` checks it). A home marked
+*first use* there is made the first time the game needs it, from the kit's template of the same
+path (the session-start card names the templates folder).
 
 | What | Where |
 |---|---|
 | Where work stopped, what's next, the only open-questions list | `docs/STATUS.md` (**read it first when resuming**) |
 | The build order, and the log of what landed when | `docs/plans/roadmap.md`; a feature's own plan in `docs/plans/YYYY-MM-DD-<topic>.md` |
-| What each system does now | `docs/systems/<system>.md` |
-| Why it is that way | `docs/decisions/` (index `README.md`; one `YYYY-MM-DD-<topic>.md` per topic) |
+| What each system does now | `docs/systems/<system>.md` (first use: the first system built) |
+| Why it is that way | `docs/decisions/` (first use: the first decision; an index and one record per topic) |
 | Engine and tool quirks | `docs/guides/quirks.md` (read before debugging) |
 | Bugs known and not yet fixed | `docs/known-bugs.md` (check it before fixing a bug; update it with the fix) |
-| What good looks like; what the project holds | `docs/research/` (name it in every subagent brief and plan) |
+| What good looks like; what the project holds | `docs/research/` (first use; once it exists, name it in every subagent brief and plan) |
 | Rules for code, scenes, docs, git, working with the user | `.claude/rules/` |
 | Working rules learned from the user | `.claude/memory/` (index below) |
-| Another agent taking over | `AGENTS.md` |
+| Another agent taking over | `AGENTS.md` (first use: when another agent joins) |
 | The user's guide | `docs/guides/start-here.md`, `docs/guides/between-sessions.md` (keep them accurate) |
 {{#CANON}}
 | Story, setting, characters, names, tone | `docs/canon/bible.md` (rules: `docs/canon/README.md`) |
@@ -53,7 +55,8 @@ Working rules learned from the user (save new ones here, one file each, format i
 
 The rules that must never be missed. A rule the user makes binding gets one line here too.
 
-- **Commit only on the user's yes**, staged by path; then {{PUSH_POLICY}}
+- **Commit only on the user's yes**, staged by path (the project's settings also make each commit
+  prompt); then {{PUSH_POLICY}}
 - **Never claim something works without running it.** Checks before the user sees anything,
   output quoted; show work neutrally, never call it good (`.claude/rules/showing-work.md`).
 - **One question at a time**, each with a recommendation (`.claude/rules/working-with-user.md`).
@@ -74,18 +77,6 @@ The rules that must never be missed. A rule the user makes binding gets one line
   estimate and the balance (`.claude/rules/paid-tools.md`).
 {{/PAID}}
 
-## Project layout
-
-{{LAYOUT}}
-
-`tests/*_check.tscn` (headless checks) · `tools/` (`dev.sh`) · `docs/` · `inbox/` (drop box).
-
-## Engine settings
-
-{{ENGINE_SETTINGS}}
-
-Autoloads: {{AUTOLOADS}}.
-
 ## Workflow
 
 1. **New system → plan first** (`plan-feature`): scene tree, signals, data resources, and the
@@ -104,7 +95,8 @@ Autoloads: {{AUTOLOADS}}.
 ## Commands
 
 - `tools/dev.sh check [name…]` — refresh Godot's cache if files changed, then run the headless
-  checks: all, or only those named (exit 1 = a failure).
+  checks in `tests/`: all, or only those named (exit 1 = a failure, or none ran). The smoke
+  check loads every script and plays the main scene; each system adds its own check.
 - `tools/dev.sh lint` — gdlint + gdformat on changed `.gd` files.
 - `tools/dev.sh stale` — paths in the live docs that no longer exist.
 - `tools/dev.sh conform` — does the project match `.claude/godot-accel/shape.md` (homes, headings,

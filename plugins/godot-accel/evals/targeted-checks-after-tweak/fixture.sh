@@ -7,9 +7,10 @@ g() { git -c user.name=eval -c user.email=eval@example.invalid "$@"; }
 mkdir -p scripts
 printf 'extends CharacterBody2D\n\nconst WALK_SPEED: float = 200.0\n' >scripts/player.gd
 for n in player enemy hud; do
-	sed "s/example_check/${n}_check/; s/ExampleCheck/$(echo ${n^})Check/" tests/example_check.tscn >tests/${n}_check.tscn
-	cp tests/example_check.gd tests/${n}_check.gd
+	printf 'extends Node\n\n\nfunc _ready() -> void:\n\tprint("%s_check: 0 failed")\n\tget_tree().quit(0)\n' "$n" >tests/${n}_check.gd
+	printf '[gd_scene format=3]\n\n[ext_resource type="Script" path="res://tests/%s_check.gd" id="1"]\n\n[node name="Check" type="Node"]\nscript = ExtResource("1")\n' "$n" >tests/${n}_check.tscn
 done
+mkdir -p docs/systems
 cat >docs/systems/player.md <<'MD'
 # Player: what is true now
 

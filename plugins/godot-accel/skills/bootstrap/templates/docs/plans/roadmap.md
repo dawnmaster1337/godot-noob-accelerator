@@ -17,7 +17,7 @@ session), **L** (too big: split it, or give it a plan with its own tasks). Each 
 ## M0: foundations (systems and tools; placeholder art)
 
 - [ ] 0.0 (S) Green baseline. Done when: `tools/dev.sh check` and `tools/dev.sh lint all` pass,
-  so every later task can trust the checks.
+  so every later task can trust the checks (the smoke check needs a main scene: 0.1 makes one).
 - [ ] 0.1 (M) Player moves on screen (the first `plan-feature`). Done when: …
 - [ ] 0.2 …
 

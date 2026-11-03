@@ -7,11 +7,11 @@ allowed-tools: Read Bash(git status *) Bash(git diff *) Bash(git log *) Bash(git
 
 Work done: $ARGUMENTS
 
-!`git status --short | head -30`
+!`git status --short 2>/dev/null | head -30; true`
 
-!`git log --oneline -3`
+!`git log --oneline -3 2>/dev/null || echo "no commits yet"`
 
-!`git remote -v | head -2`
+!`git remote -v 2>/dev/null | head -2; true`
 
 !`cat .claude/godot-accel/save-work.md 2>/dev/null; true`
 
@@ -23,7 +23,7 @@ running out of usage → **quick save**; otherwise **task save**. Project steps 
 
 1. **Plan tick:** tick the finished task in its plan (`- [x]`). STATUS waits for the session save.
    A manifest (`docs/production/manifest.md`)? Each new placeholder or third-party file has a row.
-2. **Gate:** code or scene changes → `ship-check` steps 1–5; then always `tools/dev.sh stale` and
+2. **Gate:** code or scene changes → run the `ship-check` skill (its steps 1–5); then always `tools/dev.sh stale` and
    `budget`.
 3. **Secrets:** no API keys, tokens, private keys or `.env` files in the diff or in untracked files
    being added. Found one → stop and say so.

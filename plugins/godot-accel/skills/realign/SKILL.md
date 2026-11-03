@@ -22,7 +22,8 @@ reword. Afterwards no home has two files.
    instead. Uncommitted work → offer `save-work` first, so each move is its own commit.
 1. **The checking tools first:** add `.claude/godot-accel/shape.md` and `.claude/budgets.md` from
    the templates if missing, and the kit's `tools/dev.sh` (the project's own verbs merged in; it
-   finds a Godot project in a subfolder such as `game/` itself, and runs GUT when installed).
+   finds a Godot project in a subfolder such as `game/` itself, and runs GUT or gdUnit4 when
+   installed) with `tests/smoke_check.*`.
    Scripts, git hooks, `settings.json` and budgets merge by `update` step 5's rules (a hook that
    is theirs gets new checks in `<hook>.project`). Run `tools/dev.sh conform` and `lint all`.
    **Lint already failing** → roadmap task 0.0 (green baseline); tell the user the commit hook
@@ -57,7 +58,8 @@ reword. Afterwards no home has two files.
    - `tools/dev.sh conform` and `stale`: that home's problems are gone. Offer a commit for it,
      staged by path; check `git diff --cached --name-status` first (`git mv` stages itself).
    A big project can take one home per session: `conform` shows what is left.
-5. **Fill the rest** as bootstrap would: missing kit files from the templates, every placeholder
+5. **Fill the rest** as bootstrap would: missing **setup** files from the templates (a *first use*
+   home the project has no content for stays unmade; `conform` doesn't ask for it), every placeholder
    filled (`conform` lists any left) from CLAUDE.md and `project.godot`; bootstrap's questions
    only where nothing in the project answers them. A kit rule line that contradicts the
    project's own way (its events autoload, its folder style, review by images) is left out, and

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: resume-in-empty-repo
+description: resume in a freshly bootstrapped project whose git repo has no commits yet and no inbox/ folder still reaches the model (no injected command fails) and reads STATUS. Needs --scaffold; run once with --runs 1.
+tags: [resume, first-run]
+context:
+  scaffold_script: fixture.sh

@@ -17,13 +17,18 @@ version: `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`. The project's versi
 2. **The project's choices,** from what exists, not by asking: language, canon, MCP, extras
    (manifest, standards, paid tools). Use bootstrap's file map with them.
 3. **Compare** each template with the project's file:
-   - **missing** → add it, placeholders filled as bootstrap would;
+   - **missing** → add it if the file map says *setup*, placeholders filled as bootstrap would; a
+     *first use* file waits until the game needs it;
    - **same** apart from filled placeholders → nothing;
    - **differs** → list the kit lines the project lacks. Lines only the project has are theirs.
    Files the user fills in (STATUS, roadmap, decisions, systems, bugs, quirks, canon,
    memory) are never rewritten: only missing files are added, and a template's new section is
    offered as a heading; their form is `realign`'s job. `shape.md`: kit rows into the first
-   table only; "This project's own rows" are theirs.
+   table only, with the kit's Made column; "This project's own rows" are theirs.
+   - **Kit 0.5.0:** `tests/smoke_check.*` replaces the `2 + 2` example check (offer to delete
+     `example_check.*` if unchanged); `settings.suggested.json`'s ask and deny rules go into
+     `.claude/settings.json`; an `autoMemoryDirectory` in `.claude/settings.local.json` pointing
+     at `.claude/memory` now loads the memory twice (CLAUDE.md imports it): the user removes it.
 4. **Show** one table, under 15 lines: file · add / merge / nothing · what changes. Get a yes.
    Ask one at a time only where a kit line contradicts theirs (recommend theirs).
 5. **Merge:** each new kit line where it belongs in the user's file; never delete or reword theirs.

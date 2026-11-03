@@ -16,6 +16,35 @@ is_godot_project() {
 	[ "$(ls -d -- "$root"/*/project.godot 2>/dev/null | grep -c .)" = 1 ]
 }
 
+# game_dir: the folder holding project.godot: the project root, or the one folder below it that
+# holds one (tools/dev.sh finds it the same way). Its .godot/ is Godot's cache.
+game_dir() {
+	local root found
+	root=$(project_root)
+	if [ -f "$root/project.godot" ]; then
+		printf '%s' "$root"
+		return
+	fi
+	found=$(ls -d -- "$root"/*/project.godot 2>/dev/null)
+	if [ "$(printf '%s\n' "$found" | grep -c .)" = 1 ]; then
+		printf '%s' "${found%/project.godot}"
+	else
+		printf '%s' "$root"
+	fi
+}
+
+# state_file <name>: a kit file in Godot's (git-ignored) cache folder: the stamp touched before
+# each shell command, the list of game files Claude changed since the last check.
+state_file() {
+	printf '%s' "$(game_dir)/.godot/godot-accel-$1"
+}
+
+# have_json_reader: true when jq or python3 exists. Without both, the hooks that read their
+# input do nothing, and the session-start card says so.
+have_json_reader() {
+	command -v jq >/dev/null 2>&1 || command -v python3 >/dev/null 2>&1
+}
+
 # json_field <key> <json>: one string field from the hook input, via jq or python3.
 # Prints nothing when neither tool exists (the hook then does nothing).
 json_field() {
@@ -90,8 +119,8 @@ path_block_reason() {
 	return 0
 }
 
-# bash_stamp: touched before each shell command, so the format + lint hook can find the .gd files
-# that command changed. Lives in Godot's (git-ignored) cache folder.
+# bash_stamp: touched before each shell command, so the format + lint hook can find the files
+# that command changed.
 bash_stamp() {
-	printf '%s' "$(project_root)/.godot/godot-accel-bash.stamp"
+	state_file bash.stamp
 }

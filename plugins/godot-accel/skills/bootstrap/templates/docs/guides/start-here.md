@@ -43,8 +43,8 @@ stays sharper and each session costs less.
   time.
 - **`/clear`** gives Claude a fresh, empty memory of the chat (its project notes stay). Do it after
   a save, when a task is finished. It makes the next task cheaper and sharper.
-- **Want to change a number yourself** (speed, jump height, a timing)? The system's page in
-  `docs/systems/` says which file and Inspector group it's in. Change it in Godot; Claude keeps
+- **Want to change a number yourself** (speed, jump height, a timing)? Once a system is built,
+  its page in `docs/systems/` says which file and Inspector group it's in. Change it in Godot; Claude keeps
   your values.
 - **Claude says the project was set up with an older kit?** Say **update the kit**: it adds
   what's new and asks before changing anything you wrote.

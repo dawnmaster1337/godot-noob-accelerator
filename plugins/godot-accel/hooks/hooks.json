@@ -1,5 +1,5 @@
 {
-  "description": "godot-accel: session-start status card, a per-message reminder of rules the user has had to repeat, a guard on engine-managed files (editing tools and shell writes), and format + lint after GDScript changes. Each does nothing outside a Godot project, stands down when the project registers its own copy, and exits cleanly when a tool it needs is missing.",
+  "description": "godot-accel: session-start status card, a per-message reminder of rules the user has had to repeat, a guard on engine-managed files for the editing tools (the project's deny rules cover shell writes), format + lint after GDScript changes, and a stop check that asks for the headless checks after game files changed. Each does nothing outside a Godot project, stands down when the project registers its own copy, and exits cleanly when a tool it needs is missing.",
   "hooks": {
     "SessionStart": [
       {
@@ -14,7 +14,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "matcher": "Edit|Write|NotebookEdit",
         "hooks": [
           {
             "type": "command",
@@ -27,18 +27,28 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/guard-bash.sh\""
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/shell-stamp.sh\""
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Edit|Write|MultiEdit|Bash",
+        "matcher": "Edit|Write|Bash",
         "hooks": [
           {
             "type": "command",
             "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/gd-format-lint.sh\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/stop-check.sh\""
           }
         ]
       }

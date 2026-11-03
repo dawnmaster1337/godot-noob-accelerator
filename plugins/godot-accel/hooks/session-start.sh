@@ -2,7 +2,9 @@
 # SessionStart (startup, resume, /clear, compaction): tells Claude how safe the work is in git,
 # the user's uncommitted scene and resource edits, what waits in inbox/, what STATUS says is next
 # and whether it is over budget, whether the project's kit version is behind the plugin, whether
-# Godot is reachable, and the project's own standing guard (.claude/start-guard.md). Read-only: never fetches, pulls or pushes.
+# Godot and the hooks' own tools are reachable, whether the project's settings carry the kit's
+# deny rules, and the project's own standing guard (.claude/start-guard.md). Read-only: never
+# fetches, pulls or pushes.
 # Outside a kit project it stays silent, unless one sits just above or below the start folder:
 # then it says where, because every hook, project skill, agent and rule loads from the start
 # folder and would otherwise be off without a word.
@@ -85,7 +87,7 @@ if [ -f docs/STATUS.md ]; then
 fi
 
 # Kit version: the project's stamp (written by bootstrap and update) against this plugin's.
-if [ -f .claude/budgets.md ]; then
+if [ -d .claude/godot-accel ] || [ -f .claude/budgets.md ]; then
 	kit=$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "$(dirname "$0")/../.claude-plugin/plugin.json" | head -1)
 	mine=""
 	[ -f .claude/godot-accel/kit-version ] && mine=$(tr -d '[:space:]' <.claude/godot-accel/kit-version)
@@ -101,8 +103,16 @@ if [ -f .claude/budgets.md ]; then
 	fi
 fi
 
-if is_godot_project && ! command -v godot >/dev/null 2>&1; then
-	msg="$msg 'godot' is not on PATH: headless checks can't run (docs/guides/setup-new-machine.md)."
+# What the kit's checks need on this machine. Missing, they are off without a word, so say it.
+if is_godot_project; then
+	command -v godot >/dev/null 2>&1 ||
+		msg="$msg 'godot' is not on PATH: headless checks can't run (docs/guides/setup-new-machine.md)."
+	have_json_reader ||
+		msg="$msg Neither jq nor python3 is installed: the kit's file guard and lint hooks are OFF. Tell the user: install jq (Linux: the package manager; macOS: brew install jq)."
+	PATH="$HOME/.local/bin:$PATH" command -v gdlint >/dev/null 2>&1 ||
+		msg="$msg gdtoolkit is not installed: GDScript is not linted or formatted. Tell the user: pipx install 'gdtoolkit==4.*'."
+	[ -f tools/dev.sh ] && ! grep -qsF 'Edit(.godot/**)' .claude/settings.json &&
+		msg="$msg .claude/settings.json lacks the kit's deny rules (shell writes to Godot's files, secrets reads): suggest /godot-accel:update."
 fi
 
 # The project's own standing guard, HTML comments stripped, capped.
@@ -110,6 +120,10 @@ if [ -f .claude/start-guard.md ]; then
 	guard=$(sed -e 's/<!--.*-->//g' -e '/<!--/,/-->/d' .claude/start-guard.md | tr '\n' ' ' | tr -s ' ' | cut -c1-1200)
 	case "$guard" in *[![:space:]]*) msg="$msg GUARD: ${guard}" ;; esac
 fi
+
+# Where the kit's templates are, for a home the shape marks "first use" that doesn't exist yet.
+[ -f .claude/godot-accel/shape.md ] &&
+	msg="$msg Kit templates (for a first-use home in .claude/godot-accel/shape.md): $(cd "$(dirname "$0")/.." && pwd)/skills/bootstrap/templates/"
 
 # Plain stdout is added to Claude's context for SessionStart.
 printf '%s\n' "$msg"

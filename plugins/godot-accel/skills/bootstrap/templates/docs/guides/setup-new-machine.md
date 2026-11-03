@@ -39,13 +39,15 @@ The last line turns on the project's git checks (format, lint, no secrets), if i
 
 ## 3. Claude Code
 
-1. Install the kit plugin once per machine: in Claude Code run
+1. Install the kit plugin once per machine: start Claude Code in the project folder and run
    `/plugin marketplace add dawnmaster1337/{{KIT_REPO}}`, then `/plugin install {{KIT_NAME}}@{{KIT_NAME}}`.
+   If this project's `.claude/settings.json` already turns the kit on, pick **project scope**.
 2. Recommended companion for Godot know-how: GodotPrompter (see the kit's README).
-3. Claude's memory for this project is in the repo (`.claude/memory/`). {{MEMORY_LINK_STEP}}
+3. Claude's memory for this project is in the repo (`.claude/memory/`), loaded through
+   `CLAUDE.md`: nothing to set up.
 {{MCP_SETUP_STEP}}
 
 ## 4. First run
 
-`godot --headless --editor --quit --path .` once (builds Godot's cache), then
-`tools/dev.sh check`. Everything should pass. Then open the editor: `godot --path . -e`.
+`tools/dev.sh check` (it builds Godot's cache first). Everything should pass. Then open the
+editor: `godot --path . -e`.

@@ -19,7 +19,8 @@
 An add-on for **Claude Code** that helps it build your **Godot** game carefully: it writes down
 what you decide, tests its work before showing you, and remembers where you stopped.
 
-No coding experience needed.
+No coding experience needed. It's for a game you'll keep working on for weeks. For a game jam or
+a weekend try, plain Claude Code is enough.
 
 ## 💥 Why?
 
@@ -35,7 +36,8 @@ helps you. It works for our own games. It might not work for yours, and it might
 it sucks, [tell us](#-tell-us-how-it-went).
 
 - 🐢 It's slower than "just build it": Claude asks questions and tests first.
-- 📦 It adds a few text files to your project.
+- 📦 It adds about 12 files you'll see (notes, a check script, a smoke test) and about 20 hidden
+  ones (Claude's rules, git checks). More appear only when your game needs them.
 - 🐧 Only tested on Linux so far.
 - 💸 The kit is free. Claude Code needs a paid Claude plan.
 
@@ -61,7 +63,8 @@ Claude gives a suggestion with every question. To take it, just say **APR**, sho
 **First time?** Follow the **[beginner's guide](docs/beginners-guide.md)**. It takes about an
 hour, from nothing installed to a character moving on screen.
 
-**Already set up?** In Claude Code, run these one at a time:
+**Already set up?** Start Claude Code **in your game's folder** (the one with `project.godot`),
+then run these one at a time:
 
 ```
 /plugin marketplace add dawnmaster1337/godot-noob-accelerator
@@ -71,7 +74,8 @@ hour, from nothing installed to a character moving on screen.
 /plugin install godot-accel@godot-accel
 ```
 
-Restart Claude Code **in your game's folder** (the one with `project.godot`), then type:
+When it asks where, pick **this repository (project scope)**: the kit then loads only in this
+game, not in every project. Restart Claude Code in the same folder, then type:
 
 ```
 /godot-accel:bootstrap
@@ -90,7 +94,10 @@ if it's just "I gave up at step 2".
 <summary><b>More: updating, what's inside, companions</b></summary>
 
 - **Updating:** run `/plugin marketplace update godot-accel`, then `/plugin` → godot-accel →
-  update, and start a new session. Then say **update the kit** in your project.
+  update, and start a new session. Then say **update the kit** in your project. Still the old
+  version? Run the marketplace update again: it can reuse a stale copy. To update on its own,
+  turn on auto-update for this marketplace in `/plugin` → Marketplaces (it's off for kits like
+  this one).
 - **What's inside, and why:** [how it works](docs/how-it-works.md) ·
   [every file it adds](docs/structure.md) · [making it your own](docs/customising.md)
 - **Recommended companion:** [GodotPrompter](https://github.com/jame581/GodotPrompter) knows

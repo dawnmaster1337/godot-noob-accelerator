@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# PreToolUse (Edit|Write|MultiEdit|NotebookEdit): refuse edits to files Godot or other people own
-# (path_block_reason in lib.sh). Exit 2 blocks the edit and shows the reason to Claude. Silent
+# PreToolUse (Edit|Write|NotebookEdit): refuse edits to files Godot or other people own
+# (path_block_reason in lib.sh). It works even where the project's settings lack the kit's deny
+# rules; those also cover shell writes. Exit 2 blocks the edit and shows the reason to Claude. Silent
 # outside a Godot project, or when the project registers its own guard-paths.sh.
 set -u
 # shellcheck source=lib.sh

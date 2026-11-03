@@ -5,6 +5,91 @@ All notable changes. Versions follow the plugin's `version` in
 
 ## Unreleased
 
+## 0.5.0 — grows with the game, and checks that mean something
+
+From an outside adversarial review of 0.4.2. The kit now starts small and grows with the game, and
+more of its promises are enforced by a check, a setting or a hook instead of a sentence.
+
+**Fixed: the beginner flow**
+
+- **"save work" no longer stalls after a code change.** `ship-check` could only be typed by the
+  user, so `save-work`, which runs it as its gate, was refused it. Claude can run it now.
+- **No skill aborts in a new repo.** A skill's injected command that failed (`git log` with no
+  commits yet, `ls inbox` with no inbox) stopped the whole skill. Every one now ends so it can't
+  fail, and `tests/run.sh` checks them.
+
+**Checks that prove something**
+
+- **A smoke check replaces the `2 + 2` example:** `tests/smoke_check.tscn` loads every script
+  (a parse error fails it, even in a script no scene uses) and plays the main scene for a second
+  (a script error fails it, a scene change included). A new project fails it until it has a main
+  scene, on purpose.
+- **`tools/dev.sh check` fails when nothing ran**, runs the plain check scenes and GUT or gdUnit4
+  together (gdUnit4 is wired up now), and exits 1 on any failure.
+- **`refresh` is one `--import` run** (it rebuilds the class cache, a renamed or deleted
+  `class_name` included; verified on 4.7.2).
+- **Bootstrap makes untyped GDScript an error** (`untyped_declaration=2`), so the typing rule
+  is checked by Godot.
+- **A stop hook** asks Claude to run the checks covering the game files it changed before it
+  finishes a turn, or to say why they can't run. It asks once per batch of changes.
+
+**Settings instead of regexes**
+
+- **`settings.suggested.json` asks before every commit** (and every push, unless Claude pushes for
+  you), and **denies** reading `.env` files and export credentials and writing Godot's cache,
+  `.import` and `.uid` files. Claude Code applies those to shell redirects, `tee` and `sed` too.
+- **The shell-write regex is gone** (it missed `tee --append`, `sed --in-place` and writes after
+  a `cd`, and blocked commit messages containing `->`). `shell-stamp.sh` only touches the stamp
+  the lint hook uses. The editing-tool guard and `protected-paths.txt` stay.
+- **The session-start card says when a check is off:** no `jq` or `python3` (the hooks can't read
+  their input), no gdtoolkit, no deny rules in the project's settings.
+
+**Grows with the game**
+
+- **The shape has a Made column:** `setup` homes are written by bootstrap; `first use` homes
+  (decisions, system pages, research, reviews, archive, `AGENTS.md`, the reminder) are made the
+  first time the game needs them, from the kit's template of the same path. `conform` and `stale`
+  don't ask for one until then. A new project starts with about 12 files you'll see.
+- **CLAUDE.md drops "Project layout" and "Engine settings"**: Claude reads the folders and
+  `project.godot` itself, and the shape no longer requires those headings.
+
+**Hooks**
+
+- **Subfolder projects, finished:** the stamp, the lint hook's search and `pre-commit`'s `addons/`
+  filter all use the game folder now (0.4.2 missed them, so shell edits in `game/` were never
+  linted).
+- **After a shell command the lint hook only lints**, never reformats: that command may have been
+  a `git pull`, or the user saving in Godot.
+- **Budgets:** a commit is refused only for a file read every session (CLAUDE.md, STATUS, memory,
+  rules, the reminder) over its budget; any other file over budget is a warning.
+
+**Rules and agents**
+
+- Default layout: a folder per scene or feature, as Godot's project-organization guide
+  recommends; a project sorted by kind keeps its layout.
+- Polling `Input` in `_process` is fine (the reviewer no longer flags it); `duplicate()` is
+  shallow (`duplicate(true)` or `duplicate_deep()` for nested resources).
+- Moving a script outside the editor moves its `.uid` too (left behind, every scene using it
+  fails to load; verified on 4.7.2). `load_steps` is no longer required (4.7 doesn't write it).
+- `docs/.gdignore` keeps notes and screenshots out of Godot's import.
+- The reviewer agents use the session's model (`inherit`, not `opus`) and no longer claim to be
+  read-only (they run git and the checks).
+- Memory loads one way only: CLAUDE.md imports `.claude/memory/MEMORY.md`; bootstrap no longer
+  points `autoMemoryDirectory` there (that loaded it twice).
+- `MultiEdit` dropped from the hook matchers (a legacy tool name).
+
+**Repo**
+
+- **`tests/run.sh`** builds throwaway projects from the templates and runs every `dev.sh` verb, the
+  plugin's hooks and the git hooks on root and `game/` layouts, failure cases included. **CI**
+  (`.github/workflows/tests.yml`) runs it on every push with real Godot 4.7.2, gdtoolkit,
+  shellcheck, GUT 9.6.1 and gdUnit4 6.2.2.
+- Two new evals: `save-work-after-code-change` and `resume-in-empty-repo`.
+- The README says who the kit is for, what it adds, which install scope to pick, and how to get an
+  update that seems stuck. The beginner's guide warns that Windows and macOS are untested.
+- `examples/minimal-game` is on 0.5.0 and its docs pass `conform`.
+- Skill and agent budget raised to 4,000 characters.
+
 ## 0.4.2 — fixes from the second real realign
 
 From running `realign` on an established project with its Godot project in a subfolder, GUT tests

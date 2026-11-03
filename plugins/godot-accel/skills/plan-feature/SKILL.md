@@ -22,7 +22,9 @@ behaviour) needs no plan: say so in one line and build it with the normal workfl
    (`.claude/rules/working-with-user.md`).
 5. **Record** the answers: `docs/decisions/YYYY-MM-DD-<topic>.md` from its `_template.md`
    (status decided, the user's answers, rejected options) and a row in
-   `docs/decisions/README.md`.
+   `docs/decisions/README.md`. A home not made yet (the shape's *first use*: decisions, system
+   pages) starts from the kit's template of the same path, `${CLAUDE_SKILL_DIR}/../bootstrap/templates/`;
+   a `_template.md` is the project's if it has one, else the kit's.
 6. **Plan:** `docs/plans/YYYY-MM-DD-<topic>.md` from its `_template.md`:
    - **Done =** one paragraph a player could check, plus the check that proves it headless;
    - **Design:** scene tree, signals, data resources; the pattern picked, the one rejected, why
