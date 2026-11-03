@@ -51,7 +51,8 @@ it sucks, [tell us](#-tell-us-how-it-went).
 | **feels too slow** *(any feeling)* | tweaks a setting, not the code |
 | **save work** | saves, but only when you say yes |
 
-Not sure what Claude means? Say **"explain like I'm new"**. To take its suggestion, say **APR**.
+Claude gives a suggestion with every question. To take it, just say **APR**, short for
+**"as per recommendation"**. Not sure what Claude means? Say **"explain like I'm new"**.
 
 ## 🚀 Install
 
