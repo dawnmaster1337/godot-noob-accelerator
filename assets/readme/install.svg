@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 430" width="1280" height="430" role="img" aria-labelledby="t d">
+<title id="t">Install in four steps</title>
+<desc id="d">Step 1, Get the tools: Godot 4 and git (free), and Claude Code (needs a paid Claude plan). Step 2, Add the kit: Two commands inside Claude Code. Copy them from below. Step 3, Open your game: Start Claude Code in your game&#x27;s folder, the one with project.godot in it. Step 4, Say hello: Type /godot-accel:bootstrap. Answer a few questions. Say APR to take a suggestion.</desc>
+<rect width="1280" height="430" rx="36" fill="#FFF8EE"/>
+<g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
+<text x="48" y="68" font-size="38" font-weight="800" fill="#1E2A44">Install in four steps</text>
+<text x="48" y="102" font-size="21" fill="#2F3D5C">About an hour the first time, if you are new to all of it. Five minutes if not.</text>
+<rect x="40" y="134" width="282" height="260" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
+<circle cx="92" cy="190" r="32" fill="#5FA3D6"/>
+<text x="92" y="204" text-anchor="middle" font-size="36" font-weight="800" fill="#0F2A45">1</text>
+<rect x="234" y="184" width="52" height="36" rx="8" fill="#FFF8EE" stroke="#0F2A45" stroke-width="4"/><path d="M246 184 v-10 a6 6 0 0 1 6 -6 h16 a6 6 0 0 1 6 6 v10" fill="none" stroke="#0F2A45" stroke-width="4"/><line x1="234" y1="200" x2="286" y2="200" stroke="#0F2A45" stroke-width="4"/>
+<text x="64" y="266" font-size="24" font-weight="800" fill="#1E2A44">Get the tools</text>
+<text x="64" y="300" font-size="17.5" fill="#3A4766">Godot 4 and git (free), and</text>
+<text x="64" y="324" font-size="17.5" fill="#3A4766">Claude Code (needs a paid</text>
+<text x="64" y="348" font-size="17.5" fill="#3A4766">Claude plan).</text>
+<path d="M326.0 254 l10 10 -10 10" fill="none" stroke="#C9B89A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="346" y="134" width="282" height="260" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
+<circle cx="398" cy="190" r="32" fill="#F6C453"/>
+<text x="398" y="204" text-anchor="middle" font-size="36" font-weight="800" fill="#4A3300">2</text>
+<path d="M542 172 h14 a8 8 0 1 1 16 0 h18 v16 a8 8 0 1 1 0 16 v18 h-48 z" fill="#FFF8EE" stroke="#4A3300" stroke-width="4" stroke-linejoin="round"/>
+<text x="370" y="266" font-size="24" font-weight="800" fill="#1E2A44">Add the kit</text>
+<text x="370" y="300" font-size="17.5" fill="#3A4766">Two commands inside Claude</text>
+<text x="370" y="324" font-size="17.5" fill="#3A4766">Code. Copy them from below.</text>
+<path d="M632.0 254 l10 10 -10 10" fill="none" stroke="#C9B89A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="652" y="134" width="282" height="260" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
+<circle cx="704" cy="190" r="32" fill="#5CC8A8"/>
+<text x="704" y="204" text-anchor="middle" font-size="36" font-weight="800" fill="#123B33">3</text>
+<path d="M844 176 h20 l6 7 h30 v34 h-56 z" fill="#FFF8EE" stroke="#123B33" stroke-width="4" stroke-linejoin="round"/>
+<text x="676" y="266" font-size="24" font-weight="800" fill="#1E2A44">Open your game</text>
+<text x="676" y="300" font-size="17.5" fill="#3A4766">Start Claude Code in your</text>
+<text x="676" y="324" font-size="17.5" fill="#3A4766">game&#x27;s folder, the one with</text>
+<text x="676" y="348" font-size="17.5" fill="#3A4766">project.godot in it.</text>
+<path d="M938.0 254 l10 10 -10 10" fill="none" stroke="#C9B89A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="958" y="134" width="282" height="260" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="2"/>
+<circle cx="1010" cy="190" r="32" fill="#EF7FA0"/>
+<text x="1010" y="204" text-anchor="middle" font-size="36" font-weight="800" fill="#4A1024">4</text>
+<path d="M1150 172 h56 v34 h-34 l-12 10 v-10 h-10 z" fill="#FFF8EE" stroke="#4A1024" stroke-width="4" stroke-linejoin="round"/><circle cx="1166" cy="189" r="3.5" fill="#4A1024"/><circle cx="1178" cy="189" r="3.5" fill="#4A1024"/><circle cx="1190" cy="189" r="3.5" fill="#4A1024"/>
+<text x="982" y="266" font-size="24" font-weight="800" fill="#1E2A44">Say hello</text>
+<text x="982" y="300" font-size="17.5" fill="#3A4766">Type /godot-accel:bootstrap.</text>
+<text x="982" y="324" font-size="17.5" fill="#3A4766">Answer a few questions. Say</text>
+<text x="982" y="348" font-size="17.5" fill="#3A4766">APR to take a suggestion.</text>
+</g></svg>
