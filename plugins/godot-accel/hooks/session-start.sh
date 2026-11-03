@@ -49,6 +49,11 @@ msg="[godot-accel] Session start."
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
 	changed=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
 	msg="$msg Git: ${changed} uncommitted path(s)."
+	# No commit yet: everything is new, nothing is the user's edit of a saved file.
+	git rev-parse --verify -q HEAD >/dev/null 2>&1 || {
+		fresh=1
+		msg="$msg No commits yet: nothing is saved in git; suggest a first save-work."
+	}
 	if ! git remote get-url origin >/dev/null 2>&1; then
 		msg="$msg NO remote: the work exists only on this machine; offer to set one up."
 	else
@@ -58,7 +63,7 @@ if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
 	[ "$changed" != "0" ] && msg="$msg Uncommitted work: never discard it; suggest save-work before the session ends."
 	# Scenes and resources changed outside a commit are most often the user's own editor work.
 	edits=$(git status --porcelain 2>/dev/null | cut -c4- | grep -E '\.(tres|tscn)$' | head -10 | tr '\n' ' ')
-	[ -n "$edits" ] && msg="$msg Uncommitted scene/resource edits, likely the user's own (re-read before editing, never revert; .claude/rules/tuning.md): ${edits}"
+	[ -n "$edits" ] && [ -z "${fresh:-}" ] && msg="$msg Uncommitted scene/resource edits, likely the user's own (re-read before editing, never revert; .claude/rules/tuning.md): ${edits}"
 else
 	msg="$msg Not a git repository yet: offer to set one up (nothing is backed up)."
 fi

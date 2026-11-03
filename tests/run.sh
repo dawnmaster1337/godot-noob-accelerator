@@ -95,6 +95,14 @@ expect_out 'not needed yet' "conform matches, first-use homes not asked for" too
 expect 0 "conform exit code" tools/dev.sh conform
 expect 0 "tidy" tools/dev.sh tidy
 
+F=$WORK/fresh
+mkdir -p "$F"
+(cd "$F" && KIT_NO_GIT=1 . "$PLUGIN/evals/lib/kit-project.sh") >/dev/null
+cd "$F" || exit 1
+expect_out 'No commits yet' "session-start in a repo with no commits says so" hook session-start.sh '{}'
+if hook session-start.sh '{}' | grep -q "likely the user's own"; then bad "session-start calls new files the user's edits"; else ok "and doesn't call new files the user's edits"; fi
+cd "$P" || exit 1
+
 echo "== check fails when it proves nothing, or the game is broken"
 mv tests/smoke_check.tscn "$WORK/smoke.tscn"
 expect 1 "no checks at all fails" tools/dev.sh check
