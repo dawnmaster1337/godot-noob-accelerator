@@ -14,7 +14,7 @@ Any line over 400 characters fails too (a long table cell is a long line).
 | `.claude/memory/*.md` (each) | 1,200 | one fact, its why, how to apply; no diary |
 | `.claude/rules/*.md` (each) | 3,000 | one topic per file. A file holding a generated table: trim the prose, never the rows (the next generate puts them back) |
 | `.claude/reminder.md` | 600 | one or two sentences per rule; a rule the docs now enforce → delete |
-| `docs/guides/quirks.md` | 5,500 | quirks a script now owns → delete |
+| `docs/guides/quirks.md` | 8,000 | quirks a script now owns → delete |
 | `docs/known-bugs.md` | 6,000 | Fixed list → the last 20 (git keeps the rest) |
 | `docs/systems/*.md` (each) | 10,000 | detail into the decision record it cites |
 | `.claude/skills/*/SKILL.md`, `.claude/agents/*.md` (each) | 3,000 | steps and pointers |

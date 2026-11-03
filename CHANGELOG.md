@@ -5,6 +5,27 @@ All notable changes. Versions follow the plugin's `version` in
 
 ## Unreleased
 
+## 0.4.1 — fixes from the first real realign
+
+From running `realign` on a 125-doc project:
+
+- **`conform` task check:** accepts a lettered sub-task (`1.2b`); sees a `Done when` that wraps
+  onto the next line; reports every fault of a task at once instead of one per pass.
+- **`budget`'s 400-character line check** now reads every `live` doc of the shape, as `stale`
+  does; before, a long line anywhere else in `docs/` passed. `stale` knows more file types
+  (`.svg`, `.csv`, `.gdshader`, `.glb`, `.ogg`, `.wav`).
+- **The shape file has a "This project's own rows" table,** so `update` can tell the project's
+  rows from the kit's.
+- **`update` and `realign` never trim the user's content to fit a budget:** they name the file
+  and the overage and ask. A git hook that is the project's own (or chains to `<hook>.project`)
+  gets new kit checks in `<hook>.project`; a rule against Claude editing hooks, or auto mode
+  refusing to edit `settings.json`, means the user gets the block or command to run.
+- **`realign`:** a project already near the shape may have nothing to archive; a required heading
+  may say more after the shape's words (`## 3. Data and behaviour`).
+- `docs/guides/quirks.md` budget 5,500 → 8,000 characters (it is read before debugging, not every
+  session).
+- README: a marketplace update can report success while reusing a stale copy; run it again.
+
 ## 0.4.0 — one shape for every project
 
 Three projects that all ran the kit had three different layouts: none was bootstrapped, and every

@@ -38,3 +38,12 @@ of the shape, an undeclared doc is drift. Never a second file doing a row's job.
 | Context budgets | `.claude/budgets.md` | live | | |
 | Rules the user has had to repeat | `.claude/reminder.md` | live | | |
 | Standing session-start reminder | `.claude/start-guard.md` | live | | |
+
+## This project's own rows
+
+Homes this project needs that the kit doesn't have. `update` merges kit rows into the table above
+and never touches this one. A row here has the same five columns (for example: art references,
+`docs/art/`, live).
+
+| Home | Path | Kind | Must have | Entries |
+|---|---|---|---|---|

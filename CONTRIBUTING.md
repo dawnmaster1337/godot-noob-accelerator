@@ -16,8 +16,9 @@ Thanks for helping. The kit improves from what real projects run into.
 - **Not engine knowledge.** How to build a Godot system belongs in
   [GodotPrompter](https://github.com/jame581/GodotPrompter); link to it instead.
 - **Every rule needs a why:** say what went wrong without it.
-- **Budgets:** each skill and agent under 3,000 characters (`bootstrap` excepted); the generated
-  `CLAUDE.md` under 200 lines. Prefer a pointer to a rule's one home over a copy.
+- **Budgets:** each skill and agent under 3,000 characters (`bootstrap` and `realign`, run once
+  per project, excepted); the generated `CLAUDE.md` under 200 lines. Prefer a pointer to a
+  rule's one home over a copy.
 - **Hooks must be portable:** no absolute paths; check every tool they call and exit 0 cleanly if
   it's missing; do nothing outside a Godot project.
 - **Bootstrap never overwrites** a user's file.

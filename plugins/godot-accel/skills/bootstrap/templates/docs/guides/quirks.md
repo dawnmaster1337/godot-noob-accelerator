@@ -1,6 +1,7 @@
 # Engine and tool quirks
 
-The one home for engine, tool and shell quirks; read before debugging. Budget: 5,500 characters.
+The one home for engine, tool and shell quirks; read before debugging, not every session.
+Budget: 8,000 characters.
 A quirk that a script can own moves into the script (`tools/dev.sh`) and leaves this page.
 User preferences go to `.claude/memory/`, not here.
 

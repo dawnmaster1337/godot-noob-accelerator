@@ -87,6 +87,9 @@ the project. The session-start card reminds you when the project is behind, or o
 
 **Updating:** third-party marketplaces don't auto-update by default. Run
 `/plugin marketplace update godot-accel`, or turn on auto-update under `/plugin` → Marketplaces.
+Then update the plugin itself (`/plugin` → godot-accel) and start a new session: a running one
+keeps the version it started with. Still shows an old version? Run the marketplace update again:
+it can report success while reusing a stale copy.
 
 </details>
 

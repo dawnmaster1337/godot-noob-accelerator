@@ -176,7 +176,7 @@ stale() {
 		[ ${#docs[@]} -gt 0 ] || return 0
 		set -- "${docs[@]}"
 	fi
-	found=$(grep -oHE '`[A-Za-z0-9_./-]+\.(md|gd|cs|py|sh|tscn|tres|json|png|txt|cfg)`' "$@" 2>/dev/null | tr -d '`' |
+	found=$(grep -oHE '`[A-Za-z0-9_./-]+\.(md|gd|cs|py|sh|tscn|tres|json|png|svg|txt|cfg|csv|gdshader|glb|ogg|wav)`' "$@" 2>/dev/null | tr -d '`' |
 		while IFS=: read -r src path; do
 			[ -e "$path" ] && continue
 			case "$path" in -* | *YYYY* | *'<'*) continue ;; esac
@@ -203,17 +203,20 @@ shape_headings() {
 	done
 }
 
-# shape_tasks <roadmap>: `- [ ] 1.2 (M) What. Done when: …`; a ticked task also says `Done YYYY-MM-DD.`
+# shape_tasks <roadmap>: `- [ ] 1.2 (M) What. Done when: …` (a letter may follow the number:
+# `1.2b`); a ticked task also says `Done YYYY-MM-DD.` Every fault of a task is reported at once.
 shape_tasks() {
-	awk -v f="$1" 'function flush() {
-			if (t == "" || t ~ /^- \[.\] [0-9.]+ *(…|\.\.\.) *$/) { t = ""; return }
-			if (t !~ /^- \[[ xX]\] [0-9]+\.[0-9]+ \([SML]\) /) print f ":" ln ": task without a number and size (S/M/L): " substr(t, 1, 60)
-			else if (t !~ /Done when/) print f ":" ln ": task without a Done when: " substr(t, 1, 60)
-			else if (t ~ /^- \[[xX]\]/ && t !~ /Done [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/) print f ":" ln ": ticked task without its Done date (Done YYYY-MM-DD.): " substr(t, 1, 60)
+	awk -v f="$1" 'function flush(   miss) {
+			if (t == "" || t ~ /^- \[.\] [0-9.]+[a-z]? *(…|\.\.\.) *$/) { t = ""; return }
+			if (t !~ /^- \[[ xX]\] [0-9]+\.[0-9]+[a-z]? /) miss = miss "; a number (1.2)"
+			if (t !~ /^- \[[ xX]\] [0-9]+\.[0-9]+[a-z]? \([SML]\) /) miss = miss "; a size (S/M/L)"
+			if (t !~ /Done +when/) miss = miss "; a Done when"
+			if (t ~ /^- \[[xX]\]/ && t !~ /Done [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/) miss = miss "; its Done date (Done YYYY-MM-DD.)"
+			if (miss != "") print f ":" ln ": task without " substr(miss, 3) ": " substr(t, 1, 60)
 			t = ""
 		}
 		/^- \[[ xX]\] / { flush(); t = $0; ln = FNR; next }
-		t != "" && /^  +[^ ]/ { t = t " " $0; next }
+		t != "" && /^  +[^ ]/ { line = $0; sub(/^ +/, "", line); t = t " " line; next }
 		{ flush() }
 		END { flush() }' "$1"
 }
@@ -423,8 +426,16 @@ budget() {
 		done < <(budget_rules)
 	done
 	local long
-	long=$(awk 'length > 400 {print FILENAME ":" FNR ": " length " characters"}' \
-		CLAUDE.md docs/STATUS.md .claude/rules/*.md .claude/memory/*.md 2>/dev/null)
+	# Long lines: every live doc of the shape (else the always-read files).
+	local docs=()
+	if [ -f "$SHAPE" ]; then
+		while IFS= read -r f; do docs+=("$f"); done < <(live_docs)
+	else
+		docs=(CLAUDE.md docs/STATUS.md .claude/rules/*.md .claude/memory/*.md)
+	fi
+	long=""
+	[ ${#docs[@]} -gt 0 ] &&
+		long=$(awk 'length > 400 {print FILENAME ":" FNR ": " length " characters"}' "${docs[@]}" 2>/dev/null)
 	if [ -n "$long" ]; then
 		echo "$long" | sed 's/^/line over 400: /'
 		problems=$((problems + $(echo "$long" | wc -l)))

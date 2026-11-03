@@ -21,15 +21,16 @@ reword. Afterwards no home has two files.
 0. **Ready?** No `project.godot` → stop (bootstrap step 0). No docs of its own at all → bootstrap
    instead. Uncommitted work → offer `save-work` first, so each move is its own commit.
 1. **The checking tools first:** add `.claude/godot-accel/shape.md` and `.claude/budgets.md` from
-   the templates if missing, and the kit's `tools/dev.sh` (the project's own verbs merged in, as
-   `update` step 5 does). Run `tools/dev.sh conform`.
+   the templates if missing, and the kit's `tools/dev.sh` (the project's own verbs merged in).
+   Scripts, git hooks, `settings.json` and budgets merge by `update` step 5's rules (a hook that
+   is theirs gets new checks in `<hook>.project`). Run `tools/dev.sh conform`.
 2. **Inventory** every file doing a home's job, whatever its name or place: root and `docs/`
    markdown, `.claude/` notes, hand-offs, CLAUDE.md sections that are really status or a plan,
    memory files holding binding rules, project skills and hooks named like the kit's. Read each;
    one file can feed several homes.
 3. **Map table**, under 20 lines: their file → kit home(s) · what moves · what is a duplicate (and
    of what) · what needs its own shape row (a home the kit lacks; recommend folding into a kit
-   home first). Unclear items: ask one at a time, with a recommendation. One yes for the table.
+   home first; rows go under "This project's own rows"). Unclear items: ask one at a time, with a recommendation. One yes for the table.
 4. **Migrate one home at a time:** status → roadmap → bugs → decisions → quirks → systems →
    research → rules and memory → CLAUDE.md. For each:
    - Write the kit file from its template, filled from their content in the kit's form. STATUS
@@ -39,8 +40,12 @@ reword. Afterwards no home has two files.
      invented). Decisions get a **Status:** line and an index row.
    - **Count before and after** (tasks, bugs, decisions, quirks, rules) and show both; explain or
      fix any difference.
-   - `git mv` the old file to `docs/archive/realign/`, its first line naming the new home; fix
-     links to it (`tools/dev.sh stale`). A project skill or hook duplicating a kit one: the kit's
+   - A file whose job moved: `git mv` it to `docs/archive/realign/`, its first line naming the new
+     home; fix links (`tools/dev.sh stale`). A project already near the shape often only has
+     formats to fix and nothing to archive.
+   - A required heading that doesn't fit: a heading may say more after the shape's words
+     (`## 3. Data and behaviour`); never rename content to fit a heading.
+   - Over a budget after the move → name file and overage and ask; never trim their content. A project skill or hook duplicating a kit one: the kit's
      stands down; the user decides whether to delete theirs.
    - `tools/dev.sh conform` and `stale`: that home's problems are gone. Offer a commit for it,
      staged by path.
