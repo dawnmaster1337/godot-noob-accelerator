@@ -13,7 +13,19 @@ is_godot_project() {
 	root=$(project_root)
 	[ -f "$root/project.godot" ] && return 0
 	[ -e "$root/.git" ] || return 1
-	[ "$(ls -d -- "$root"/*/project.godot 2>/dev/null | grep -c .)" = 1 ]
+	[ -n "$(sub_game "$root")" ]
+}
+
+# sub_game <root>: the one folder right below root that holds project.godot, or nothing (none, or
+# several: a folder of games is not one project).
+sub_game() {
+	local p found="" n=0
+	for p in "$1"/*/project.godot; do
+		[ -f "$p" ] || continue
+		found=${p%/project.godot}
+		n=$((n + 1))
+	done
+	[ "$n" = 1 ] && printf '%s' "$found"
 }
 
 # game_dir: the folder holding project.godot: the project root, or the one folder below it that
@@ -21,16 +33,9 @@ is_godot_project() {
 game_dir() {
 	local root found
 	root=$(project_root)
-	if [ -f "$root/project.godot" ]; then
-		printf '%s' "$root"
-		return
-	fi
-	found=$(ls -d -- "$root"/*/project.godot 2>/dev/null)
-	if [ "$(printf '%s\n' "$found" | grep -c .)" = 1 ]; then
-		printf '%s' "${found%/project.godot}"
-	else
-		printf '%s' "$root"
-	fi
+	found=""
+	[ -f "$root/project.godot" ] || found=$(sub_game "$root")
+	printf '%s' "${found:-$root}"
 }
 
 # state_file <name>: a kit file in Godot's (git-ignored) cache folder: the stamp touched before

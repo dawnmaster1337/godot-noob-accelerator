@@ -22,7 +22,7 @@ ok() {
 bad() {
 	fail=$((fail + 1))
 	echo "  FAIL $1"
-	[ -n "${2:-}" ] && printf '%s\n' "$2" | head -12 | sed 's/^/       /'
+	[ -n "${2:-}" ] && printf '%s\n' "$2" | head -40 | sed 's/^/       /'
 }
 # expect <exit code> <label> <cmd...>: run cmd, compare its exit code.
 expect() {
