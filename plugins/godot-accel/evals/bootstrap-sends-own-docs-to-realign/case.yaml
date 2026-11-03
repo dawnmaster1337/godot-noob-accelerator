@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: bootstrap-sends-own-docs-to-realign
+description: Bootstrap in a Godot project that already keeps its own status, to-do and bug files must send the user to realign instead of writing a second set of docs beside them. Text answer only; run once with --scaffold --runs 1 --ablation none.
+tags: [bootstrap, realign, shape]
+context:
+  scaffold_script: fixture.sh

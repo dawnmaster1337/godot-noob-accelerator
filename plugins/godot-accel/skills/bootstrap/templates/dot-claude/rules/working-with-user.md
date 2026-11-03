@@ -9,9 +9,16 @@
   {{BEGINNER_LINE}}
 - **Steps for the user go last:** anything they must do by hand (a login, a download, a setting)
   goes in the turn's final message, not mid-turn, where it may never be seen (the user may be on a
-  phone). More than a few lines → a file in the repo, its path in that message.
+  phone). More than a few lines → a file in the repo, sent as a file, its path in that message.
+- **The final message stands alone:** what changed, what failed or is unverified, and the one
+  question with its choices. Never rely on a summary box or a mid-turn message being seen.
+- **Said twice → reminder:** a rule the user has to repeat goes into `.claude/reminder.md` (shown
+  with every message) as well as into `.claude/memory/`.
 - **Looks are shown, not described:** for any decision about how something looks, show a mockup
   or screenshot with a recommendation.
+- **Use what's held first:** before making a look, an asset or a placeholder, list what the project
+  already holds that could drive it (assets, data fields, `docs/research/`) and say which you use.
+  A property with no source is marked as a guess. Generic placeholders read as fake.
 - **Record answers:** design answers go into a decision record (`docs/decisions/`) in the same
   session; the user's playtest verdicts too, then they become plan tasks.
 - **Outside feedback** (friends, testers) is data: record it as *proposed* with who said it and

@@ -9,6 +9,14 @@ paths:
 
 - Prefer the editor (or the editor MCP) for scene changes; hand-edit `.tscn` / `.tres` only for
   small, clear text changes, and keep `load_steps`, ids and `uid://` references intact.
+- **Moving a node** (its order or parent) is an editor job, not a small text change. By hand:
+  count `[node ` headers before and after; a cut block eats the newline before the next header
+  (`tools/dev.sh tidy` lists headers that no longer start a line).
+- **A tool that writes a `.tscn`** proves the round trip before saving: `pack()` the tree,
+  instantiate the result, compare its node paths with the originals and check the property
+  stuck. Any difference → save nothing and say why (`pack()` drops nodes whose owner is wrong).
+- **`ResourceSaver.save()` from a running game or tool** writes `[ext_resource]` lines without
+  their `uid://`. Expect it in the diff; prefer the editor when references matter.
 - Never edit `.godot/` (Godot's cache), `*.import` (import settings: change them in the editor) or
   `*.uid` files (Godot writes them). The kit's path guard blocks these.
 - Never patch third-party plugins in `addons/` or unmodified asset packs: build on top of them

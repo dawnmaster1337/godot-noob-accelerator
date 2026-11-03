@@ -1,8 +1,13 @@
 # Roadmap: {{GAME_NAME}}
 
 The build order. Work follows it; `docs/STATUS.md` says where it stands. Each milestone ends with
-a playable build and a review (`project-audit` or the adversarial reviewer). Tick tasks off as
-they land; a task with its own plan links to it.
+a playable build and a review (`project-audit` or the adversarial reviewer). A task with its own
+plan links to it.
+
+**This is also the build log.** Tick a task when it lands and add the date:
+`- [x] 1.2 (M) What. Done when: … Done 2026-03-14.` A finished milestone moves to
+`docs/archive/` with its dates. No separate log: the why is in `docs/decisions/`, the bugs in
+`docs/known-bugs.md`, every change in `git log`.
 
 **One task per session.** Each task fits one session: size **S** (under an hour), **M** (a
 session), **L** (too big: split it, or give it a plan with its own tasks). Each has a
@@ -25,5 +30,5 @@ session), **L** (too big: split it, or give it a plan with its own tasks). Each 
 
 ## M3: polish and the first build others can play
 
-- [ ] 3.1 Parked polish items (each with the user's words and the cause).
+- [ ] 3.1 (M) Parked polish items (each with the user's words and the cause). Done when: …
 - [ ] 3.2 …

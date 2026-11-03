@@ -67,11 +67,15 @@ Restart Claude Code (`/exit`, then `claude`), then in your Godot project's folde
 
 Answer up to eight questions (type **APR**, "as per recommendation", to take Claude's
 suggestion), say yes to the file list, and you're set. Bootstrap never overwrites a file you
-already have; in a project that already has its own status file or design notes, it uses them
-instead of adding copies.
+already have.
+
+**A project that already has its own docs** (a status file, a to-do list, a build log, design
+notes, its own rules)? Type `/godot-accel:realign` instead. It moves what those files say into the
+kit's homes and formats, one home at a time, counts before and after so nothing is dropped, and
+archives the originals. Afterwards the project reads like every other kit project.
 
 **Already set up with an older version?** After updating the plugin, say **update the kit** in
-the project. The session-start card reminds you when the project is behind.
+the project. The session-start card reminds you when the project is behind, or off the shape.
 
 <details>
 <summary>Optional tools, and updating</summary>
@@ -119,7 +123,8 @@ bootstrap copies into your project once, which are then yours to edit.
 
 | You say | Skill | What happens |
 |---|---|---|
-| `/godot-accel:bootstrap` | `bootstrap` | Sets the project up after a few questions; never overwrites a file |
+| `/godot-accel:bootstrap` | `bootstrap` | Sets a new project up after a few questions; never overwrites a file |
+| `/godot-accel:realign` | `realign` | Moves an existing project's own docs into the kit's homes and formats, keeping every fact; one home per commit |
 | "resume" | `resume` | Fetches (asks before pulling), reads where you stopped, finds half-done work, empties the inbox, proposes **one task** for the session |
 | "I want to add…" | `plan-feature` | Questions one at a time with recommendations, a decision record, a plan with a **Done =** line, your OK before any code |
 | `/godot-accel:ship-check` | `ship-check` | Lint, every check, a play-test, a review at milestones, fixes, then "To try:" and a proposed commit |
@@ -235,8 +240,9 @@ computer; the beginner's guide sets it up.
 <details>
 <summary><b>Will it mess up a project I already have?</b></summary>
 
-No. Bootstrap never overwrites a file, and it uses your existing status file or design notes
-instead of adding copies. Nothing is committed without your yes.
+No. Bootstrap never overwrites a file, and a project with its own docs goes to `realign`, which
+keeps every fact, shows before/after counts and archives (never deletes) the originals. Nothing is
+committed without your yes.
 </details>
 
 <details>
@@ -250,7 +256,8 @@ project. It adds what's new and asks before changing anything you wrote.
 <summary><b>The project feels messy. What now?</b></summary>
 
 Say **audit the project**. You get a plain-words list of what's out of place or unused, and
-Claude asks about each fix one at a time.
+Claude asks about each fix one at a time. If the project's docs don't follow the kit's shape at
+all (`tools/dev.sh conform` says so), `/godot-accel:realign` fixes that in one pass.
 </details>
 
 <details>

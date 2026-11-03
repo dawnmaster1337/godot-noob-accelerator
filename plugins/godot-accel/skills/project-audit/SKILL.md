@@ -2,12 +2,12 @@
 name: project-audit
 description: Read-only health check of a game project and how it is run with Claude — when the user asks to "audit the project", "check the repo is tidy", "are the docs a mess", "audit our workflow", "why are we using so many tokens", "what keeps going wrong", or at the end of a milestone. Finds files in the wrong place, unused or overgrown code, scattered or stale docs, contradicting rules and token cost; writes a ranked report in plain words; then asks about each fix one at a time.
 argument-hint: "[focus, e.g. code, docs, tokens, git, the last milestone]"
-allowed-tools: Read Glob Grep Bash(wc *) Bash(git log *) Bash(git status *) Bash(git worktree list) Bash(tools/dev.sh tidy) Bash(tools/dev.sh stale) Bash(tools/dev.sh budget)
+allowed-tools: Read Glob Grep Bash(wc *) Bash(git log *) Bash(git status *) Bash(git worktree list) Bash(tools/dev.sh tidy) Bash(tools/dev.sh stale) Bash(tools/dev.sh budget) Bash(tools/dev.sh conform)
 ---
 
 Focus: $ARGUMENTS
 
-!`if [ -x tools/dev.sh ]; then tools/dev.sh tidy 2>&1; tools/dev.sh stale 2>&1; tools/dev.sh budget 2>&1; else echo "CHECKS DID NOT RUN (no tools/dev.sh)"; fi; true`
+!`if [ -x tools/dev.sh ]; then tools/dev.sh conform 2>&1; tools/dev.sh tidy 2>&1; tools/dev.sh stale 2>&1; tools/dev.sh budget 2>&1; else echo "CHECKS DID NOT RUN (no tools/dev.sh)"; fi; true`
 
 !`git log --oneline -40 --stat 2>/dev/null | grep -cE 'docs/STATUS.md'; true`
 
@@ -20,7 +20,8 @@ checks above find the mechanical problems; you judge what they mean.
 2. **The code:** scripts over ~300 lines, the same logic in several places, names that don't
    match the game's words (`.claude/rules/docs.md`), values hard-coded that belong in a Tuning
    Resource.
-3. **The docs:** each fact in its one home (CLAUDE.md's table); docs outside `docs/`; system pages
+3. **The docs:** `conform` problems rank first (a project off the shape → recommend `realign`,
+   not piecemeal fixes); each fact in its one home; system pages
    that disagree with the code, or systems with no page; finished plans not archived; decisions
    with no index row; dead paths (`stale`).
 4. **The rules and memory:** rules that disagree (CLAUDE.md, rules, memory, skills); binding rules

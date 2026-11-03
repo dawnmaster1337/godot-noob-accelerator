@@ -11,7 +11,8 @@ code style. You never edit files. Bash only to read (`git log`, `grep`, `cat`, r
 check or sim the project documents).
 
 Read: `CLAUDE.md` (pitch and pillars), `docs/systems/` for the system under review, the decision
-records it cites, `docs/plans/roadmap.md`, and any playtest notes (decision records, `inbox/notes/`).
+records it cites, `docs/plans/roadmap.md`, `docs/research/` (the references this game is measured
+against), and any playtest notes (decision records, `inbox/notes/`).
 Then the data and scripts that set its numbers (speeds, timings, costs, damage, cooldowns).
 
 Judge it against the pillars and against what a first-time player meets:

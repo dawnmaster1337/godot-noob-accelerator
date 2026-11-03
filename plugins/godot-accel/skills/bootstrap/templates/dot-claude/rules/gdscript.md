@@ -12,7 +12,8 @@ paths:
   `scripts/`, `resources/`). For a game with many interacting mechanics, the alternative is
   `features/<name>/` per mechanic, features never referencing each other, cross-feature events
   through one events autoload (GodotPrompter `scene-organization`, `event-bus`).
-- A script past ~300 lines: move logic into a helper script, not more into the same file.
+- A script past ~300 lines: split logic into a helper **as its own change, before you need to**.
+  `gdlint` fails at 1000 lines, on whatever edit crosses it, mid-task. Never shave comments to fit.
 - Data (stats, items, abilities, levels) lives in `Resource` subclasses, not hard-coded.
   `duplicate()` any Resource you change per instance: resources are shared.
 - Game-time logic in `_physics_process` or Timers; UI input in `_unhandled_input` / `_gui_input`,

@@ -26,7 +26,9 @@ when you pick them.
 | `rules/godot-mcp.md` *(optional)* | "Never work blind" when an editor MCP server is used |
 | `rules/paid-tools.md` *(optional)* | Spend gate for any paid API |
 | `memory/MEMORY.md`, `memory/README.md` | The project's memory index (imported by CLAUDE.md) and its format |
-| `budgets.md` | Character budgets `trim-context` enforces |
+| `budgets.md` | Character budgets `trim-context` and `pre-commit` enforce |
+| `reminder.md` | Rules you've had to say twice, repeated to Claude with every message you send (under 600 characters; empty by default) |
+| `godot-accel/shape.md` | **The project's shape:** each home's path, kind (live, plan, history), headings and entry format. `tools/dev.sh conform` checks the project against it; add a row for a home of your own |
 | `protected-paths.txt` | Extra paths the guard hook blocks (`addons/*` …), with `!` exceptions |
 | `start-guard.md` | A short standing reminder shown at every session start (empty by default) |
 | `godot-accel/kit-version` | The kit version the project was set up or last updated with; `update` and the session-start card compare it with the plugin |
@@ -41,13 +43,14 @@ when you pick them.
 | `STATUS.md` | Where work stopped, **Next**, the only open-questions list. Read first on resume; under 5,000 characters; no session logs |
 | `known-bugs.md` | Bugs known and not yet fixed (repro, expected, actual), and the last 20 fixed with their cause |
 | `decisions/README.md`, `_template.md` | Index of decisions with status, and the record shape (Topic \| Decision \| Why, your answers, rejected options) |
-| `plans/roadmap.md`, `_template.md` | The milestones; a plan's shape (Done =, design, ticked tasks) |
+| `plans/roadmap.md`, `_template.md` | The milestones and the build log (ticked tasks carry their date); a plan's shape (Done =, design, ticked tasks) |
 | `systems/_template.md` | "What is true now" page per system, with Sources, Open and doc-vs-code mismatches |
 | `reviews/README.md`, `archive/README.md` | Where audit reports and finished plans go |
 | `guides/start-here.md` | Your one-page daily routine |
 | `guides/between-sessions.md` | What you can do while Claude isn't running: inbox drops, note shapes |
 | `guides/setup-new-machine.md` | Install, clone, hooks path, the daily routine across machines |
-| `guides/quirks.md` | Engine and tool gotchas, one line each |
+| `guides/quirks.md` | Engine and tool gotchas, one line each, seeded with ones verified on Godot 4.7 |
+| `research/README.md` | What good looks like (notes on reference works) and what the project already holds; named in every plan and subagent brief |
 | `canon/` *(optional)* | `bible.md`, `README.md` (who owns it), `requests/_template.md` |
 | `standards.md` *(optional)* | Row-by-row standards with status (locked, proved, proposed, open, later) |
 | `production/manifest.md` *(optional)* | Every asset the game needs and where it stands |
@@ -57,13 +60,14 @@ when you pick them.
 | File | Why |
 |---|---|
 | `inbox/README.md`, `inbox/.gdignore` | The drop box; Godot ignores it, git tracks only the README |
-| `tools/dev.sh` | `check` (refresh when files changed + every or named headless checks), `refresh`, `lint`, `stale`, `budget`, `tidy` |
+| `tools/dev.sh` | `check` (refresh when files changed + every or named headless checks), `refresh`, `lint`, `stale`, `conform`, `budget`, `tidy` |
 | `tests/example_check.gd`, `.tscn` | The check-scene pattern: exit code = failures. Copy it per system |
 | `.githooks/` | Do nothing until `git config core.hooksPath .githooks` (per clone). `pre-commit`: lint, format, no `.godot/`, `.env` or key-shaped strings. `pre-push`: hands over to git-lfs. Identity checks only where `~/.config/identity-guard/` exists (`.githooks/README.md`) |
 
 ## In the plugin (not copied; updated with the plugin)
 
 Skills (`resume`, `plan-feature`, `ship-check`, `save-work`, `trim-context`, `project-audit`,
-`canon-check`, `harvest-learnings`, `bootstrap`, `update`), agents (`adversarial-reviewer`,
-`design-reviewer`, `canon-reviewer`) and hooks (session start, path guard for edits and shell writes, format + lint). Project-specific
+`canon-check`, `harvest-learnings`, `bootstrap`, `realign`, `update`), agents (`adversarial-reviewer`,
+`design-reviewer`, `canon-reviewer`) and hooks (session start, a per-message reminder of rules you
+had to repeat, path guard for edits and shell writes, format + lint). Project-specific
 steps for a kit skill go in `.claude/godot-accel/<skill>.md` (`docs/customising.md`).

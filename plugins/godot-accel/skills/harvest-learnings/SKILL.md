@@ -3,7 +3,7 @@ name: harvest-learnings
 description: Turn what this project has learned about working with Claude into feedback for the Godot Noob Accelerator kit — compares the project's CLAUDE.md, rules, docs conventions and memory with the kit's templates, keeps only lessons that would help any project, strips all project content, and writes ready-to-paste GitHub issue bodies. Never posts anything. Run it by typing it.
 argument-hint: "[optional: an area to focus on, e.g. rules, saving, hooks]"
 disable-model-invocation: true
-allowed-tools: Read Glob Grep Bash(diff *) Bash(git log *) Bash(ls *)
+allowed-tools: Read Glob Grep Bash(diff *) Bash(git log *) Bash(ls *) Bash(tools/dev.sh conform)
 ---
 
 Focus: $ARGUMENTS
@@ -13,6 +13,9 @@ version: `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`.
 
 !`git log --oneline -- CLAUDE.md .claude docs/guides docs/decisions/README.md 2>/dev/null | head -30`
 
+0. **Off the shape?** No `.claude/godot-accel/shape.md`, or `tools/dev.sh conform` fails: say so
+   first and recommend `/godot-accel:realign`, then harvest anyway. "Never set up with the kit"
+   and the gaps it caused are a learning too.
 1. **Compare** the project with the templates: `CLAUDE.md` (sections added, removed, reworded;
    the Hard rules), each `.claude/rules/*.md`, `.claude/memory/` (every `feedback` and `user`
    memory), `.claude/budgets.md`, `docs/guides/quirks.md`, the Fixed list in

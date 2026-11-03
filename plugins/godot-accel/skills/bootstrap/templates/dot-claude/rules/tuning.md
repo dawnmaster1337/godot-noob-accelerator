@@ -20,5 +20,12 @@ paths:
 - **Hand edits are the user's.** An uncommitted change to a `.tres`, `.tscn` or tuning script
   that you didn't make is the user's editor or Inspector work. Re-read the file from disk before
   editing it, build on their values, and ask before changing one they set. Never revert it.
+- **A guard comparing a preset with its file** must bypass the cache: `load(path)` returns the
+  object the game already holds, so it compares a thing with itself. Use
+  `ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE_DEEP)`.
+- **Never regenerate a generated page over an uncommitted data file:** the generator reads the
+  working tree, so the user's trial value lands in the page as the agreed one (and its `--check`
+  passes against the same tree). `git status` the data first; a dirty row goes back to the
+  committed value after generating.
 - **Say where it lives.** Each value's file, Inspector group and safe range go in its system
   page (`docs/systems/<system>.md` §3), so the user can change it without asking.

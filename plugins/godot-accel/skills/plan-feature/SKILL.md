@@ -10,8 +10,9 @@ Request: $ARGUMENTS
 behaviour) needs no plan: say so in one line and build it with the normal workflow.
 
 1. **Where it fits:** read `docs/plans/roadmap.md` (is it due now, or later?), the page in
-   `docs/systems/` it touches and the decision records that page cites. If it contradicts a
-   decision or a locked standard, say so and ask first.
+   `docs/systems/` it touches, the decision records that page cites, and `docs/research/` (what
+   good looks like here; a subagent brief names it too). If it contradicts a decision or a locked
+   standard, say so and ask first.
 2. **Echo it back** as a short list (what the player does, sees, feels) and confirm.
 3. **Engine know-how:** if GodotPrompter is installed, load `godot-prompter:godot-grill` when
    there are open design decisions, then the domain skill (`player-controller`, `inventory-system`,

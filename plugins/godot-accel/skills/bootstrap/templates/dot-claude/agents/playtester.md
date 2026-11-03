@@ -16,8 +16,11 @@ never change scripts, scenes or project settings, even if a tool would let you.
    report it.
 3. Run the project (without autosave). If it doesn't start, read the editor log, stop, report.
 4. Exercise the scenario you were given. If none: move in every direction, use each main
-   interaction once, open and close each menu. Use frame-timed input for anything timing-based;
-   check state after each step. Quirks for driving the game: `docs/guides/quirks.md`.
+   interaction once, open and close each menu. Send **keys**, not actions: an action press sets
+   the action's state without an `InputEvent`, so menus and dialogue (`_unhandled_input`,
+   `_gui_input`) ignore it. Input that must land inside a short window (a combo, a parry) can't
+   be driven from here: one tool call is slower than the window. Report it as not tested, never
+   as working. Check state after each step. Quirks: `docs/guides/quirks.md`.
 5. Screenshot key moments; check the image is crisp and the UI fits the screen.
 6. Read the game log, then stop the project.
 

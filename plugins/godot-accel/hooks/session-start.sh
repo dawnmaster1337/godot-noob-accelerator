@@ -57,7 +57,14 @@ inbox=$(find inbox -type f ! -name README.md ! -name .gdignore ! -name .DS_Store
 # STATUS 'Next' paragraph, whole, up to the next blank line.
 next=$(awk '/^\*\*Next/{on=1} on&&/^$/{exit} on{printf "%s ", $0}' docs/STATUS.md 2>/dev/null | cut -c1-900)
 [ -n "$next" ] && msg="$msg STATUS says: ${next}"
-[ -f docs/STATUS.md ] || msg="$msg No docs/STATUS.md: the project is not bootstrapped (/godot-accel:bootstrap)."
+[ -f docs/STATUS.md ] || msg="$msg No docs/STATUS.md: the project is not on the kit's shape. A new project: /godot-accel:bootstrap; one with its own docs, rules or notes: /godot-accel:realign (it moves them into the kit's homes, keeping every fact)."
+
+# The kit's shape (.claude/godot-accel/shape.md): only the count here; tools/dev.sh conform lists them.
+if [ -f .claude/godot-accel/shape.md ] && grep -q '^conform()' tools/dev.sh 2>/dev/null; then
+	problems=$(bash tools/dev.sh conform 2>/dev/null | grep -c '^conform: .*:' | tr -d ' ')
+	[ "${problems:-0}" -gt 0 ] 2>/dev/null &&
+		msg="$msg SHAPE: tools/dev.sh conform finds ${problems} problem(s) (docs out of their homes or form): suggest /godot-accel:realign."
+fi
 
 # STATUS over its budget (from .claude/budgets.md, else 5,000 characters).
 if [ -f docs/STATUS.md ]; then

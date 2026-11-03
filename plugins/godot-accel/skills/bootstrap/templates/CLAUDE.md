@@ -13,16 +13,18 @@ What makes this game this game. Every design decision is checked against these.
 
 ## How this project is run
 
-Each kind of fact has **one home**; everything else points at it.
+Each kind of fact has **one home**; everything else points at it. The full list, with each
+home's form, is `.claude/godot-accel/shape.md` (`tools/dev.sh conform` checks it).
 
 | What | Where |
 |---|---|
 | Where work stopped, what's next, the only open-questions list | `docs/STATUS.md` (**read it first when resuming**) |
-| The build order | `docs/plans/roadmap.md`; a feature's own plan in `docs/plans/YYYY-MM-DD-<topic>.md` |
+| The build order, and the log of what landed when | `docs/plans/roadmap.md`; a feature's own plan in `docs/plans/YYYY-MM-DD-<topic>.md` |
 | What each system does now | `docs/systems/<system>.md` |
 | Why it is that way | `docs/decisions/` (index `README.md`; one `YYYY-MM-DD-<topic>.md` per topic) |
 | Engine and tool quirks | `docs/guides/quirks.md` (read before debugging) |
 | Bugs known and not yet fixed | `docs/known-bugs.md` (check it before fixing a bug; update it with the fix) |
+| What good looks like; what the project holds | `docs/research/` (name it in every subagent brief and plan) |
 | Rules for code, scenes, docs, git, working with the user | `.claude/rules/` |
 | Working rules learned from the user | `.claude/memory/` (index below) |
 | Another agent taking over | `AGENTS.md` |
@@ -82,16 +84,21 @@ Autoloads: {{AUTOLOADS}}.
 2. **Small steps.** After each: lint, `tools/dev.sh check <name>` for the checks covering what
    you touched (its system page §4 names them), {{RUN_STEP}}; fix every error. Every check runs
    in `ship-check`, before a commit.
-3. **Save constantly** (`save-work`): after every finished task, and at session end. Never end a
+3. **A check proves it is used**, not only that it is right: data nothing reads passes every test
+   and does nothing in the game. Assert the consumer (the scene that loads it, the system that
+   reads the field).
+4. **Save constantly** (`save-work`): after every finished task, and at session end. Never end a
    session with uncommitted work unsaid.
-4. Small commits with imperative messages.
+5. Small commits with imperative messages.
 
 ## Commands
 
 - `tools/dev.sh check [name…]` — refresh Godot's cache if files changed, then run the headless
   checks: all, or only those named (exit 1 = a failure).
 - `tools/dev.sh lint` — gdlint + gdformat on changed `.gd` files.
-- `tools/dev.sh stale` — paths in the always-read docs that no longer exist.
+- `tools/dev.sh stale` — paths in the live docs that no longer exist.
+- `tools/dev.sh conform` — does the project match `.claude/godot-accel/shape.md` (homes, headings,
+  task, bug and decision formats, no stray docs).
 - `tools/dev.sh budget` — files over their `.claude/budgets.md` budget, lines over 400 characters.
 - `tools/dev.sh tidy` — what has drifted: unsaved files, docs and code out of place, unused files.
 - {{TEST_COMMAND}}

@@ -52,15 +52,25 @@ fast. A decision that lives only in chat is forgotten by the next session.
 | Where we are, what's next, open questions | `docs/STATUS.md` |
 | What each system does **now** | `docs/systems/<system>.md` |
 | **Why** it's that way | `docs/decisions/` (frozen once decided; indexed in its README) |
-| What's next | `docs/plans/` |
+| What's next, and what landed when (the build log) | `docs/plans/roadmap.md`, `docs/plans/` |
 | Bugs known and not yet fixed | `docs/known-bugs.md` |
 | Engine and tool gotchas | `docs/guides/quirks.md` |
+| What good looks like, what the project holds | `docs/research/` |
+
+The full list, with each home's headings and entry format, is the project's
+`.claude/godot-accel/shape.md`; `tools/dev.sh conform` checks the project against it. A project
+that needs a home the kit lacks adds a row there, so it is declared rather than drift.
 
 Everything else points at the home. When a decision changes, Claude greps `docs/` and fixes every
 copy in the same change.
 
 **Why:** the same rule in four places drifts into four versions, and a resumed session follows the
 stale one. A plan line once overrode a locked standard that way.
+
+**Content stays, structure converges.** Three projects that all ran the kit ended up with three
+different layouts, because every way the kit had of handling an existing project kept the
+project's own file formats. The shape file and `conform` make the structure checkable, and
+`realign` moves a project onto it while keeping every fact the project holds.
 
 ## 4. Memory that travels
 
@@ -135,9 +145,9 @@ paragraph of several hundred words, while its CLAUDE.md said "keep it to a few l
 ## 9. Keeping the project tidy
 
 `project-audit` is a health check for the whole project. `tools/dev.sh tidy` finds the mechanical
-drift: files not in git, docs outside `docs/`, code outside the folders CLAUDE.md names, scripts
-and scenes nothing uses, scripts over 300 lines, finished plans not archived. The skill reads
-that, then judges what a script can't: duplicated logic, system pages that disagree with the code,
+drift: files not in git, code outside the folders CLAUDE.md names, scripts and scenes nothing
+uses, scripts over 300 lines, scenes a hand edit broke, finished plans not archived;
+`tools/dev.sh conform` finds docs out of their homes or form. The skill reads both, then judges what a script can't: duplicated logic, system pages that disagree with the code,
 rules that clash, token cost. It writes a ranked report in plain words and asks about each fix.
 Run it at the end of a milestone, or whenever the project feels messy or sessions feel slow.
 

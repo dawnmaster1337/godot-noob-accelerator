@@ -1,6 +1,6 @@
 ---
 name: bootstrap
-description: Set up a Godot 4 project to be run with this kit — writes CLAUDE.md, .claude/rules, project memory, the docs skeleton (STATUS, decisions, plans, systems, guides), the inbox, a check runner and git ignores, after a few questions. Never overwrites an existing file. Run it once per project, by typing it.
+description: Set up a new Godot 4 project to be run with this kit — writes CLAUDE.md, .claude/rules, project memory, the docs skeleton (STATUS, decisions, plans, systems, guides), the inbox, a check runner and git ignores, after a few questions. Never overwrites an existing file; a project that already has its own docs goes to realign. Run it once per project, by typing it.
 argument-hint: "[optional: the game's name and a one-line pitch]"
 disable-model-invocation: true
 allowed-tools: Read Glob Grep Bash(ls *) Bash(grep *) Bash(echo *) Bash(git status *) Bash(git rev-parse *) Bash(godot --version)
@@ -41,6 +41,9 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
    CLAUDE.md / `.claude/` / `docs/`, and the project's own docs that already do a kit file's job
    (a status or to-do file, design notes, a bug list, rules). Say in three lines what you found. Project hooks named like
    the kit's (`guard-paths.sh`, `gd-format-lint.sh`…): the kit's copies stand down; say so.
+   **The project has its own docs** beyond a README or a short CLAUDE.md (any status, to-do,
+   plan, log, hand-off, bug, quirk or rules file) → this is a job for `realign`, which moves their
+   content into the kit's homes instead of writing a second copy beside them. Say so and stop.
 2. **Ask, one at a time** (skip any the request or step 1 already answers; ≤ 8):
    1. The game's name (default: `config/name`).
    2. One line: what is the game? (genre, the hook).
@@ -56,10 +59,7 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
    8. Extras (multi-pick, recommendations marked): Claude pushes after each commit you approve
       (rec) · asset manifest (rec) · standards page · paid-tools
       spend gate (only if you'll use paid image/sound generators).
-3. **Show the file list** (create / append / exists-ask / adopt) from the map below and get a
-   yes. **Adopt:** where the project already has its own file for a kit file's job, recommend
-   using it in the kit's place (move or rename it, fixing links, and point CLAUDE.md at it), never
-   a second copy beside it.
+3. **Show the file list** (create / append / exists-ask) from the map below and get a yes.
 4. **Write** each file: copy, fill the placeholders, keep or delete each `{{#X}}…{{/X}}` block
    (keep the inside when X is on; remove the markers either way). Leave no `{{…}}` behind except
    in `docs/` example rows. The filled CLAUDE.md must stay under 200 lines and 8,000 characters.
@@ -74,7 +74,7 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
    `.claude/settings.local.json` (per machine, git-ignored; makes Claude's own memory land in the
    repo folder too).
 6. **Prove it:** `tools/dev.sh check` (plain checks: the example check passes), `tools/dev.sh
-   lint all`, `stale` (no dead paths) and `budget`. Quote the outputs. All pass → tick roadmap
+   lint all`, `stale` (no dead paths), `conform` (matches the shape) and `budget`. Quote the outputs. All pass → tick roadmap
    task 0.0 (green baseline). Godot not on PATH → say so and point
    at `docs/guides/setup-new-machine.md`.
 7. **Summary** (short): what was created or appended, what was skipped and why, then next steps:
@@ -91,8 +91,9 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
 | `dot-claude/rules/gdscript.md` / `csharp.md` | `.claude/rules/` | by language (both: both) |
 | `dot-claude/rules/godot-mcp.md`, `dot-claude/agents/playtester.md` | `.claude/…` | MCP named |
 | `dot-claude/rules/paid-tools.md` | `.claude/rules/` | spend gate picked |
-| `dot-claude/memory/*`, `budgets.md`, `protected-paths.txt`, `start-guard.md` | `.claude/` | always (`start-guard.md` empty unless standards picked) |
-| `docs/STATUS.md`, `known-bugs.md`, `decisions/*`, `plans/*`, `systems/_template.md`, `reviews/`, `archive/`, `guides/*` | `docs/` | always |
+| `dot-claude/memory/*`, `budgets.md`, `protected-paths.txt`, `start-guard.md`, `reminder.md` | `.claude/` | always (`start-guard.md` empty unless standards picked) |
+| `dot-claude/godot-accel/shape.md` | `.claude/godot-accel/` | always (its canon, standards and manifest rows only if picked) |
+| `docs/STATUS.md`, `known-bugs.md`, `decisions/*`, `plans/*`, `systems/_template.md`, `research/`, `reviews/`, `archive/`, `guides/*` | `docs/` | always |
 | `docs/canon/**` | `docs/canon/` | canon yes |
 | `docs/standards.md`, `docs/production/manifest.md` | `docs/` | if picked |
 | `inbox/README.md`, `inbox/.gdignore` | `inbox/` | always |
@@ -110,7 +111,6 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
 | `{{GAME_NAME}}`, `{{PITCH}}` | answers 1, 2 |
 | `{{GODOT_VERSION}}` | from `config/features` (e.g. `4.4`) |
 | `{{LANGUAGE}}` | GDScript / C# / GDScript and C# |
-
 | `{{CURRENT_GOAL}}` | "a playable prototype" unless the user said otherwise |
 | `{{PILLAR_1}}` | ask nothing: write "*to be agreed in the first planning session*" |
 | `{{DATE}}` | today, `YYYY-MM-DD` |

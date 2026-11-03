@@ -12,7 +12,7 @@ end of the day). Claude commits only after you say yes.
 1. Only take **free, commercial-use-OK** packs: CC0 or "credit required" is fine; avoid
    "non-commercial", "share-alike" (CC BY-SA) and GPL unless you know what that means for you.
 2. Make a folder per pack in `inbox/assets/` and put the download in it. Don't unzip or rename.
-3. Add a `NOTES.md` beside it (link, licence, what it's for).
+3. Add a *NOTES.md* beside it (link, licence, what it's for).
 
 Claude checks the licence, installs the pack unmodified, records it, and empties the inbox.
 
@@ -40,7 +40,7 @@ Shopkeeper: Back again? You must really like rocks.
 ## 3. Play and take notes
 
 Open the project in Godot and press **F5** to play (**F8** or closing the window stops it).
-Write what felt off in `inbox/notes/playtest.md` straight away, while you remember. Screenshots
+Write what felt off in *inbox/notes/playtest.md* straight away, while you remember. Screenshots
 help: put them in `inbox/notes/` too.
 
 ## Don't

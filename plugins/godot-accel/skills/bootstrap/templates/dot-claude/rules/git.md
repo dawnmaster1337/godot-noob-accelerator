@@ -14,5 +14,10 @@
 - **Secrets:** never paste, write or commit API keys or tokens. Key commands go in a normal
   terminal, never in chat. If a key lands in the chat or a file, tell the user to revoke it.
 - Before ending a session: no uncommitted work left unsaid.
-- Parallel work: a second session that writes code works in its own worktree; only one session at
-  a time runs the game or edits `docs/STATUS.md`.
+- **Parallel work** (sessions or subagents that write code): each in its own worktree. Link
+  git-ignored inputs (raw data, caches) from the main checkout and `git lfs pull` there. Heavy
+  jobs (builds, exports) share one lock (`flock /tmp/<project>-build.lock <command>`): parallel
+  builds run out of memory. Only one agent runs the game or captures the screen at a time. Agents
+  commit code only, never generated outputs, and never edit shared docs (`docs/STATUS.md`, plans,
+  logs): they return that text in their report. The main session merges, rebuilds once and runs
+  the checks.

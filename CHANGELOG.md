@@ -5,6 +5,64 @@ All notable changes. Versions follow the plugin's `version` in
 
 ## Unreleased
 
+## 0.4.0 — one shape for every project
+
+Three projects that all ran the kit had three different layouts: none was bootstrapped, and every
+way the kit had of handling an existing project (bootstrap's "adopt", `update`, `project-audit`)
+kept the project's own file formats. This release separates the two: **the user's content is
+always kept; the structure always becomes the kit's.**
+
+- **The shape file** (`.claude/godot-accel/shape.md`): each home's path, kind (`live`, `plan`,
+  `history`), required headings and entry format. A project adds a row for a home of its own;
+  anything else in `docs/` is drift.
+- **`tools/dev.sh conform`** checks the project against it and exits 1 on any problem: a missing
+  home or heading, a stray doc, a roadmap task without a number, size or Done when, a ticked task
+  without its date, a bug missing a field, and a decisions index that disagrees with its records
+  (`conform decisions` runs only that part).
+- **New `realign` skill** (`/godot-accel:realign`): moves an existing project onto the shape one
+  home at a time, rewriting each file's facts into the kit's form, counting before and after so
+  nothing is dropped, archiving the original and committing per home. Bootstrap sends projects
+  with their own docs to it (its "adopt" option is gone); `update`, `project-audit`,
+  `harvest-learnings` and the session-start card point at it when `conform` fails.
+- **The roadmap is the build log:** a ticked task carries `Done YYYY-MM-DD.`; no separate log.
+- **`docs/research/`:** what good looks like for this game and what the project already holds.
+  `plan-feature` and the design reviewer read it; every subagent brief names it.
+
+Fixed:
+
+- `tools/dev.sh stale` always exited 0, so it could never stop anything; it now exits 1 on a dead
+  path. Its default list missed `docs/systems/` and `docs/guides/`, where dead paths collected; it
+  now reads every `live` row of the shape and skips decisions, reviews, archive and plans.
+- `pre-commit` never checked budgets, so over-budget files were committed (a piped
+  `budget | tail -1` hid the exit code). It now refuses a staged file over its budget, and checks
+  the decisions index when a decision file is staged.
+- Template paths that `stale` flagged (files the user creates were in backticks).
+
+From three projects' harvested learnings:
+
+- **Evidence:** a new check is proven twice (it fails without the fix, and its inputs really
+  happened); a pipeline is proven by a clean run from empty; a subagent's report is a claim to
+  check; a check proves something *uses* what was authored, not only that the data is right.
+- **Scenes:** moving a node is an editor job (and `tidy` lists `[node` headers merged into the
+  line above); a tool that writes a `.tscn` proves the round trip first; runtime saves drop
+  `uid://` lines.
+- **Tuning:** a preset-vs-file guard must bypass the resource cache; never regenerate a generated
+  page over an uncommitted data file.
+- **Parallel work:** worktree rules for several coding agents at once: linked inputs, one build
+  lock, one renderer, code-only commits, shared docs merged by the main session.
+- **Working with the user:** the final message stands alone (phone and remote users); use what
+  the project already holds before making placeholders.
+- **Prompt-reminder hook:** rules the user has had to repeat go in `.claude/reminder.md` and are
+  shown with every message.
+- **GDScript:** split a long script before lint's 1000-line cap forces it mid-task; never shave
+  comments to fit. The playtester sends keys, not actions, and says when windowed input can't be
+  driven remotely.
+- **Quirks seeded**, each reproduced on Godot 4.7.2 or tagged as reported: JSON numbers load as
+  floats, `load()` returns the cached instance, `.tres` stores only non-default values, runtime
+  saves drop uids, helpers named like Object virtuals, physics-interpolation teleports, layout
+  overflow, vsync-capped measurements, black captures on a locked desktop, LFS worktrees.
+- `budgets.md`: a rules file holding a generated table trims its prose, never its rows.
+
 ## 0.3.0 — catch-up for existing projects, safer hooks, a GitHub-ready README
 
 - **New `update` skill** ("update the kit"): brings a project set up with an older kit up to
