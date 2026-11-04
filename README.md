@@ -2,7 +2,7 @@
 
 <img src="assets/readme/hero.svg" alt="Godot Noob Accelerator: make a Godot game with Claude Code, without the mess. Built by a beginner, for beginners." width="100%">
 
-[![Latest release](https://img.shields.io/github/v/release/dawnmaster1337/godot-noob-accelerator?label=release&color=d97757)](https://github.com/dawnmaster1337/godot-noob-accelerator/releases)
+[![Latest release](https://img.shields.io/github/v/release/dawnmaster1337/godot-noob-accelerator?label=release&color=d97757&cacheSeconds=3600)](https://github.com/dawnmaster1337/godot-noob-accelerator/releases)
 [![Godot 4](https://img.shields.io/badge/Godot-4.x-478cbf?logo=godotengine&logoColor=white)](https://godotengine.org)
 [![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-d97757)](https://code.claude.com/docs)
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-5cc8a8)](LICENSE)
