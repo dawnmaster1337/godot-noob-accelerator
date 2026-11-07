@@ -11,6 +11,13 @@
       "description": "Bootstrap a Godot project's CLAUDE.md, rules and docs, then run it session by session: resume, plan, check, save, trim, audit.",
       "category": "development",
       "tags": ["godot", "gamedev", "workflow", "docs", "memory"]
+    },
+    {
+      "name": "godot-sourcing",
+      "source": "./plugins/godot-sourcing",
+      "description": "Ready-made before handmade: search free, commercially licensed shaders, models, textures, skies, addons and systems before building them; shortlist with licences, fetch your pick, record the credit.",
+      "category": "development",
+      "tags": ["godot", "gamedev", "assets", "shaders", "licences"]
     }
   ]
 }

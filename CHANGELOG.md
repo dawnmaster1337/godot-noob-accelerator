@@ -5,6 +5,38 @@ All notable changes. Versions follow the plugin's `version` in
 
 ## Unreleased
 
+**New plugin: godot-sourcing, ready-made before handmade**
+
+Claude Code tended to build everything itself (a primitive tree, a hand-written water shader)
+when free, better, commercially licensed versions were one search away. The marketplace now has a
+second plugin, `godot-sourcing@godot-accel`, with one skill, `find-assets`:
+
+- **Searches before building:** shaders (Godot Shaders, the Asset Library's Shaders category,
+  GitHub), models, textures, skies, sprites, audio and fonts (the 3D Asset Server, 26 sites
+  including Poly Haven, ambientCG and Kenney, bundled as the `3d-assets` MCP server), and addons
+  and systems (the Asset Store, the Asset Library, GitHub, awesome-godot, the Godot Forum).
+- **Licences first:** takes CC0 and MIT-style licences, takes CC-BY with a credit line, asks for
+  share-alike and custom terms, excludes GPL code, non-commercial (Godot Shaders' Shadertoy ports
+  included) and unlicensed assets.
+- **Shortlist, then wait:** up to five matches with licence, preview link and the work to adapt;
+  nothing is downloaded before the user picks.
+- **A per-project policy** (`.claude/rules/sourcing.md`, made on first use): a kind the project
+  makes itself on purpose is never sourced.
+- **Fits the kit:** unmodified files in `assets/third_party/` and `addons/`, credits in the asset
+  manifest, hand-downloaded packs through `inbox/`. Works in any Godot 4 project on its own.
+- Two evals (`plugins/godot-sourcing/evals/`): a "make it look nicer" request shortlists and
+  downloads nothing; a `make` kind is not searched for.
+
+**The kit points to it**
+
+- `plan-feature` runs `find-assets` first when it's installed and the feature needs an asset, a
+  shader or a common system; bootstrap's summary mentions it once when it isn't.
+- **New `docs/companions.md`:** godot-sourcing, GodotPrompter, alexmeckes' godot-claude-skills
+  (`godot-shader`) and PooDoge's godot-mcp-skills (`godot-shader-lab`), with what each needs and
+  where they overlap. README, beginner's guide and how-it-works link to it.
+- `tests/run.sh` validates the new plugin and the marketplace, checks the 4,000-character skill
+  and agent budget across both plugins, and runs the new eval fixtures.
+
 ## 0.5.0 — grows with the game, and checks that mean something
 
 From an outside adversarial review of 0.4.2. The kit now starts small and grows with the game, and

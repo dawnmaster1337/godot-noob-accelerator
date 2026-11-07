@@ -16,7 +16,9 @@ behaviour) needs no plan: say so in one line and build it with the normal workfl
 2. **Echo it back** as a short list (what the player does, sees, feels) and confirm.
 3. **Engine know-how:** if GodotPrompter is installed, load `godot-prompter:godot-grill` when
    there are open design decisions, then the domain skill (`player-controller`, `inventory-system`,
-   `save-load`…). Without it, rely on the project's rules.
+   `save-load`…). Without it, rely on the project's rules. **Ready-made first:** if
+   `godot-sourcing:find-assets` is available and the feature needs an asset, a shader or a
+   common system, run it before designing one; the user's pick is recorded with the answers.
 4. **Questions, one at a time,** scope first, each with a recommendation the user can take with
    "APR"; stop when nothing open changes the build. Plain words; a mockup for anything visual
    (`.claude/rules/working-with-user.md`).

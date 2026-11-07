@@ -1,0 +1,13 @@
+{
+  "name": "godot-sourcing",
+  "displayName": "Godot Sourcing",
+  "version": "0.1.0",
+  "description": "Ready-made before handmade: before Claude writes a shader, models a mesh or builds a common system, it searches free, commercially licensed sources (Godot Shaders, the Asset Store and Asset Library, GitHub, Poly Haven, ambientCG, Kenney and more through the 3D Asset Server), shortlists matches with their licences, waits for your pick, then fetches it and records the credit.",
+  "author": {
+    "name": "dawnmaster1337"
+  },
+  "repository": "https://github.com/dawnmaster1337/godot-noob-accelerator",
+  "license": "MIT",
+  "privacyPolicyUrl": "https://3d.shep.bot/privacy",
+  "keywords": ["godot", "godot-4", "assets", "shaders", "cc0", "licences", "gamedev"]
+}

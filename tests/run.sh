@@ -59,16 +59,37 @@ if command -v shellcheck >/dev/null 2>&1; then
 	expect 0 "shellcheck hooks and dev.sh" shellcheck -S warning -x "$HOOKS"/*.sh "$KIT_TEMPLATES"/tools/dev.sh
 fi
 expect 0 "repo .githooks is the template" diff -r "$REPO/.githooks" "$KIT_TEMPLATES/dot-githooks"
-for f in "$HOOKS/hooks.json" "$KIT_TEMPLATES/dot-claude/settings.suggested.json" "$PLUGIN/.claude-plugin/plugin.json" "$REPO/.claude-plugin/marketplace.json"; do
+SOURCING=$REPO/plugins/godot-sourcing
+for f in "$HOOKS/hooks.json" "$KIT_TEMPLATES/dot-claude/settings.suggested.json" "$PLUGIN/.claude-plugin/plugin.json" "$REPO/.claude-plugin/marketplace.json" "$SOURCING/.claude-plugin/plugin.json" "$SOURCING/.mcp.json"; do
 	expect 0 "valid JSON ${f#"$REPO"/}" python3 -I -c 'import json,sys; json.load(open(sys.argv[1]))' "$f"
 done
 if command -v claude >/dev/null 2>&1; then
 	expect 0 "claude plugin validate --strict" claude plugin validate "$PLUGIN" --strict
+	expect 0 "claude plugin validate --strict (godot-sourcing)" claude plugin validate "$SOURCING" --strict
+	expect 0 "claude plugin validate (marketplace)" claude plugin validate "$REPO"
 fi
+# CONTRIBUTING's budget: each skill and agent under 4,000 characters (bootstrap and realign,
+# run once per project, excepted).
+over=$(for f in "$REPO"/plugins/*/skills/*/SKILL.md "$REPO"/plugins/*/agents/*.md; do
+	[ -f "$f" ] || continue
+	case "$f" in */skills/bootstrap/* | */skills/realign/*) continue ;; esac
+	n=$(wc -c <"$f")
+	[ "$n" -lt 4000 ] || echo "${f#"$REPO"/}: $n characters"
+done)
+[ -z "$over" ] && ok "every skill and agent under 4,000 characters" || bad "skills or agents over budget" "$over"
 # Every injected skill command must end so it can't exit non-zero: a failing one aborts the skill.
-unsafe=$(grep -hn '^!`' "$PLUGIN"/skills/*/SKILL.md | grep -vE '(; true|\|\| echo "[^"]*")`$')
+unsafe=$(grep -hn '^!`' "$REPO"/plugins/*/skills/*/SKILL.md | grep -vE '(; true|\|\| echo "[^"]*")`$')
 [ -z "$unsafe" ] && ok "every skill's ! command ends in '; true' or '|| echo'" || bad "skill ! commands that can fail" "$unsafe"
-cmds=$(grep -h '^!`' "$PLUGIN"/skills/*/SKILL.md | sed 's/^!`//; s/`$//')
+cmds=$(grep -h '^!`' "$REPO"/plugins/*/skills/*/SKILL.md | sed 's/^!`//; s/`$//')
+# godot-sourcing's eval fixtures build a project from scratch: they must run in an empty folder.
+for f in "$SOURCING"/evals/*/fixture.sh "$SOURCING"/evals/lib/*.sh; do
+	expect 0 "bash -n ${f#"$REPO"/}" bash -n "$f"
+done
+for c in "$SOURCING"/evals/*/fixture.sh; do
+	d=$WORK/fixture-$(basename "$(dirname "$c")")
+	mkdir -p "$d"
+	expect 0 "eval fixture ${c#"$REPO"/}" bash -c 'cd "$1" && bash "$2" && test -f project.godot -a -f .claude/rules/sourcing.md' _ "$d" "$c"
+done
 for where in empty-git no-git; do
 	d=$WORK/$where
 	mkdir -p "$d"

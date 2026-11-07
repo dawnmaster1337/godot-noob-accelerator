@@ -194,6 +194,14 @@ saving and so on the right way):
 /plugin install godot-prompter@skillsmith
 ```
 
+Optional, from the kit's own marketplace: before Claude makes a shader, a 3D model or a sky by
+hand, it looks for a free one you're allowed to use in a game you sell, shows you a short list,
+and waits for your pick:
+
+```
+/plugin install godot-sourcing@godot-accel
+```
+
 Restart Claude Code so they load: type `/exit`, then `claude` again.
 
 ✅ **Check:** type `/godot` and the list that pops up includes `/godot-accel:bootstrap`.
