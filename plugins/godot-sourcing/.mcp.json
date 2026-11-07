@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "3d-assets": {
+      "type": "http",
+      "url": "https://3d.shep.bot/mcp"
+    }
+  }
+}

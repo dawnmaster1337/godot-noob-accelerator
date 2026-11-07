@@ -49,5 +49,14 @@ you mean to (`claude plugin eval plugins/godot-accel --scaffold --allow-tools Ba
 cases with a `fixture.sh` need `--scaffold`, or they run in an empty folder).
 
 Add a line to [CHANGELOG.md](CHANGELOG.md) under "Unreleased" and bump the version in
-`plugins/godot-accel/.claude-plugin/plugin.json` when releasing: users only get an update
-when that version changes.
+`plugins/godot-accel/.claude-plugin/plugin.json` (or `plugins/godot-sourcing/…` for that plugin)
+when releasing: users only get an update when that version changes.
+
+## godot-sourcing
+
+The second plugin holds **where to look and which licences are safe**, never assets. The same
+rules apply (budgets, a why for every rule). Its `skills/find-assets/sources.md` describes other
+people's sites and APIs, which change: when one answers differently, fix the line and its date.
+Its evals need the web: `claude plugin eval plugins/godot-sourcing --scaffold --allow-tools Bash
+WebSearch WebFetch --allow-real-servers --runs 1` (without `--allow-real-servers` the
+3D Asset Server isn't started and the skill falls back to web search).

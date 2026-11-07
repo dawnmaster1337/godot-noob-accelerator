@@ -102,6 +102,10 @@ if it's just "I gave up at step 2".
   [every file it adds](docs/structure.md) · [making it your own](docs/customising.md)
 - **Recommended companion:** [GodotPrompter](https://github.com/jame581/GodotPrompter) knows
   how to build Godot things (movement, menus, saving). This kit is about working carefully.
+- **Ready-made before handmade:** `godot-sourcing`, in this same marketplace
+  (`/plugin install godot-sourcing@godot-accel`), makes Claude look for free, commercially
+  licensed shaders, models, textures, skies and addons before building them, and records the
+  credit. More companions, shader skills included: [companions](docs/companions.md).
 - **Your project learned something?** `/godot-accel:harvest-learnings` writes feedback for this
   kit with your game's details removed. [Contributing](CONTRIBUTING.md) ·
   [changelog](CHANGELOG.md)
