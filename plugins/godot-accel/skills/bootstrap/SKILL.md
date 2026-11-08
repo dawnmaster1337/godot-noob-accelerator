@@ -85,8 +85,8 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
 7. **Summary** (short): what was created or appended, what was skipped and why, then next steps:
    read `docs/guides/start-here.md`; say **save work** to commit this setup; describe the first
    thing to build (it starts `plan-feature`). If GodotPrompter's skills aren't in your skill list,
-   recommend installing it (kit README, "More"); if `godot-sourcing:find-assets` isn't either,
-   mention it in one line (ready-made assets before handmade: `docs/companions.md`).
+   recommend installing it (kit README, "More"); if `godot-sourcing:find-assets` isn't either
+   (a kit installed before 0.6.0), give its install line: `/plugin install godot-sourcing@godot-accel`.
 
 ## File map
 

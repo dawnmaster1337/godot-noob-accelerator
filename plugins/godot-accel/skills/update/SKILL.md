@@ -41,4 +41,5 @@ version: `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`. The project's versi
 6. **Prove it:** `tools/dev.sh check`, `lint all`, `stale`, `budget`, `conform`; quote them. A
    failure the update caused → fix it; a `conform` problem it didn't → offer `realign`.
 7. **Record:** the plugin's version into `.claude/godot-accel/kit-version`. Report: added,
-   merged, kept as theirs, still open. Then `save-work` (commit on yes).
+   merged, kept as theirs, still open; `godot-sourcing:find-assets` not in your skill list → give
+   `/plugin install godot-sourcing@godot-accel` (the kit depends on it). Then `save-work` (commit on yes).

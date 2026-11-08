@@ -99,8 +99,9 @@ if [ -d .claude/godot-accel ] || [ -f .claude/budgets.md ]; then
 	if [ -z "$mine" ]; then
 		msg="$msg KIT: this project was set up with a kit older than 0.3.0 (no .claude/godot-accel/kit-version); the kit is now ${kit}. Suggest /godot-accel:update to bring in the newer rules and templates."
 	elif [ -n "$kit" ] && [ "$mine" != "$kit" ]; then
-		newest=$(printf '%s\n%s\n' "$mine" "$kit" | sort -V | tail -1)
-		if [ "$newest" = "$kit" ]; then
+		# A pre-release (0.6.0-beta.1) sorts before its release: "~" does that in sort -V, "-" doesn't.
+		newest=$(printf '%s\n%s\n' "${mine//-/\~}" "${kit//-/\~}" | sort -V | tail -1)
+		if [ "$newest" = "${kit//-/\~}" ]; then
 			msg="$msg KIT: this project is on kit ${mine}; the kit is now ${kit}. Suggest /godot-accel:update."
 		else
 			msg="$msg KIT: this project was updated with kit ${mine}, but this machine's plugin is ${kit}: suggest /plugin marketplace update godot-accel."

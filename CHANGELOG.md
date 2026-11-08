@@ -29,8 +29,12 @@ second plugin, `godot-sourcing@godot-accel`, with one skill, `find-assets`:
 
 **The kit points to it**
 
-- `plan-feature` runs `find-assets` first when it's installed and the feature needs an asset, a
-  shader or a common system; bootstrap's summary mentions it once when it isn't.
+- **Installed with the kit:** godot-accel declares godot-sourcing as a dependency, so installing
+  the kit installs both. A kit installed before 0.6.0 may need
+  `/plugin install godot-sourcing@godot-accel` once; bootstrap's summary gives that line when the
+  skill is missing.
+- `plan-feature` runs `find-assets` first when the feature needs an asset, a shader or a common
+  system.
 - **New `docs/companions.md`:** godot-sourcing, GodotPrompter, alexmeckes' godot-claude-skills
   (`godot-shader`) and PooDoge's godot-mcp-skills (`godot-shader-lab`), with what each needs and
   where they overlap. README, beginner's guide and how-it-works link to it.
