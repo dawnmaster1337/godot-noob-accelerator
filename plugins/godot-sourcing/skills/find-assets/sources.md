@@ -1,12 +1,12 @@
 # Where to look, by kind
 
 Each source's licence is listed as its own site states it; `licences.md` says what to do with
-each. Facts here were checked in November 2026: if a URL or API answers differently now, trust
-the site and tell the user so this file can be fixed.
+each. Facts here were checked live on 8 November 2026: if a URL or API answers differently now,
+trust the site and tell the user so this file can be fixed.
 
 ## The 3D Asset Server (models, materials, textures, skies, sprites, UI, audio, fonts, packs)
 
-One search across 26 asset sites, free, no account or key, every result with its licence. This
+One search across 26 asset sites, free, no account or key, most results with their licence. This
 plugin connects it as the `3d-assets` MCP server (https://3d.shep.bot/mcp). Tools:
 
 - `search_assets` — `query`, `types` (model, material, texture, hdri, sprite, ui, audio, font,
@@ -15,20 +15,23 @@ plugin connects it as the `3d-assets` MCP server (https://3d.shep.bot/mcp). Tool
   `resolution`; returns the licence, formats and a `bundleUrl` to download.
 - `list_providers` — every source, its licence, and whether files download directly.
 
-Read `license.commercialUse` and `license.attributionRequired` on each result. A result with
+Read `license.commercialUse` and `license.attributionRequired` on each search result (`get_asset`
+returns `license` as a plain name). A result with no `license` (common for OpenGameArt, CGTrader
+and itch.io) has an unknown licence: read it on the source page first. A result with
 `downloadable: false` is fetched from its `url` on the source site (Fab, Poliigon and TurboSquid
 return a search link only). The server writes nothing to disk: download the `bundleUrl` with
 `curl -L`. Limit: 120 requests a minute; on a 429, wait the `Retry-After` time and retry once.
 Same search without MCP: `https://3d.shep.bot/v1/search?q=<words>&type=<type>&free=true&limit=10`.
 
 Sources it covers that are CC0 throughout: Poly Haven, ambientCG, Kenney, TextureCan,
-3DAssets.dev, Grab3D. Per asset (check each): Quaternius (CC0 or its own licence), OpenGameArt,
+3DAssets.dev, Grab3D, cgbookcase (download on its site). Per asset (check each): Quaternius (CC0 or its own licence), OpenGameArt,
 Sketchfab (needs a login), BlenderKit, Wikimedia Commons, itch.io. Credit always needed:
 Scenario 3D Collection (CC-BY 4.0).
 
 Direct, when the server is down:
 - **Poly Haven** (CC0): `https://api.polyhaven.com/assets?t=<hdris|textures|models>`, then
-  `/files/<id>` for download links. Every request needs a User-Agent naming the project.
+  `/files/<id>` for download links. The API asks every client to send a User-Agent naming the
+  project.
 - **ambientCG** (CC0): `https://ambientcg.com/api/v2/full_json?q=<words>&type=<Material|HDRI|3DModel>&include=downloadData&limit=10`.
 
 ## Packs with no API of their own
@@ -44,10 +47,13 @@ godot-accel project empties `inbox/assets/`).
 
 - **Godot Shaders** (https://godotshaders.com): browse by type with
   `https://godotshaders.com/shader/?shader_type=<spatial|canvas_item>&pg=1`, or search with
-  `site:godotshaders.com <effect>`. Licence is on each shader's page: CC0, MIT, GPL v3, or a
-  Shadertoy port (CC BY-NC-SA 3.0 by default: excluded). Pages don't state a Godot version:
-  Godot 3 code (`hint_color`, `SCREEN_TEXTURE` read directly) needs a port to Godot 4.
-- **Asset Library, category Shaders** (below), and GitHub (`gh search repos "<effect> shader"
+  `site:godotshaders.com <effect>`. Licence is under each shader's code ("The shader code and all
+  code snippets in this post are under …"): CC0, MIT or GPL v3; a Shadertoy port says it's
+  CC BY-NC-SA 3.0 unless its author states otherwise (excluded). A page marked CC0 or MIT whose
+  text names a Shadertoy original is still under the original's licence: read it on Shadertoy.
+  The licence covers the code, not the page's images. A Godot version shows only in the tags, if
+  at all: Godot 3 code (`hint_color`, `SCREEN_TEXTURE` read directly) needs a port to Godot 4.
+- **Asset Library, category Shaders** (below, add `&category=3`), and GitHub (`gh search repos "<effect> shader"
   --topic godot --sort stars`).
 
 ## Addons, tools and whole systems
@@ -62,7 +68,8 @@ godot-accel project empties `inbox/assets/`).
   say so in the shortlist.
 - **GitHub:** `gh search repos "<words>" --topic godot --sort stars --limit 10 --json
   fullName,url,description,license,stargazersCount,pushedAt` (add `--license mit` to narrow).
-  **awesome-godot** (https://github.com/godotengine/awesome-godot) lists free/libre addons,
+  A `license` of `other` or none means reading the repository's LICENSE file.
+  **awesome-godot** (https://github.com/Calinou/awesome-godot) lists free/libre addons,
   templates and demos.
 - **Godot Forum** (https://forum.godotengine.org): `site:forum.godotengine.org <words>`. A post
   is a lead, never a licence: follow it to the repository or store page and read the licence there.
