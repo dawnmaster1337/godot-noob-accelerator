@@ -193,6 +193,13 @@ if hook session-start.sh '{}' | grep -q "lacks the kit's deny rules"; then bad "
 printf '{}\n' >.claude/settings.json
 expect_out "lacks the kit's deny rules" "session-start flags missing deny rules" hook session-start.sh '{}'
 git checkout -q .claude/settings.json
+cp .claude/godot-accel/kit-version "$WORK/kit-version.bak"
+kitv=$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "$PLUGIN/.claude-plugin/plugin.json" | head -1)
+echo "0.0.1" >.claude/godot-accel/kit-version
+expect_out 'Suggest /godot-accel:update' "session-start: an older project suggests update" hook session-start.sh '{}'
+echo "${kitv}-beta.1" >.claude/godot-accel/kit-version
+expect_out 'Suggest /godot-accel:update' "session-start: a pre-release stamp is older than its release" hook session-start.sh '{}'
+cp "$WORK/kit-version.bak" .claude/godot-accel/kit-version
 
 echo "== git hooks"
 printf '%*s\n' 9000 '' | tr ' ' x >>CLAUDE.md

@@ -23,6 +23,9 @@ Say **"find a toon water shader"**, **"I need some low-poly trees"**, or
 
 ## Install
 
+Installing the Godot Noob Accelerator (`godot-accel@godot-accel`) installs this plugin too. On its
+own:
+
 ```
 /plugin marketplace add dawnmaster1337/godot-noob-accelerator
 /plugin install godot-sourcing@godot-accel

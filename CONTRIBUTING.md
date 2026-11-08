@@ -54,7 +54,9 @@ when releasing: users only get an update when that version changes.
 
 ## godot-sourcing
 
-The second plugin holds **where to look and which licences are safe**, never assets. The same
+The second plugin holds **where to look and which licences are safe**, never assets. godot-accel
+lists it in `dependencies`, so installing the kit installs it: one install for a beginner, while
+the kit stays process and godot-sourcing keeps its own version and MCP server. The same
 rules apply (budgets, a why for every rule). Its `skills/find-assets/sources.md` describes other
 people's sites and APIs, which change: when one answers differently, fix the line and its date.
 Its evals need the web: `claude plugin eval plugins/godot-sourcing --scaffold --allow-tools Bash
