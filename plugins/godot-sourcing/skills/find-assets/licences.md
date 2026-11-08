@@ -18,5 +18,8 @@ a licence is unclear, say so and let the user decide.
 **Mixed packs:** a pack's headline licence doesn't cover a file credited to someone else in it.
 Read the pack's licence file, not only its page.
 
+**Ports:** a shader marked CC0 or MIT that names an original elsewhere (a Shadertoy link, another
+repository) is still under the original's licence; the porter can't relicense it. Read it there.
+
 **Excluded but the best match?** Name it in one line under the shortlist ("best look, but
 non-commercial") so the user knows it exists, and never fetch it.
