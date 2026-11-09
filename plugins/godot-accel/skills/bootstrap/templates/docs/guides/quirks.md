@@ -52,5 +52,8 @@ a Godot upgrade, re-check the quirks tagged with an older version, or retire the
   `git -c credential.helper= -c "credential.helper=!f() { echo username=<account>; echo password=\$(gh auth token -u <account>); }; f" push`
 - *Seen 2026-10 (Linux):* window captures come out pure black → the desktop is locked; check
   first (`loginctl show-session <id> -p LockedHint`) and say so instead of sending black images.
+- *Claude Code:* a new agent worktree starts from origin's default branch, without unpushed
+  commits, unless `worktree.baseRef` is `"head"` (the kit's settings set it) → any other tool:
+  `git merge --ff-only <local tip>` in the worktree before work starts, or push first.
 - *Seen 2026-11:* a new git worktree in a project using Git LFS opens in Godot with broken art
   or sounds → it holds LFS pointer files: `git lfs pull` in the worktree before opening Godot.

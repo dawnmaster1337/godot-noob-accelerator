@@ -7,4 +7,7 @@
 - After each step: run the game through the MCP, read the game and editor logs, fix every error.
 - Disk edits while the editor is open: run without autosave, so the editor doesn't overwrite them.
 - Only one session drives the editor at a time.
+- **Driven input can miss:** a synthetic key event may carry no typed character, so text entry
+  never fires from it. Before writing that something doesn't work, confirm the input reached it;
+  else test it by hand (`.claude/rules/showing-work.md`).
 - New quirks go into `docs/guides/quirks.md` "Editor and MCP".

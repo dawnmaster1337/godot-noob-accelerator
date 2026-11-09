@@ -11,4 +11,8 @@ paid APIs):
   hoping for better.
 - **Never lose a paid result:** save the output and a ledger row in the same step; after an
   interruption, check what was paid for and recover it before anything else.
+- **Approval failing → stop spending:** two refusals or non-answers in a row from the permission
+  check: stop, say what is failing, and ask the user to change the permission mode before any
+  further paid call. Never retry one blind: a turn cut between the call and reading its result
+  pays for an output nobody saved. Before a paid batch, check a plain command still round-trips.
 - Paid calls go through one project script that logs them, never through ad-hoc tools that skip it.

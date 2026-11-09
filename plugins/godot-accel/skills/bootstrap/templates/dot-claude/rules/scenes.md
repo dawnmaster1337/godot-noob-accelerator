@@ -2,7 +2,7 @@
 paths:
   - "**/*.tscn"
   - "**/*.tres"
-  - "project.godot"
+  - "**/project.godot"
 ---
 
 # Scenes, resources and project files

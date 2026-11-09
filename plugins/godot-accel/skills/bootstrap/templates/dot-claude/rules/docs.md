@@ -21,6 +21,8 @@ paths:
 - **A decision changed?** Grep `docs/` for the old claim and fix every copy in the same change; add
   the record to `docs/decisions/README.md`.
 - **Budgets in characters** (`.claude/budgets.md`); no line over 400 characters. Trim at session end.
+- **No absolute paths in records:** the pre-push identity guard reads a home folder as identity.
+  Quoting the user, use the repo-relative path and say so in the record.
 - **Only real paths get backticks** (`scenes/<name>.tscn`), so `tools/dev.sh stale` finds dead
   ones. A file the user will create, or one outside this repo, goes without them.
 - **After changing docs:** `tools/dev.sh conform`, `stale` and `budget`.

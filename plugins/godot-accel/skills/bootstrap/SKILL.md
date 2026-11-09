@@ -44,7 +44,7 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
    **The project has its own docs** beyond a README or a short CLAUDE.md (any status, to-do,
    plan, log, hand-off, bug, quirk or rules file) → this is a job for `realign`, which moves their
    content into the kit's homes instead of writing a second copy beside them. Say so and stop.
-2. **Ask, one at a time** (skip any the request or step 1 already answers; ≤ 8):
+2. **Ask, one at a time** (skip any the request or step 1 already answers; ≤ 9):
    1. The game's name (default: `config/name`).
    2. One line: what is the game? (genre, the hook).
    3. Language: GDScript (recommended unless a `.csproj` exists) / C# / both.
@@ -59,6 +59,8 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
    8. Extras (multi-pick, recommendations marked): Claude pushes after each commit you approve
       (rec) · asset manifest (rec) · standards page · paid-tools
       spend gate (only if you'll use paid image/sound generators).
+   9. Only with `godot-sourcing:find-assets` in your skill list: is there a kind of asset you make
+      yourself on purpose, so Claude never downloads it (models, 2D art, sound…)? Rec: none.
 3. **Show the file list** (create / append / exists-ask) from the map below and get a yes. Say
    in one line that more homes (decisions, system pages, research…) appear when the game needs
    them.
@@ -67,6 +69,8 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
    in `docs/` example rows. The filled CLAUDE.md must stay under 200 lines and 8,000 characters.
    Write the plugin's version (`${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`) into
    `.claude/godot-accel/kit-version`, so `update` and the session-start card know it.
+   Answer 9 given → run `godot-sourcing:find-assets` with `policy: make=<kinds, or none>`: it
+   writes `.claude/rules/sourcing.md` with the default licence line, and stops.
 5. **Finish the setup** (ask before each): `chmod +x tools/dev.sh .githooks/pre-commit
    .githooks/commit-msg .githooks/pre-push` (git ignores a hook that isn't executable);
    `git init` if not a repo; turn on the git checks with `git config core.hooksPath .githooks`
@@ -97,7 +101,7 @@ copies it from these templates, as the shape's Made column says.
 | Template | Target | When |
 |---|---|---|
 | `CLAUDE.md` | same | setup |
-| `dot-claude/rules/working-with-user.md`, `git.md`, `showing-work.md`, `docs.md`, `scenes.md`, `tuning.md` | `.claude/rules/` | setup |
+| `dot-claude/rules/working-with-user.md`, `handing-over.md`, `git.md`, `showing-work.md`, `docs.md`, `scenes.md`, `tuning.md` | `.claude/rules/` | setup |
 | `dot-claude/rules/gdscript.md` / `csharp.md` | `.claude/rules/` | setup, by language (both: both) |
 | `dot-claude/rules/godot-mcp.md`, `dot-claude/agents/playtester.md` | `.claude/…` | setup, MCP named |
 | `dot-claude/rules/paid-tools.md` | `.claude/rules/` | setup, spend gate picked |

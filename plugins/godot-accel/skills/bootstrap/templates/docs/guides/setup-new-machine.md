@@ -51,3 +51,15 @@ The last line turns on the project's git checks (format, lint, no secrets), if i
 
 `tools/dev.sh check` (it builds Godot's cache first). Everything should pass. Then open the
 editor: `godot --path . -e`.
+
+## Renaming or moving the project folder
+
+1. Save work: commit and push.
+2. Close the Claude session (not `/clear`: it keeps the old folder, which then no longer exists).
+3. Rename or move the folder.
+4. Start a new session in the new folder.
+5. Run `git worktree repair` there (worktrees store the old absolute path).
+6. Run `git grep` for the old folder path and fix any hits.
+
+The kit's memory (`.claude/memory/`) moves with the folder. Claude's own per-folder memory
+doesn't.

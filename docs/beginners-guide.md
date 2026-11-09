@@ -210,7 +210,7 @@ Type:
 /godot-accel:bootstrap
 ```
 
-Claude asks up to eight questions, **one at a time**, each with a suggested answer. Not sure?
+Claude asks up to nine questions, **one at a time**, each with a suggested answer. Not sure?
 Type **APR** ("as per recommendation") and it takes its suggestion. It asks:
 
 1. Your game's name.

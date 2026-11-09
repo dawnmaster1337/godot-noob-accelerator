@@ -3,7 +3,7 @@
 All notable changes. Versions follow the plugin's `version` in
 `plugins/godot-accel/.claude-plugin/plugin.json`.
 
-## Unreleased
+## 0.6.0 — ready-made before handmade, and what three projects taught the kit
 
 **New plugin: godot-sourcing, ready-made before handmade**
 
@@ -26,6 +26,38 @@ second plugin, `godot-sourcing@godot-accel`, with one skill, `find-assets`:
   manifest, hand-downloaded packs through `inbox/`. Works in any Godot 4 project on its own.
 - Two evals (`plugins/godot-sourcing/evals/`): a "make it look nicer" request shortlists and
   downloads nothing; a `make` kind is not searched for.
+
+**What three real projects and a try-out taught the kit**
+
+- **Stop check:** a project whose `tools/dev.sh` predates 0.5.0 never cleared the hook's list,
+  so it blocked every other turn. The hook now stays off there (the session-start card says
+  why), and one batch of changes blocks once.
+- **`tools/dev.sh`:** `budget` names files within 5% of their budget; the refresh and
+  "used by" searches skip `.claude/worktrees/` (other sessions' checkouts).
+- **New rule file `handing-over.md`:** what the user sees, runs and reviews (stills and clips,
+  one piece then a review, "open X, try Y", one runner per command, steps last), split from
+  `working-with-user.md`, which keeps questions and answers (stale question lists, paused plans).
+- **`showing-work.md`:** a UI change is done only when seen; a break test must cross its
+  threshold; a negative from driven input isn't a finding; suspect the ruler first.
+- **Smaller rules:** stop paid calls when approval keeps failing (`paid-tools.md`); no absolute
+  paths in records (`docs.md`); worktree cleanup after a merge (`git.md`); driven input can miss
+  (`godot-mcp.md`).
+- **Settings and git:** new worktrees branch from local HEAD (`worktree.baseRef: "head"`); video
+  captures are git-ignored; `scenes.md` loads for a `project.godot` in a subfolder.
+- **Docs skeleton:** known-bugs says a recorded cause is a claim until measured and what
+  "can't reproduce" usually means; plans get Verdicts and Temporary tools; the setup guide
+  covers renaming the project folder.
+- **Skills:** `plan-feature` proves every premise, not only a refactor's; `trim-context` reviews
+  the reminder; `project-audit` counts worktree disk; `ship-check` lists owed credits at a
+  milestone; `update` moves hand-over lines to the new file and sets up the sourcing policy.
+- **find-assets, from a three-run try-out:** the policy is a gate before the first search
+  (bootstrap asks its one question); decisions are read first; "improve ours" searches methods
+  too; shortlists give found / licence-checked / shortlisted counts and widen under three; a set
+  gets a row per item; an existing third-party register wins; reference-only picks ship nothing;
+  `SOURCE.md` when there's no licence file. `sources.md` adds Poly Pizza, Sketchfab's licence
+  API, BlenderKit's new domain, and the Asset Library's `godot_version` trap. Fetch detail moved
+  to `fetch.md`.
+- **README:** trying a test branch with `"ref"`, not `marketplace remove`.
 
 **The kit points to it**
 

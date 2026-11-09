@@ -33,9 +33,12 @@ behaviour) needs no plan: say so in one line and build it with the normal workfl
      (the first system's plan also picks the layout style in `.claude/rules/gdscript.md`);
    - **Tasks:** small steps, each runnable, the last one a check in `tests/`.
    Add or link the task in `docs/plans/roadmap.md`.
-   **A refactor proves its premise first:** grep the duplication and read two call sites (a doc's
-   "used by" column is not evidence); say what the guarding check compares. A check that must fail
-   when the refactor succeeds (byte-for-byte output) guards nothing. No caller needs it yet: park it.
+   **A plan proves its premise first, and again before the first edit.** A claim about the code:
+   grep the call sites and read two (a doc's "used by" column is not evidence). A number it
+   promises: measure it, and say what it's a share of. A decision already made: grep the decision
+   records and reviews' "keep as is". A count that reads like a cause: ask what it's worth, not how
+   big it is. A task you wrote is not evidence. Say what the guarding check compares (one that must
+   fail when the work succeeds guards nothing). No caller needs it yet: park it.
 7. **Show** the plan in under ten lines and ask for the OK. No code before it.
 8. **On OK:** build task 1 (CLAUDE.md workflow: small steps, checks, a run after each), tick
    tasks as they land, and finish with `save-work`. When it's done, write or update the system's

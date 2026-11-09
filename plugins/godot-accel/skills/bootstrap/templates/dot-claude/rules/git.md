@@ -20,4 +20,7 @@
   builds run out of memory. Only one agent runs the game or captures the screen at a time. Agents
   commit code only, never generated outputs, and never edit shared docs (`docs/STATUS.md`, plans,
   logs): they return that text in their report. The main session merges, rebuilds once and runs
-  the checks.
+  the checks. Repo-wide scripts and formatters skip `.claude/worktrees/` (other sessions' work).
+- **After merging an agent's branch:** check `git status` in its worktree (keep or move any
+  uncommitted file that isn't a generated output), then `git worktree remove <path>` and
+  `git worktree prune`. Keep worktrees whose branch isn't merged (`git branch --no-merged`).

@@ -5,6 +5,8 @@ cost tokens in every session: keep them under budget. Over budget → trim now (
 the doc it points to), unless what is left is protected (`trim-context` step 4): then it
 becomes a task, never a deletion. A commit is refused only for a file read every session
 (`CLAUDE.md`, STATUS, memory, rules, the reminder); the rest are a warning. A file named in its own row uses that row; a glob row skips `README.md`.
+`budget` also names files within 5% of their budget ("near budget"): an addition to one of those
+trims in the same edit, so the commit gate isn't failed one edit at a time.
 Any line over 400 characters fails too (a long table cell is a long line), except table rows in
 docs read only when needed (research, registers).
 
