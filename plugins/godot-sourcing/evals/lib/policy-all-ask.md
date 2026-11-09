@@ -1,6 +1,6 @@
-# Sourcing ready-made assets
+# Find or build: the project's choices
 
-## What may be sourced
+## Per kind
 
 | Kind | Policy |
 |---|---|

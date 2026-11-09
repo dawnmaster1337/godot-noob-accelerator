@@ -1,13 +1,13 @@
-# Sourcing ready-made assets
+# Find or build: the project's choices
 
 The project's policy for `find-assets` (godot-sourcing plugin). The user owns it; change a row
-by saying so. Why it exists: some projects make every asset themselves on purpose, and a
-sourced asset in the wrong kind would undo that.
+by saying so. Why it exists: whether to use a ready-made asset or build one is the user's call,
+and some projects make every asset of a kind themselves on purpose.
 
-## What may be sourced
+## Per kind
 
-`source`: search free sources first, then build only what's missing · `make`: never source;
-build or generate it here · `ask`: ask each time.
+`ask`: ask each time, find or build · `source`: find ready-made options without asking ·
+`make`: always build or generate it here, never search.
 
 | Kind | Policy |
 |---|---|
@@ -19,7 +19,7 @@ build or generate it here · `ask`: ask each time.
 | Fonts | {{FONTS}} |
 | Addons, tools, whole systems | {{ADDONS}} |
 
-## Licences
+## Licences for what is found
 
 {{LICENCE_LINE}}
 

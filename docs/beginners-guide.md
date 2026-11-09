@@ -195,8 +195,9 @@ saving and so on the right way):
 ```
 
 The kit installs one helper of its own with it, `godot-sourcing`: before Claude makes a shader, a
-3D model or a sky by hand, it looks for a free one you're allowed to use in a game you sell,
-shows you a short list, and waits for your pick. Nothing to type: try saying "I need some trees".
+3D model or a sky, it asks whether you want a ready-made one or one built for you. Choose
+ready-made and it shows you a short list of free ones you're allowed to use in a game you sell,
+and waits for your pick. Nothing to type: try saying "I need some trees".
 
 Restart Claude Code so they load: type `/exit`, then `claude` again.
 

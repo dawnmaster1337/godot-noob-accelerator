@@ -39,8 +39,8 @@ questions **one at a time, each with a recommendation** ("APR" takes it), record
 a dated decision record, then writes a plan with a **Done =** paragraph a player could check and
 small tasks, and waits for your OK. If GodotPrompter is installed, it loads the matching engine
 skill and says which pattern it picked and which it rejected. If godot-sourcing is installed and
-the feature needs an asset, a shader or a common system, it looks for a ready-made one first and
-your pick becomes part of the decision.
+the feature needs an asset, a shader or a common system, it asks whether to find a ready-made one
+or build it, and your answer (and pick) becomes part of the decision.
 
 **Why:** a dozen questions at once get skimmed; one at a time with a default gets real answers
 fast. A decision that lives only in chat is forgotten by the next session.

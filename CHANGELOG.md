@@ -3,9 +3,28 @@
 All notable changes. Versions follow the plugin's `version` in
 `plugins/godot-accel/.claude-plugin/plugin.json`.
 
-## 0.6.0 — ready-made before handmade, and what three projects taught the kit
+## 0.6.1 — find or build: the user's call
 
-**New plugin: godot-sourcing, ready-made before handmade**
+0.6.0 framed godot-sourcing as "ready-made before handmade". That was wrong: whether to use a
+ready-made asset or build one is the user's decision, and the kit shouldn't lean either way.
+
+- **`find-assets` asks first:** its first step, before any search or code, is one question with
+  no recommendation: find a ready-made one, or build it here? Build → Claude builds it. Find →
+  the licence policy, then the search and shortlist as before. It offers once to remember the
+  answer for that kind.
+- **The project policy answers ahead of time, per kind:** `ask` (now the default for every kind),
+  `source` (find without asking) or `make` (always build). Existing policy files keep working.
+- **Reworded everywhere it leaned:** the skill's description, both plugin descriptions, the
+  READMEs, the beginner's guide, how-it-works, companions, and `plan-feature` ("Find or build",
+  not "Ready-made first").
+- **Eval:** `flat-water-shortlists` is now `flat-water-asks-first`: a "make it look nicer"
+  request gets the question first, recommending neither, with nothing searched or written.
+
+godot-accel 0.6.1, godot-sourcing 0.1.1.
+
+## 0.6.0 — godot-sourcing, and what three projects taught the kit
+
+**New plugin: godot-sourcing** (framed as "ready-made before handmade"; corrected in 0.6.1)
 
 Claude Code tended to build everything itself (a primitive tree, a hand-written water shader)
 when free, better, commercially licensed versions were one search away. The marketplace now has a

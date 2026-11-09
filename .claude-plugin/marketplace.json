@@ -15,7 +15,7 @@
     {
       "name": "godot-sourcing",
       "source": "./plugins/godot-sourcing",
-      "description": "Ready-made before handmade: search free, commercially licensed shaders, models, textures, skies, addons and systems before building them; shortlist with licences, fetch your pick, record the credit.",
+      "description": "Find or build, your call: before Claude makes a shader, model, texture, sky, addon or system, it asks whether to find a ready-made one or build it. Finding shortlists free, licence-checked options, fetches your pick and records the credit.",
       "category": "development",
       "tags": ["godot", "gamedev", "assets", "shaders", "licences"]
     }

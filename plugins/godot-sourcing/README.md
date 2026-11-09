@@ -1,15 +1,16 @@
 # Godot Sourcing (plugin)
 
-**Ready-made before handmade.** Left alone, Claude Code builds everything itself: a primitive
-tree, a hand-written water shader, a skybox from a gradient. Free, better, commercially licensed
-versions are usually one search away. This plugin's `find-assets` skill looks there first.
+**Find or build, your call.** Left alone, Claude Code builds everything itself without asking: a
+primitive tree, a hand-written water shader, a skybox from a gradient. Free, commercially
+licensed versions often exist too. This plugin's `find-assets` skill asks you which you want.
 
 When you ask for something to look or feel better, or Claude is about to write a shader, model a
 mesh or build a common system, it:
 
-1. checks your project's sourcing policy (`.claude/rules/sourcing.md`, made the first time: a
-   kind you make yourself on purpose is never sourced);
-2. searches the sources for that kind: the 3D Asset Server (26 sites, including Poly Haven,
+1. asks you first: find a ready-made one, or build it here? Neither is recommended; it's your
+   call. Your project's policy (`.claude/rules/sourcing.md`) can answer for a kind ahead of time:
+   always build it, always find it, or ask (the default);
+2. if you chose to find one: searches the sources for that kind: the 3D Asset Server (26 sites, including Poly Haven,
    ambientCG and Kenney), Godot Shaders, the Asset Store and Asset Library, GitHub, awesome-godot
    and the Godot Forum;
 3. drops anything you can't use in a game you might sell (non-commercial, GPL code, no licence);
@@ -33,7 +34,7 @@ own:
 
 It works in any Godot 4 project and fits in with the Godot Noob Accelerator (`godot-accel`) when
 both are installed: credits go in the kit's asset manifest, packs you download by hand go through
-the kit's `inbox/`, and `plan-feature` checks for a ready-made asset before planning one.
+the kit's `inbox/`, and `plan-feature` asks find-or-build when a feature needs an asset.
 
 ## What it connects to
 

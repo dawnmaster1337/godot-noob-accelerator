@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: flat-water-asks-first
+description: A "make it look nicer" request about a visual fires find-assets, which first asks whether to find a ready-made one or build it, recommending neither, and searches, downloads and writes nothing before the answer. Needs --scaffold.
+tags: [sourcing, find-or-build]
+context:
+  scaffold_script: fixture.sh

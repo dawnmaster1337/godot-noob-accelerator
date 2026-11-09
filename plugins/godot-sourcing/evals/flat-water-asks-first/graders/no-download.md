@@ -6,4 +6,4 @@ min: 0
 max: 0
 arm: with-only
 ---
-Nothing is downloaded before the user picks from the shortlist.
+Nothing is downloaded before the user answers find or build.
