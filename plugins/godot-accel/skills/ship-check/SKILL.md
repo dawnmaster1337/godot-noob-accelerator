@@ -34,6 +34,8 @@ milestone).
    subagent or worktree built, or when the user asks. Otherwise skip it and say so. When it runs,
    delegate to `adversarial-reviewer` with only the intent above and, for committed work, the
    commit range (the milestone's first commit's parent `..HEAD`): never your summary.
+   At a milestone, also list every credit still owed (a register row saying "credit owed"): the
+   game can't ship with one.
 4. **Fix:** every CRITICAL and HIGH finding, and the obvious ones of any severity, without asking
    (bugs, crashes, softlocks, stuck input, lint, docs that contradict the code). Ask only about
    findings that touch a design decision, one at a time with a recommendation. Each MEDIUM or

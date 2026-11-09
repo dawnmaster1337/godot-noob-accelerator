@@ -67,7 +67,7 @@ STAMP="$GAME/.godot/dev-refresh.stamp"
 
 needs_refresh() {
 	[ -f "$STAMP" ] || return 0
-	[ -n "$(find "$GAME" \( -path "$GAME/.godot" -o -path ./.git -o -path ./inbox \) -prune -o -type f -newer "$STAMP" \
+	[ -n "$(find "$GAME" \( -path "$GAME/.godot" -o -path ./.git -o -path ./inbox -o -path '*/.claude/worktrees' \) -prune -o -type f -newer "$STAMP" \
 		\( -name '*.gd' -o -name '*.cs' -o -name '*.tscn' -o -name '*.tres' -o -name '*.res' \
 		-o -name '*.gdshader' -o -name '*.png' -o -name '*.jpg' -o -name '*.webp' -o -name '*.svg' \
 		-o -name '*.ogg' -o -name '*.wav' -o -name '*.mp3' -o -name '*.glb' -o -name '*.gltf' \
@@ -454,10 +454,10 @@ conform() {
 }
 
 # used_by <text> <file>: does any scene, resource, script or project.godot other than <file>
-# contain <text>? (Godot's cache and git's folder don't count.)
+# contain <text>? (Godot's cache, git's folder and other sessions' worktrees don't count.)
 used_by() {
 	grep -rlsF --include='*.tscn' --include='*.tres' --include='*.gd' --include='*.cs' \
-		--include=project.godot --exclude-dir=.godot --exclude-dir=.git -e "$1" . |
+		--include=project.godot --exclude-dir=.godot --exclude-dir=.git --exclude-dir=.claude -e "$1" . |
 		grep -vxF "./$2" | grep -q .
 }
 
@@ -540,6 +540,9 @@ budget() {
 				if [ "$size" -gt "$limit" ]; then
 					echo "over budget: $f $size/$limit characters"
 					problems=$((problems + 1))
+				elif [ $((size * 20)) -gt $((limit * 19)) ]; then
+					# Within 5%: it passes, but the next addition must trim in the same edit.
+					echo "near budget: $f $size/$limit characters ($((limit - size)) left)"
 				fi
 			done
 		done < <(budget_rules)

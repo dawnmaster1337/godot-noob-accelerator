@@ -112,6 +112,16 @@ expect 1 "check of a missing name fails" tools/dev.sh check nothing
 expect 0 "lint all" tools/dev.sh lint all
 expect 0 "stale (first-use homes may be named before they exist)" tools/dev.sh stale
 expect 0 "budget" tools/dev.sh budget
+for _ in $(seq 49); do printf '%099d\n' 0; done >docs/STATUS.md
+expect_out 'near budget: docs/STATUS.md 4900/5000 characters \(100 left\)' "budget names a file within 5% of its budget" tools/dev.sh budget
+expect 0 "and still passes" tools/dev.sh budget
+git checkout -q docs/STATUS.md
+stamp=$(stat -c %Y .godot/dev-refresh.stamp)
+sleep 1
+mkdir -p .claude/worktrees/other && printf 'extends Node\n' >.claude/worktrees/other/new.gd
+tools/dev.sh check >/dev/null 2>&1
+[ "$(stat -c %Y .godot/dev-refresh.stamp)" = "$stamp" ] && ok "check ignores other sessions' worktrees" || bad "a file in .claude/worktrees/ triggered a refresh"
+rm -rf .claude/worktrees
 expect_out 'not needed yet' "conform matches, first-use homes not asked for" tools/dev.sh conform
 expect 0 "conform exit code" tools/dev.sh conform
 expect 0 "tidy" tools/dev.sh tidy
@@ -176,6 +186,13 @@ grep -q 'var  x' loose.gd && ok "after a shell command, a file is not reformatte
 grep -qx loose.gd .godot/godot-accel-touched && ok "the changed file is noted for the stop hook" || bad "touched list" "$(cat .godot/godot-accel-touched 2>&1)"
 expect 2 "stop-check asks for a check after game files changed" hook stop-check.sh '{}'
 expect 0 "stop-check lets the next stop through (asks once)" hook stop-check.sh '{}'
+expect 0 "stop-check: one batch blocks once, not every other turn" hook stop-check.sh '{}'
+echo loose.gd >.godot/godot-accel-touched
+cp tools/dev.sh "$WORK/dev.sh.bak"
+sed -i 's/godot-accel-touched/kit-list/g' tools/dev.sh
+expect 0 "stop-check stays off with a dev.sh that never clears the list" hook stop-check.sh '{}'
+expect_out 'predates the kit.s stop check' "session-start says the stop check is off" hook session-start.sh '{}'
+cp "$WORK/dev.sh.bak" tools/dev.sh
 rm loose.gd
 tools/dev.sh check >/dev/null 2>&1
 [ ! -e .godot/godot-accel-touched ] && ok "tools/dev.sh check empties the list" || bad "touched list survives a check"

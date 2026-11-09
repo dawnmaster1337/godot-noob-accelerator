@@ -98,6 +98,12 @@ if it's just "I gave up at step 2".
   version? Run the marketplace update again: it can reuse a stale copy. To update on its own,
   turn on auto-update for this marketplace in `/plugin` → Marketplaces (it's off for kits like
   this one).
+- **Trying a test branch:** in `~/.claude/settings.json` (and the project's
+  `.claude/settings.json`, if it lists the kit), add `"ref": "<branch>"` to the `godot-accel`
+  entry's `source` under `extraKnownMarketplaces`. Then run
+  `claude plugin marketplace add 'dawnmaster1337/godot-noob-accelerator#<branch>'` and
+  `claude plugin update godot-accel@godot-accel`. Remove the `ref` to go back. Don't run
+  `marketplace remove`: it uninstalls the kit and rewrites the project's settings.
 - **What's inside, and why:** [how it works](docs/how-it-works.md) ·
   [every file it adds](docs/structure.md) · [making it your own](docs/customising.md)
 - **Recommended companion:** [GodotPrompter](https://github.com/jame581/GodotPrompter) knows

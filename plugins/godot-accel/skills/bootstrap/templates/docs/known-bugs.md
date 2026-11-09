@@ -7,6 +7,11 @@ change as the fix. Playtest notes from `inbox/` land here. Budget: 6,000 charact
 
 Copy this block per bug, newest first. Status: `open` · `in progress` · `can't reproduce`.
 
+A cause written here is a claim until measured: re-measure it (a cheap temporary trace) before
+building its fix, and correct the entry when it's wrong. `can't reproduce` is a finding, not a
+dead end: it usually means the data model can't express something the reporter expects. Ask
+what the data *cannot* say before relabelling anything; if it was never a bug, say so and why.
+
 ```
 ### <Short title>
 - Status: open

@@ -3,18 +3,20 @@
 # tools/dev.sh check, it may not finish until it has run the checks or said why they can't run.
 # "Never claim it works without running it" as a hook, not only a sentence. It blocks once per
 # batch of changes (a marker file), so a check that can't run never traps the session.
-# gd-format-lint.sh writes the list; tools/dev.sh check empties it. Silent outside a kit project,
-# or when the project registers its own stop-check.sh.
+# gd-format-lint.sh writes the list; tools/dev.sh check empties it (from kit 0.5.0: an older
+# dev.sh never does, so the hook stays off there and the session-start card says why). Silent
+# outside a kit project, or when the project registers its own stop-check.sh.
 set -u
 # shellcheck source=lib.sh
 . "$(dirname "$0")/lib.sh"
 is_godot_project || exit 0
 project_has_own_hook stop-check.sh && exit 0
-[ -f "$(project_root)/tools/dev.sh" ] || exit 0
+grep -qs 'godot-accel-touched' "$(project_root)/tools/dev.sh" || exit 0
 touched=$(state_file touched)
 [ -s "$touched" ] || exit 0
+# Asked already: let this stop through and start a new batch, so one batch blocks once.
 if [ -f "$touched.asked" ]; then
-	rm -f "$touched.asked"
+	rm -f "$touched" "$touched.asked"
 	exit 0
 fi
 touch "$touched.asked"

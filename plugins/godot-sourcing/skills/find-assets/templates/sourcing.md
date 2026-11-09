@@ -24,5 +24,5 @@ build or generate it here · `ask`: ask each time.
 {{LICENCE_LINE}}
 
 Where downloads go: `assets/third_party/<source>-<slug>/` and `addons/<name>/`, unmodified.
-Where credits go: the asset manifest (docs/production/manifest.md) in a godot-accel project,
-else CREDITS.md at the project root.
+Where credits go: the project's existing third-party register if it has one, else the asset
+manifest (docs/production/manifest.md) in a godot-accel project, else CREDITS.md at the root.

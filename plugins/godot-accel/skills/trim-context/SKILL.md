@@ -30,7 +30,9 @@ Project steps (from `.claude/godot-accel/trim-context.md`, shown above if any) r
 3. **Stale.** Delete memories and STATUS lines that are no longer true (a fixed bug, an answered
    question, a superseded plan); a Fixed list in `docs/known-bugs.md` past 20 lines loses the
    oldest. Fix every path `stale` listed. For each decision that changed this session, grep
-   `docs/` for the old claim and fix every copy.
+   `docs/` for the old claim and fix every copy. Read each line of `.claude/reminder.md` against
+   STATUS and the plan: a line about work that ended, or a rule a check now enforces, goes (keep
+   its memory file if it is still true).
 4. **Never trim:** canon, decision records, open questions the user hasn't answered, quirks that
    still apply. Over budget with only these left: cut what another home already holds, then
    stop; tell the user which files are still over and by how much, and make it a STATUS Next

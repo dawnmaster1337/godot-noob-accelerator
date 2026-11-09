@@ -117,6 +117,8 @@ if is_godot_project; then
 		msg="$msg Neither jq nor python3 is installed: the kit's file guard and lint hooks are OFF. Tell the user: install jq (Linux: the package manager; macOS: brew install jq)."
 	PATH="$HOME/.local/bin:$PATH" command -v gdlint >/dev/null 2>&1 ||
 		msg="$msg gdtoolkit is not installed: GDScript is not linted or formatted. Tell the user: pipx install 'gdtoolkit==4.*'."
+	[ -f tools/dev.sh ] && ! grep -qs 'godot-accel-touched' tools/dev.sh &&
+		msg="$msg tools/dev.sh predates the kit's stop check (it never clears its list), so that check is off until /godot-accel:update."
 	[ -f tools/dev.sh ] && ! grep -qsF 'Edit(.godot/**)' .claude/settings.json &&
 		msg="$msg .claude/settings.json lacks the kit's deny rules (shell writes to Godot's files, secrets reads): suggest /godot-accel:update."
 fi

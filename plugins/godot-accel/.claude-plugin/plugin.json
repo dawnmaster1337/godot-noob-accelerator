@@ -1,7 +1,7 @@
 {
   "name": "godot-accel",
   "displayName": "Godot Noob Accelerator",
-  "version": "0.6.0-beta.1",
+  "version": "0.6.0",
   "description": "The process layer for a Godot 4 game made with Claude Code: a bootstrap that writes CLAUDE.md, rules and a docs skeleton, plus skills, agents and hooks for resuming, planning, checking, saving and learning between sessions.",
   "author": {
     "name": "dawnmaster1337"

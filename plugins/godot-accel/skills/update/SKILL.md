@@ -25,10 +25,12 @@ version: `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`. The project's versi
    memory) are never rewritten: only missing files are added, and a template's new section is
    offered as a heading; their form is `realign`'s job. `shape.md`: kit rows into the first
    table only, with the kit's Made column; "This project's own rows" are theirs.
-   - **Kit 0.5.0:** `tests/smoke_check.*` replaces the `2 + 2` example check (offer to delete
-     `example_check.*` if unchanged); `settings.suggested.json`'s ask and deny rules go into
-     `.claude/settings.json`; an `autoMemoryDirectory` in `.claude/settings.local.json` pointing
-     at `.claude/memory` now loads the memory twice (CLAUDE.md imports it): the user removes it.
+   - **Kit 0.5.0:** `tests/smoke_check.*` replaces the `2 + 2` example (delete
+     `example_check.*` if unchanged); new ask and deny rules for `.claude/settings.json`; an
+     `autoMemoryDirectory` pointing at `.claude/memory` loads memory twice: the user removes it.
+   - **Kit 0.6.0:** the hand-over lines of `working-with-user.md` (looks, review, "open X, try
+     Y", steps last, final message) moved to `handing-over.md`: move the project's wording with
+     them. `tools/dev.sh` from 0.5.0 on clears the stop check's list (older: the check is off).
 4. **Show** one table, under 15 lines: file · add / merge / nothing · what changes. Get a yes.
    Ask one at a time only where a kit line contradicts theirs (recommend theirs).
 5. **Merge:** each new kit line where it belongs in the user's file; never delete or reword theirs.
@@ -41,5 +43,6 @@ version: `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`. The project's versi
 6. **Prove it:** `tools/dev.sh check`, `lint all`, `stale`, `budget`, `conform`; quote them. A
    failure the update caused → fix it; a `conform` problem it didn't → offer `realign`.
 7. **Record:** the plugin's version into `.claude/godot-accel/kit-version`. Report: added,
-   merged, kept as theirs, still open; `godot-sourcing:find-assets` not in your skill list → give
-   `/plugin install godot-sourcing@godot-accel` (the kit depends on it). Then `save-work` (commit on yes).
+   merged, kept as theirs, still open. `godot-sourcing:find-assets` not in your skill list → give
+   `/plugin install godot-sourcing@godot-accel`; in it but no `.claude/rules/sourcing.md` → ask
+   bootstrap's question 9 and do its step 4 line. Then `save-work` (commit on yes).

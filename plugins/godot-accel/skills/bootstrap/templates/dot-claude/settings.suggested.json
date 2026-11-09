@@ -35,5 +35,8 @@
       "Bash(rm -fr *)",
       "Bash(sudo *)"
     ]
+  },
+  "worktree": {
+    "baseRef": "head"
   }
 }

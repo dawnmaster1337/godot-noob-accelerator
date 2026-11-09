@@ -1,7 +1,7 @@
 # Where to look, by kind
 
 Each source's licence is listed as its own site states it; `licences.md` says what to do with
-each. Facts here were checked live on 8 November 2026: if a URL or API answers differently now,
+each. Facts here were checked live on 8 and 9 November 2026: if a URL or API answers differently now,
 trust the site and tell the user so this file can be fixed.
 
 ## The 3D Asset Server (models, materials, textures, skies, sprites, UI, audio, fonts, packs)
@@ -24,15 +24,36 @@ return a search link only). The server writes nothing to disk: download the `bun
 Same search without MCP: `https://3d.shep.bot/v1/search?q=<words>&type=<type>&free=true&limit=10`.
 
 Sources it covers that are CC0 throughout: Poly Haven, ambientCG, Kenney, TextureCan,
-3DAssets.dev, Grab3D, cgbookcase (download on its site). Per asset (check each): Quaternius (CC0 or its own licence), OpenGameArt,
-Sketchfab (needs a login), BlenderKit, Wikimedia Commons, itch.io. Credit always needed:
-Scenario 3D Collection (CC-BY 4.0).
+3DAssets.dev, Grab3D, cgbookcase (download on its site). Per asset (check each): Quaternius (CC0
+or its own licence), OpenGameArt, Sketchfab (needs a login), BlenderKit, Wikimedia Commons,
+itch.io. Credit always needed: Scenario 3D Collection (CC-BY 4.0).
+
+A first search finds few? Widen before reporting: `limit` 40–50 without `types`, then one search
+per provider (`providers: ["sketchfab"]`, then `opengameart`, `itchio`, `kenney`, `quaternius`),
+then the sources below the server doesn't cover.
+
+Licence pages that refuse a script:
+- **Sketchfab** model pages refuse `curl`. Its API gives the licence:
+  `https://api.sketchfab.com/v3/search?type=models&q=<words>&downloadable=true&count=24`
+  (`license.label`, e.g. "CC Attribution") or `https://api.sketchfab.com/v3/models/<uid>`.
+- **BlenderKit** now answers at `blendkit.com` (a redirect from `blenderkit.com`; its images still
+  come from `public.blenderkit.com`). Its "Royalty Free" is its own licence: custom terms, ask.
+- **OpenGameArt** and **CGTrader** pages may answer 403 or an empty 202 to a script. Give the
+  link and mark the licence "not verified" until it's read.
 
 Direct, when the server is down:
 - **Poly Haven** (CC0): `https://api.polyhaven.com/assets?t=<hdris|textures|models>`, then
   `/files/<id>` for download links. The API asks every client to send a User-Agent naming the
   project.
 - **ambientCG** (CC0): `https://ambientcg.com/api/v2/full_json?q=<words>&type=<Material|HDRI|3DModel>&include=downloadData&limit=10`.
+
+## Poly Pizza (low-poly models, not in the server)
+
+https://poly.pizza: thousands of low-poly models, many by Google Poly and Quaternius, each CC0 or
+CC-BY 3.0 (credit). Search `https://poly.pizza/search/<words>` (model links are `/m/<id>`). Each
+model page names its licence (a `creativecommons.org` link) and holds the direct file link,
+`https://static.poly.pizza/<file-id>.glb`. It ships no licence file: write `SOURCE.md`
+(`fetch.md`). Its pages show poly counts unlabelled: count triangles from the file.
 
 ## Packs with no API of their own
 
@@ -63,6 +84,8 @@ godot-accel project empties `inbox/assets/`).
   Listings show the licence.
 - **Asset Library** (older, still online; assets were not moved over automatically, so check
   both): `https://godotengine.org/asset-library/api/asset?filter=<words>&godot_version=<x.y>&max_results=10`.
+  Always pass `godot_version`: without it the API returns few or none. The project's x.y finds
+  only that version; `any` widens to all (for "road": none 0, `4.3` 2, `any` 6).
   Fields: `asset_id`, `title`, `category`, `godot_version`, `cost` (the licence),
   `support_level`, `modify_date`. A stale `modify_date` or an older `godot_version` is a risk:
   say so in the shortlist.
