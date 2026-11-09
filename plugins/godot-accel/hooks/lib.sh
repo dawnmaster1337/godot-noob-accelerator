@@ -85,6 +85,15 @@ except Exception:
 	fi
 }
 
+# json_string <text>: the text as a JSON string, via jq or python3 (for a hook's JSON output).
+json_string() {
+	if command -v jq >/dev/null 2>&1; then
+		printf '%s' "$1" | jq -Rs .
+	else
+		printf '%s' "$1" | python3 -I -c 'import json, sys; print(json.dumps(sys.stdin.read()), end="")'
+	fi
+}
+
 # project_has_own_hook <script name>: true when the project's own settings already register a
 # hook script of the same name (written before the plugin shipped one). The project's copy wins,
 # so the same job doesn't run twice and report every failure twice.

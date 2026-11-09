@@ -145,6 +145,14 @@ rm broken.gd
 cp main.gd "$WORK/main.gd"
 printf 'extends Node2D\n\n\nfunc _ready() -> void:\n\tvar a: Array = []\n\tprint(a[3])\n' >main.gd
 expect 1 "a runtime error in the main scene fails it" tools/dev.sh check
+printf 'extends Node2D\n\n\nfunc _ready() -> void:\n\tpush_error("pushed boom")\n' >main.gd
+expect 1 "an engine ERROR line fails it, though Godot exits 0 (push_error)" tools/dev.sh check
+expect_out 'Godot printed errors' "and says why" tools/dev.sh check
+printf '# expected on purpose\n\npushed boom\n' >tests/expected_errors.txt
+expect 0 "an error listed in tests/expected_errors.txt doesn't fail it" tools/dev.sh check
+rm tests/expected_errors.txt
+printf 'extends Node2D\n\n@onready var hp: Node = $Missing\n\n\nfunc _ready() -> void:\n\tprint(hp)\n' >main.gd
+expect 1 "a missing node fails it" tools/dev.sh check
 cp "$WORK/main.gd" main.gd
 printf 'extends Node2D\n\n\nfunc _ready() -> void:\n\tvar n = 3\n\tprint(n)\n' >untyped.gd
 expect 1 "an untyped declaration fails it (untyped_declaration = error)" tools/dev.sh check
@@ -197,6 +205,19 @@ rm loose.gd
 tools/dev.sh check >/dev/null 2>&1
 [ ! -e .godot/godot-accel-touched ] && ok "tools/dev.sh check empties the list" || bad "touched list survives a check"
 expect 0 "stop-check silent after a check" hook stop-check.sh '{}'
+hook shell-stamp.sh '{"tool_input":{"command":"x"}}'
+sleep 1
+mkdir -p .claude/worktrees/other && printf 'extends Node\n' >.claude/worktrees/other/theirs.gd
+hook gd-format-lint.sh '{"tool_name":"Bash","tool_input":{"command":"x"}}' >/dev/null 2>&1
+[ ! -s .godot/godot-accel-touched ] && ok "other sessions' worktrees are not noted" || bad "a .claude/worktrees file was noted" "$(cat .godot/godot-accel-touched)"
+rm -rf .claude/worktrees
+hook shell-stamp.sh '{"tool_input":{"command":"git commit"}}'
+sleep 1
+printf 'extends Node\nfunc Pulled_In() -> void:\n\tpass\n' >pulled.gd
+g add pulled.gd && g commit -qm pulled --no-verify
+expect 0 "after a command that moved HEAD (pull, merge, checkout), lint doesn't block" hook gd-format-lint.sh '{"tool_name":"Bash","tool_input":{"command":"git commit"}}'
+[ ! -s .godot/godot-accel-touched ] && ok "and its files are not noted as Claude's" || bad "files from git were noted" "$(cat .godot/godot-accel-touched)"
+g reset -q --hard HEAD~1
 printf 'extends Node2D\nvar  y: int = 1\n' >edited.gd
 expect 0 "lint hook after an edit: formats" hook gd-format-lint.sh "{\"tool_name\":\"Edit\",\"tool_input\":{\"file_path\":\"$P/edited.gd\"}}"
 grep -q 'var y' edited.gd && ok "an edited file is formatted" || bad "edited file not formatted" "$(cat edited.gd)"
@@ -235,6 +256,18 @@ git add -f addons/third/x.gd
 expect 0 "pre-commit skips addons/" .githooks/pre-commit
 git reset -q
 rm -r addons
+mkdir -p docs/plans
+printf '# Mask shader\n\nSee 2026-11-09-mask-shader-for-the-water-and-the-sky.md\n' >docs/plans/2026-11-09-mask-shader-for-the-water-and-the-sky.md
+git add docs/plans/2026-11-09-mask-shader-for-the-water-and-the-sky.md
+expect 0 "pre-commit: a word ending in 'sk-' is not a key (mask-shader)" .githooks/pre-commit
+git reset -q
+rm docs/plans/2026-11-09-mask-shader-*
+printf 'key = "sk-ant-%s"\n' "$(printf '%*s' 40 '' | tr ' ' a)" >leak.cfg
+git add leak.cfg
+expect 1 "pre-commit refuses a key-shaped string" .githooks/pre-commit
+expect_out '    leak.cfg' "and names the file" .githooks/pre-commit
+git reset -q
+rm leak.cfg
 
 echo "== a game in a subfolder (game/)"
 S=$WORK/sub
@@ -253,7 +286,7 @@ mkdir -p game/addons/third
 printf 'extends Node\nfunc Bad_Name():\n  pass\n' >game/addons/third/x.gd
 out=$(hook gd-format-lint.sh '{"tool_name":"Bash","tool_input":{"command":"x"}}' 2>&1)
 code=$?
-[ "$code" = 2 ] && printf '%s' "$out" | grep -q lintme.gd && ok "shell edits in game/ are linted" || bad "game/ shell edit not linted (exit $code)" "$out"
+[ "$code" = 0 ] && printf '%s' "$out" | grep -q '"additionalContext":.*lintme.gd' && ok "shell edits in game/ are linted, reported without blocking" || bad "game/ shell edit not reported (exit $code)" "$out"
 printf '%s' "$out" | grep -q addons && bad "game/addons/ was linted" "$out" || ok "game/addons/ is not linted"
 rm game/lintme.gd
 git add -f game/addons/third/x.gd

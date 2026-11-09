@@ -1,6 +1,8 @@
 extends Node
 ## The smoke check: every script in the project loads, and the main scene loads and plays for a
-## moment. A script error while it plays fails it too: tools/dev.sh reads the output for one.
+## moment. Any error Godot prints while it plays fails it too (a missing node, a failed load, a
+## push_error): tools/dev.sh reads the output for one. An error a check expects on purpose goes in
+## tests/expected_errors.txt.
 ## Run: tools/dev.sh check smoke   (or: godot --headless --path . res://tests/smoke_check.tscn)
 ## A check for one system copies this pattern to tests/<topic>_check.gd + .tscn: load a scene or
 ## Resource, poke it, compare the result with _check(). Exit code 1 = a failure.

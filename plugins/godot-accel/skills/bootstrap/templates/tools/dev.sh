@@ -90,15 +90,32 @@ refresh() {
 	return $fail
 }
 
+# engine_errors <log>: the run's error lines. Godot prints a missing node, a failed load or a
+# push_error as "ERROR:" and still exits 0, so the log decides too. Not counted: leak reports at
+# shutdown ("... at exit"), and lines holding a text from tests/expected_errors.txt (one per line:
+# a check that tests an error path lists the error it expects there).
+engine_errors() {
+	local expected="$GAME/tests/expected_errors.txt"
+	grep -E '^(USER |SCRIPT )?ERROR' "$1" | grep -v 'at exit' | {
+		if [ -f "$expected" ]; then grep -vFf <(grep -vE '^[[:space:]]*(#|$)' "$expected"); else cat; fi
+	}
+}
+
 # run_check <tests/x_check.tscn>: prints only a failure; returns 1 on one.
 run_check() {
-	local scene=$1 log code
+	local scene=$1 log code errors why
 	log=$(mktemp)
 	headless 120 "res://$scene" >"$log" 2>&1
 	code=$?
-	if [ "$code" -ne 0 ] || grep -q "SCRIPT ERROR" "$log"; then
-		echo "FAIL $scene (exit $code)"
-		grep -E "FAIL|SCRIPT ERROR|failed" "$log" | head -5
+	errors=$(engine_errors "$log")
+	if [ "$code" -ne 0 ] || [ -n "$errors" ]; then
+		why="exit $code"
+		[ -n "$errors" ] && why="$why, Godot printed errors"
+		echo "FAIL $scene ($why)"
+		{
+			grep -E "FAIL|failed" "$log"
+			printf '%s\n' "$errors"
+		} | grep . | head -8
 		rm -f "$log"
 		return 1
 	fi

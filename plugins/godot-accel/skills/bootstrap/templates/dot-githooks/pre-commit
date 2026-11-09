@@ -62,8 +62,16 @@ if echo "$files" | grep -qE '(^|/)\.env($|\.)'; then
   exit 1
 fi
 # Common key shapes: private key blocks, AWS, GitHub, Slack, Anthropic/OpenAI-style "sk-" keys.
-if git diff --cached -U0 | grep -E '^\+' | grep -qE -- '-----BEGIN [A-Z ]*PRIVATE KEY-----|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{36}|xox[baprs]-[A-Za-z0-9-]{10,}|sk-[A-Za-z0-9_-]{20,}'; then
-  echo "pre-commit: something that looks like an API key or private key is staged"
+# Only added lines count, not the diff's file headers, and "sk-" must start a word: a plan named
+# 2026-11-09-mask-shader-for-the-water.md is not a key.
+key='-----BEGIN [A-Z ]*PRIVATE KEY-----|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{36}|xox[baprs]-[A-Za-z0-9-]{10,}|(^|[^A-Za-z0-9_-])sk-[A-Za-z0-9_-]{32,}'
+keyfiles=$(echo "$files" | while IFS= read -r f; do
+  [ -n "$f" ] || continue
+  git diff --cached -U0 -- "$f" | grep -E '^\+' | grep -v '^+++ ' | grep -qE -- "$key" && printf '%s\n' "$f"
+done)
+if [ -n "$keyfiles" ]; then
+  echo "pre-commit: something that looks like an API key or private key is staged in:"
+  printf '%s\n' "$keyfiles" | sed 's/^/    /'
   exit 1
 fi
 # Character budgets (.claude/budgets.md, else tools/dev.sh's defaults). A staged file Claude reads

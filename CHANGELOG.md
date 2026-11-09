@@ -3,6 +3,26 @@
 All notable changes. Versions follow the plugin's `version` in
 `plugins/godot-accel/.claude-plugin/plugin.json`.
 
+## Unreleased — checks you can trust
+
+From an adversarial audit of 0.6.1. **Update:** yes, the first fix changes what a passing check
+means. A project gets the new `tools/dev.sh` and pre-commit through **update the kit**.
+
+- **A check scene fails on any error Godot prints.** Godot reports a missing node, a failed load
+  or a `push_error` as an `ERROR:` line and still exits 0, so a main scene with all three passed
+  the smoke check. `tools/dev.sh check` now reads the log for them (leak reports at shutdown
+  aside). A check that tests an error path lists the error it expects in
+  `tests/expected_errors.txt`. GUT and gdUnit4 runs are unchanged: they test errors on purpose.
+- **The secrets check stopped blocking ordinary words.** `sk-` had no word boundary, so a plan
+  named `…-mask-shader-for-the-water.md` (the kit's own naming) looked like an API key, and the
+  message named no file. Now `sk-` must start a word, only added lines count (not the diff's file
+  headers), and the message lists the files.
+- **Lint after a shell command reports, never blocks.** It used to block Claude over files a
+  `git pull` or merge brought in, or that the user saved in Godot meanwhile: against the rule
+  that the user's edits are theirs. A command that moved HEAD now notes and lints nothing; any
+  other is linted and reported. Other sessions' worktrees in `.claude/` are skipped. A lint
+  failure in a file Claude's editing tools wrote still blocks, as before.
+
 ## 0.6.1 — find or build: the user's call
 
 0.6.0 framed godot-sourcing as "ready-made before handmade". That was wrong: whether to use a

@@ -70,7 +70,7 @@ when you pick them.
 |---|---|---|
 | `inbox/README.md`, `inbox/.gdignore` | setup | The drop box; Godot ignores it, git tracks only the README |
 | `tools/dev.sh` | setup | `check` (refresh when files changed, then every or the named headless checks, GUT or gdUnit4 too; fails when nothing ran), `refresh`, `lint`, `stale`, `conform`, `budget`, `tidy` |
-| `tests/smoke_check.gd`, `.tscn` | setup | Loads every script and plays the main scene for a second; a parse or script error fails it. The pattern each system's own check copies |
+| `tests/smoke_check.gd`, `.tscn` | setup | Loads every script and plays the main scene for a second; any error Godot prints fails it (a missing node, a failed load, `push_error`). The pattern each system's own check copies; an error a check expects on purpose goes in `tests/expected_errors.txt` |
 | `.githooks/` | setup | Do nothing until `git config core.hooksPath .githooks` (per clone). `pre-commit`: lint, format, no `.godot/`, `.env` or key-shaped strings, budgets. `pre-push`: hands over to git-lfs. The identity checks are the maintainer's own tool and run only where `~/.config/identity-guard/` exists (`.githooks/README.md`) |
 
 ## In the plugin (not copied; updated with the plugin)
