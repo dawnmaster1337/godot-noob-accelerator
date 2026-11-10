@@ -106,6 +106,7 @@ P=$WORK/root
 project "$P"
 cd "$P" || exit 1
 expect 0 "check passes (smoke check plays the main scene)" tools/dev.sh check
+expect_out 'no errors in 600 frames' "run plays the main scene headless, bounded" tools/dev.sh run
 expect_out 'all 1 check run' "check counts the smoke check" tools/dev.sh check
 expect 0 "check smoke (by name)" tools/dev.sh check smoke
 expect 1 "check of a missing name fails" tools/dev.sh check nothing
@@ -148,6 +149,7 @@ expect 1 "a runtime error in the main scene fails it" tools/dev.sh check
 printf 'extends Node2D\n\n\nfunc _ready() -> void:\n\tpush_error("pushed boom")\n' >main.gd
 expect 1 "an engine ERROR line fails it, though Godot exits 0 (push_error)" tools/dev.sh check
 expect_out 'Godot printed errors' "and says why" tools/dev.sh check
+expect 1 "run: an engine ERROR line fails the bounded headless run" tools/dev.sh run
 printf '# expected on purpose\n\npushed boom\n' >tests/expected_errors.txt
 expect 0 "an error listed in tests/expected_errors.txt doesn't fail it" tools/dev.sh check
 rm tests/expected_errors.txt
@@ -278,6 +280,10 @@ expect 0 "lint all" tools/dev.sh lint all
 expect 0 "conform" tools/dev.sh conform
 expect 0 "stale" tools/dev.sh stale
 expect 2 "guard-paths blocks game/.godot/" hook guard-paths.sh "{\"tool_input\":{\"file_path\":\"$S/game/.godot/x\"}}"
+expect 2 "guard-paths blocks game/addons/ (protected from the game folder)" hook guard-paths.sh "{\"tool_input\":{\"file_path\":\"$S/game/addons/x/y.gd\"}}"
+expect 2 "guard-paths folds ../ (game/scripts/../addons/)" hook guard-paths.sh "{\"tool_input\":{\"file_path\":\"$S/game/scripts/../addons/x/y.gd\"}}"
+expect 2 "guard-paths takes a relative path from the root" hook guard-paths.sh '{"tool_input":{"file_path":"./game/.godot/x"}}'
+expect 0 "guard-paths allows a game script in game/" hook guard-paths.sh "{\"tool_input\":{\"file_path\":\"$S/game/main.gd\"}}"
 hook shell-stamp.sh '{"tool_input":{"command":"x"}}'
 [ -f game/.godot/godot-accel-bash.stamp ] && ok "shell-stamp puts its stamp in game/.godot/" || bad "no stamp in game/.godot/"
 sleep 1

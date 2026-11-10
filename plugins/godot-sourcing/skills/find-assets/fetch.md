@@ -7,7 +7,10 @@ Renaming a downloaded file (a hash name to `baseball_cap.glb`) is fine; editing 
 
 - **Packs, models, textures, skies** → `assets/third_party/<source>-<slug>/`, with the pack's own
   licence file. Prefer glTF (`.glb`) for 3D. `curl -L` sends a User-Agent naming the project.
-- **Addons** → `addons/<name>/` as shipped.
+- **Addons** → `addons/<name>/` as shipped, after reading its code first: an addon's `@tool` and
+  `plugin.gd` scripts run inside the editor as soon as it's enabled, so installing one is running
+  someone's code. Say what it does on load (files it writes, network calls, `OS.execute`) before
+  the user enables it.
 - **A shader** → its code copied exactly from the page (`curl` it; never retype or summarise)
   into `assets/third_party/godotshaders-<slug>/`. A port or change goes in a project copy
   (`shaders/<name>.gdshader`) whose first lines name the source URL, author and licence.

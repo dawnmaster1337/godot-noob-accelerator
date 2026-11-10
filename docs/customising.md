@@ -49,8 +49,9 @@ A rule that must never be missed: add one line to CLAUDE.md "Hard rules" too.
 
 ## Protect more paths
 
-Godot's own files (`.godot/`, `*.import`, `*.uid`) and secrets are protected by deny rules in
-`.claude/settings.json`, which cover shell commands too. For third-party folders, add globs to
+Godot's own files (`.godot/`, `*.import`, `*.uid`) and secrets are guarded by the path guard
+(editing tools) and by deny rules in `.claude/settings.json` (the shell commands Claude Code
+recognises as file reads and writes; a guard-rail, not a wall). For third-party folders, add globs to
 `.claude/protected-paths.txt` (one per line): the guard stops Claude's editing tools there, while
 copying a new pack in with a shell command still works. `!` before a glob makes an exception,
 for your own editor plugin for example:

@@ -14,6 +14,9 @@ if [ ! -f project.godot ]; then
 fi
 G=""
 [ "$GAME" = . ] || G="$GAME/"
+# GODOT: the engine binary. Set it when `godot` isn't on PATH (an alias doesn't reach scripts;
+# on Windows use the _console.exe build, which prints to the terminal).
+GODOT=${GODOT:-godot}
 
 usage() {
 	cat <<'EOF'
@@ -24,6 +27,8 @@ tools/dev.sh <verb> [args]
                       installed (exit 1 = a failure, or no checks at all); names run only those
                       (`dev.sh check player`); --refresh forces the refresh
   refresh             rebuild Godot's class cache and imports (after a new class_name or asset)
+  run [scene]         play the main scene (or res://<scene>) headless for about ten seconds and
+                      print its errors (exit 1 = an error); Claude's run after each step
   lint [all|file...]  gdlint + gdformat --check on changed .gd files (all: the whole project)
   stale [file...]     backticked paths in the live docs (the shape's live rows) that no longer
                       exist (exit 1 = some)
@@ -53,12 +58,12 @@ limit() {
 headless() {
 	local seconds=$1
 	shift
-	limit "$seconds" godot --headless --path "$GAME" "$@" </dev/null
+	limit "$seconds" "$GODOT" --headless --path "$GAME" "$@" </dev/null
 }
 
 need_godot() {
-	command -v godot >/dev/null 2>&1 && return 0
-	echo "godot is not on your PATH (docs/guides/setup-new-machine.md, step 1)"
+	command -v "$GODOT" >/dev/null 2>&1 && return 0
+	echo "$GODOT is not on your PATH, or set GODOT to the engine binary (docs/guides/setup-new-machine.md, step 1)"
 	return 1
 }
 
@@ -121,6 +126,28 @@ run_check() {
 	fi
 	rm -f "$log"
 	return 0
+}
+
+# run [scene]: the main scene, or one scene, headless for 600 frames (about ten seconds), its log
+# shown and its ERROR lines judged as a check's are. Bounded, windowless, no permission prompt.
+run() {
+	need_godot || return 1
+	if needs_refresh; then refresh || return 1; fi
+	local log code errors scene=()
+	[ $# -gt 0 ] && scene=("res://${1#res://}")
+	log=$(mktemp)
+	headless 60 --quit-after 600 "${scene[@]}" >"$log" 2>&1
+	code=$?
+	errors=$(engine_errors "$log")
+	tail -20 "$log"
+	rm -f "$log"
+	if [ "$code" -ne 0 ] || [ -n "$errors" ]; then
+		echo "run: FAIL (exit $code)"
+		[ -n "$errors" ] && printf '%s
+' "$errors" | head -8
+		return 1
+	fi
+	echo "run: no errors in 600 frames"
 }
 
 # gut_check [name...]: the GUT tests (all, or the files whose names match), one headless run each.
@@ -594,6 +621,7 @@ verb=${1:-help}
 case "$verb" in
 	check) check "$@" ;;
 	refresh) refresh ;;
+	run) run "$@" ;;
 	lint) lint "$@" ;;
 	stale) stale "$@" ;;
 	conform) conform "$@" ;;

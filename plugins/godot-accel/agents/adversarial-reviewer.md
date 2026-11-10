@@ -1,7 +1,7 @@
 ---
 name: adversarial-reviewer
 description: Hostile, independent review of a change in a Godot project (GDScript, C#, scenes, resources) — uncommitted work, a branch or a commit range. Use at the end of a milestone, when merging a branch built by a subagent or worktree, or when the user asks for a review. Never edits (it may run git and the checks); finds the diff itself and returns SHIP or FIX FIRST with concrete failure scenarios.
-tools: Read, Grep, Glob, Bash
+tools: Read, Grep, Glob, Bash, Skill
 model: inherit
 color: red
 ---

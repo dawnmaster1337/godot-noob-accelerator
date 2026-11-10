@@ -1,9 +1,8 @@
 {
-  "description": "godot-accel: session-start status card, a per-message reminder of rules the user has had to repeat, a guard on engine-managed files for the editing tools (the project's deny rules cover shell writes), format + lint after GDScript changes, and a stop check that asks for the headless checks after game files changed. Each does nothing outside a Godot project, stands down when the project registers its own copy, and exits cleanly when a tool it needs is missing.",
+  "description": "godot-accel: session-start status card, a per-message reminder of rules the user has had to repeat, a guard on engine-managed files for the editing tools (the project's deny rules add a guard-rail for recognised shell writes), format + lint after GDScript changes, and a stop check that asks for the headless checks after game files changed. Each does nothing outside a Godot project, stands down when the project registers its own copy, and exits cleanly when a tool it needs is missing.",
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "startup|resume|clear|compact",
         "hooks": [
           {
             "type": "command",

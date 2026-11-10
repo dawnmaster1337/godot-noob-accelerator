@@ -23,7 +23,7 @@ paths:
 - **`ResourceSaver.save()` from a running game or tool** writes `[ext_resource]` lines without
   their `uid://`. Expect it in the diff; prefer the editor when references matter.
 - Never edit `.godot/` (Godot's cache), `*.import` (import settings: change them in the editor) or
-  `*.uid` files (Godot writes them). The kit's path guard and the project's deny rules block these.
+  `*.uid` files (Godot writes them). The kit's path guard and the project's deny rules guard these; neither stops a script.
 - Never patch third-party plugins in `addons/` or unmodified asset packs: build on top of them
   elsewhere (`scenes/`, `resources/`). Exceptions are listed in `.claude/protected-paths.txt`.
 - After a save with stale parse errors, Godot can drop `.tres` fields: `git diff` every `.tres`

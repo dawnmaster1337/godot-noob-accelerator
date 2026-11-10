@@ -104,4 +104,5 @@ The rules that must never be missed. A rule the user makes binding gets one line
 - `tools/dev.sh budget` — files over their `.claude/budgets.md` budget, lines over 400 characters.
 - `tools/dev.sh tidy` — what has drifted: unsaved files, docs and code out of place, unused files.
 - {{TEST_COMMAND}}
-- `godot --path . -e` opens the editor; `godot --path .` runs the game.
+- `tools/dev.sh run [scene]` — the game (or one scene) headless for about ten seconds, its errors.
+- `godot --path . -e` opens the editor; `godot --path .` runs the game in a window (for you).

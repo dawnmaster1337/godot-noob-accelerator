@@ -76,8 +76,8 @@ Templates: `${CLAUDE_SKILL_DIR}/templates/`. In there `dot-claude/` means `.clau
    `git init` if not a repo; turn on the git checks with `git config core.hooksPath .githooks`
    (recommended; "Git hooks" below); merge `dot-claude/settings.suggested.json` into
    `.claude/settings.json` (show the diff; never drop their keys; push policy on → leave out the
-   `Bash(git push *)` ask rule). Its ask rules make each commit prompt; its deny rules keep
-   Claude's shell commands off secrets and Godot's own files. If the write is refused (auto
+   `Bash(git push *)` ask rule). Its ask rules make each commit prompt; its deny rules are a
+   guard-rail keeping recognised shell reads and writes off secrets and Godot's own files. If the write is refused (auto
    mode protects `.claude/settings.json`), give the user one tested command to run with `!`.
    GDScript: with Godot closed, add `gdscript/warnings/untyped_declaration=2` under `[debug]`
    in `project.godot` (an untyped declaration becomes an error, so the typing rule is checked).
@@ -137,7 +137,7 @@ if it has one, else the kit's.
 | `{{DATE}}` | today, `YYYY-MM-DD` |
 | `{{PUSH_POLICY}}` | push on: "`git push`." · off: "the user pushes (`git push`) when they want." |
 | `{{MCP_SERVER}}` | the server name (`#MCP` on) |
-| `{{RUN_STEP}}` | MCP: "one live run through `{{MCP_SERVER}}` (run, then read the game and editor logs)"; else "one run of the game (`godot --path .`), reading its output" |
+| `{{RUN_STEP}}` | MCP: "one live run through `{{MCP_SERVER}}` (run, then read the game and editor logs)"; else "one bounded headless run of the game (`tools/dev.sh run`), reading its output" |
 | `{{TEST_COMMAND}}` | checks: "`tools/dev.sh check <name>` runs one check (`tests/<name>_check.tscn`)"; GUT: "`tools/dev.sh check` also runs the GUT tests (`check <file>` only one file)"; gdUnit4: "`tools/dev.sh check` also runs the gdUnit4 tests (`check <name>` only `tests/<name>_test.gd`)" |
 | `{{CANON_READ_LINE}}` | canon on: "7. Before any text or name: `docs/canon/bible.md` (`canon-check`)."; else delete the line |
 | `{{BEGINNER_LINE}}` | new: "The user is new to coding and git: explain each step, point at `docs/guides/start-here.md`."; else delete the line |

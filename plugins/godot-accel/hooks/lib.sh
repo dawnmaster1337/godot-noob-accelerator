@@ -103,6 +103,23 @@ project_has_own_hook() {
 	grep -qsF "hooks/$1" "$root/.claude/settings.json" "$root/.claude/settings.local.json"
 }
 
+# norm_path <path>: the absolute path with backslashes as slashes and ./ and ../ folded, without
+# touching the disk (the file may not exist yet). A relative path is taken from the project root.
+norm_path() {
+	local p=${1//\\//} part out=""
+	case "$p" in /*) ;; [A-Za-z]:/*) ;; *) p="$(project_root)/$p" ;; esac
+	local IFS=/
+	for part in $p; do
+		case "$part" in
+			'' | .) ;;
+			..) out=${out%/*} ;;
+			*) out="$out/$part" ;;
+		esac
+	done
+	case "$p" in [A-Za-z]:/*) out=${out#/} ;; esac
+	printf '%s' "${out:-/}"
+}
+
 # path_block_reason <path relative to the project root>: why the kit refuses to let Claude write
 # it, or nothing. Always: Godot's cache, import settings, .uid files, .env files. Also each glob
 # in .claude/protected-paths.txt; a line starting with ! is an exception.

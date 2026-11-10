@@ -21,10 +21,11 @@
     "deny": [
       "Read(.env)",
       "Read(.env.*)",
-      "Read(export_credentials.cfg)",
+      "Read(**/export_credentials.cfg)",
       "Edit(.env)",
       "Edit(.env.*)",
       "Edit(.godot/**)",
+      "Edit(**/.godot/**)",
       "Edit(*.import)",
       "Edit(*.uid)",
       "Bash(git reset --hard *)",

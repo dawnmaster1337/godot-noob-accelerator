@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# SessionStart (startup, resume, /clear, compaction): tells Claude how safe the work is in git,
-# the user's uncommitted scene and resource edits, what waits in inbox/, what STATUS says is next
-# and whether it is over budget, whether the project's kit version is behind the plugin, whether
-# Godot and the hooks' own tools are reachable, whether the project's settings carry the kit's
-# deny rules, and the project's own standing guard (.claude/start-guard.md). Read-only: never
-# fetches, pulls or pushes.
+# SessionStart (every source: startup, resume, /clear, compaction, fork): tells Claude how safe
+# the work is in git, the user's uncommitted scene and resource edits, what waits in inbox/, what
+# STATUS says is next and whether it is over budget, whether the project's kit version is behind
+# the plugin, whether Godot and the hooks' own tools are reachable, whether the project's settings
+# carry the kit's deny rules, and the project's own standing guard (.claude/start-guard.md).
+# Read-only, and runs none of the project's own scripts: never fetches, pulls or pushes.
 # Outside a kit project it stays silent, unless one sits just above or below the start folder:
 # then it says where, because every hook, project skill, agent and rule loads from the start
 # folder and would otherwise be off without a word.
@@ -76,12 +76,8 @@ next=$(awk '/^\*\*Next/{on=1} on&&/^$/{exit} on{printf "%s ", $0}' docs/STATUS.m
 [ -n "$next" ] && msg="$msg STATUS says: ${next}"
 [ -f docs/STATUS.md ] || msg="$msg No docs/STATUS.md: the project is not on the kit's shape. A new project: /godot-accel:bootstrap; one with its own docs, rules or notes: /godot-accel:realign (it moves them into the kit's homes, keeping every fact)."
 
-# The kit's shape (.claude/godot-accel/shape.md): only the count here; tools/dev.sh conform lists them.
-if [ -f .claude/godot-accel/shape.md ] && grep -q '^conform()' tools/dev.sh 2>/dev/null; then
-	problems=$(bash tools/dev.sh conform 2>/dev/null | grep -c '^conform: .*:' | tr -d ' ')
-	[ "${problems:-0}" -gt 0 ] 2>/dev/null &&
-		msg="$msg SHAPE: tools/dev.sh conform finds ${problems} problem(s) (docs out of their homes or form): suggest /godot-accel:realign."
-fi
+# The kit's shape is checked by resume (tools/dev.sh conform), never here: this hook runs on every
+# start, /clear and compaction, and must not run the repository's own code.
 
 # STATUS over its budget (from .claude/budgets.md, else 5,000 characters).
 if [ -f docs/STATUS.md ]; then
@@ -120,7 +116,7 @@ if is_godot_project; then
 	[ -f tools/dev.sh ] && ! grep -qs 'godot-accel-touched' tools/dev.sh &&
 		msg="$msg tools/dev.sh predates the kit's stop check (it never clears its list), so that check is off until /godot-accel:update."
 	[ -f tools/dev.sh ] && ! grep -qsF 'Edit(.godot/**)' .claude/settings.json &&
-		msg="$msg .claude/settings.json lacks the kit's deny rules (shell writes to Godot's files, secrets reads): suggest /godot-accel:update."
+		msg="$msg .claude/settings.json lacks the kit's deny rules (a guard-rail on shell writes to Godot's files and secrets reads): suggest /godot-accel:update."
 fi
 
 # The project's own standing guard, HTML comments stripped, capped.

@@ -27,7 +27,7 @@ milestone).
    Then play-test the change:
    - with a `playtester` agent in `.claude/agents/`: delegate to it with the intent above and a
      concrete scenario that exercises the change;
-   - otherwise: run the game (`godot --path .`, or a test scene), read its output, and say what
+   - otherwise: `tools/dev.sh run [scene]` (headless, about ten seconds), read its output, say what
      you could and could not verify; ask the user to play the scenario if it needs eyes.
    Fix every error, then play again.
 3. **Adversarial review — milestones only:** the end of a roadmap milestone, merging a branch a

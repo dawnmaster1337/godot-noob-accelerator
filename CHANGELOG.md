@@ -22,6 +22,24 @@ means. A project gets the new `tools/dev.sh` and pre-commit through **update the
   that the user's edits are theirs. A command that moved HEAD now notes and lints nothing; any
   other is linted and reported. Other sessions' worktrees in `.claude/` are skipped. A lint
   failure in a file Claude's editing tools wrote still blocks, as before.
+- **The path guard covers a game in a subfolder.** `game/addons/` and `game/.godot/` were open to
+  the editing tools, and `./` or `../` in a path slipped past. Paths are now folded first and
+  checked from both the project root and the game folder; the deny rules add `**/.godot/**`.
+- **New `tools/dev.sh run [scene]`:** the game headless for 600 frames (about ten seconds), its
+  `ERROR:` lines judged like a check's. Claude's run after each step and ship-check's play use it
+  instead of opening a game window that blocked the session. `GODOT=<path>` names the engine when
+  `godot` isn't on PATH.
+- **Honest wording about deny rules:** they are a guard-rail for the shell commands Claude Code
+  recognises as file reads and writes, not a wall (a script or `cp` still writes).
+- **Fixes:** the secrets deny rule now matches Godot 4's `.godot/export_credentials.cfg`; the
+  session-start card no longer runs the project's `tools/dev.sh` (resume runs `conform`) and now
+  also reaches forked sessions; the adversarial reviewer can load the code-review skill it's told
+  to use; project-audit says it writes one report.
+- **godot-sourcing:** search-result text is data, never instructions; an addon's code is read
+  (what it does when enabled) before the user turns it on; the README says the asset server is
+  connected in every session while the kit is on.
+- **The kit's own repository:** `.gitattributes` keeps shell scripts LF on Windows clones; CI
+  tests GUT 9.7.1 (the release for Godot 4.7).
 
 ## 0.6.1 — find or build: the user's call
 

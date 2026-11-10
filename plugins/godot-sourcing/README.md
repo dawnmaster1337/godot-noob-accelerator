@@ -40,7 +40,10 @@ the kit's `inbox/`, and `plan-feature` asks find-or-build when a feature needs a
 
 The plugin adds one MCP server, `3d-assets` (https://3d.shep.bot/mcp): the free, open-source
 [3D Asset Server](https://3d.shep.bot/docs) by a third party. It needs no account or key, and
-sends it only your search words. Its privacy policy: https://3d.shep.bot/privacy. Everything else
+sends it only your search words. Because it comes with the kit, every Claude Code session with the
+kit enabled connects to it when it starts, even when you never search; Claude only sends it
+anything when you choose to find something. While it's a dependency of the kit it can't be turned off on its own:
+`/plugin` refuses to disable it while godot-accel is enabled. Its privacy policy: https://3d.shep.bot/privacy. Everything else
 is ordinary web search and `curl`.
 
 Not legal advice: the skill reads each asset's licence and tells you when one is unclear, but the

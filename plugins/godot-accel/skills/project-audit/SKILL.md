@@ -1,6 +1,6 @@
 ---
 name: project-audit
-description: Read-only health check of a game project and how it is run with Claude — when the user asks to "audit the project", "check the repo is tidy", "are the docs a mess", "audit our workflow", "why are we using so many tokens", "what keeps going wrong", or at the end of a milestone. Finds files in the wrong place, unused or overgrown code, scattered or stale docs, contradicting rules and token cost; writes a ranked report in plain words; then asks about each fix one at a time.
+description: Health check (writes one report, changes nothing else) of a game project and how it is run with Claude — when the user asks to "audit the project", "check the repo is tidy", "are the docs a mess", "audit our workflow", "why are we using so many tokens", "what keeps going wrong", or at the end of a milestone. Finds files in the wrong place, unused or overgrown code, scattered or stale docs, contradicting rules and token cost; writes a ranked report in plain words; then asks about each fix one at a time.
 argument-hint: "[focus, e.g. code, docs, tokens, git, the last milestone]"
 allowed-tools: Read Glob Grep Bash(wc *) Bash(git log *) Bash(git status *) Bash(git worktree list) Bash(tools/dev.sh tidy) Bash(tools/dev.sh stale) Bash(tools/dev.sh budget) Bash(tools/dev.sh conform)
 ---
@@ -11,7 +11,7 @@ Focus: $ARGUMENTS
 
 !`git log --oneline -40 --stat 2>/dev/null | grep -cE 'docs/STATUS.md'; true`
 
-**Read-only:** change nothing until the user answers. Plain words; explain jargon once. The
+**Read-only:** change nothing but the report (step 6) until the user answers. Plain words; explain jargon once. The
 checks above find the mechanical problems; you judge what they mean.
 
 1. **The repo:** files not in git, in the wrong folder, or never used (`tidy` above; read each

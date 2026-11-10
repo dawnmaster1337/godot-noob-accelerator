@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 30
     env:
       GODOT_VERSION: 4.7.2
-      GUT_TAG: v9.6.1
+      GUT_TAG: v9.7.1
       GDUNIT_TAG: v6.2.2
     steps:
       - uses: actions/checkout@v4
