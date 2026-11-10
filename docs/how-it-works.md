@@ -4,12 +4,14 @@ The kit is a set of habits, written down so Claude follows them every session in
 relearning them. This page explains the habits and why each exists. Each "why" is something that
 went wrong in a real project without it.
 
+<img src="../assets/docs/inside.svg" alt="Inside the kit: you say a few words to Claude Code, which reads the kit's skills (recipes your words start), hooks (run on their own), rules (how Claude behaves) and checks (tools/dev.sh). What it learns goes into your project's notes, plain files in git." width="100%">
+
 ## The loop
 
-```
-resume → ask for something → (plan-feature) → build in small steps → checks → you play it
-       → save work (commit on your yes) → … → wrap up (STATUS, lessons) → /clear or exit
-```
+<img src="../assets/readme/loop.svg" alt="A loop of six steps: resume, pick one task, plan anything new, build and check, you play it, save work. Then start a fresh session." width="100%">
+
+**resume** → ask for something → plan it if it's new → build in small steps → checks → **you play
+it** → **save work** (commit on your yes) → … → **wrap up** (STATUS, lessons) → `/clear` or exit.
 
 ## 1. Starting a session
 
@@ -46,6 +48,8 @@ or build it, and your answer (and pick) becomes part of the decision.
 fast. A decision that lives only in chat is forgotten by the next session.
 
 ## 3. One home per fact
+
+<img src="../assets/docs/homes.svg" alt="One home per fact: where we are and what's next in docs/STATUS.md; why it's that way in docs/decisions/; what each system does now in docs/systems/; bugs not fixed yet in docs/known-bugs.md; how you like to work in .claude/memory/; rules for Claude in CLAUDE.md and .claude/rules/." width="100%">
 
 | Kind of fact | Its one home |
 |---|---|
@@ -84,21 +88,28 @@ must never be missed is also copied, in one line, into CLAUDE.md's **Hard rules*
 
 ## 5. Checking before you see anything
 
+<img src="../assets/docs/checks.svg" alt="Five levels of checks, each running less often and looking harder: every edit is formatted and linted; before Claude stops, the stop check asks for the checks; each small step runs its checks and a ten-second headless run; each task runs ship-check with a play-test; each milestone gets a fresh reviewer. Then you play it." width="100%">
+
 - After every `.gd` change: `gdformat` + `gdlint` for an editing tool's change, and a failure
   goes straight back to Claude. After a shell command, `gdlint` only, reported without blocking:
   you may have saved in Godot meanwhile, and your files are yours. A command that moved the
   branch (a `git pull`, merge or checkout) brought its files from git, so they aren't checked.
 - Before edits: the path guard blocks Godot's cache and generated files for the editing tools,
-  and the project's deny rules (`.claude/settings.json`) block them for shell commands too
-  (redirects, `tee`, `sed`). The same settings make every commit ask you first.
+  and the project's deny rules (`.claude/settings.json`) add a guard-rail for the shell commands
+  Claude Code recognises as file reads and writes (redirects, `tee`, `sed`, `cat`). They are not a
+  wall: a script, `cp` or Godot itself can still write there. The same settings make every
+  commit ask you first.
 - Before Claude finishes a turn in which it changed game files: the stop hook asks it to run the
   checks covering them, or to say why they can't run (once per batch of changes).
-- After each small step: only the checks covering what changed (`tools/dev.sh check <name>`);
+- After each small step: only the checks covering what changed (`tools/dev.sh check <name>`), and
+  `tools/dev.sh run`: the game headless for about ten seconds, failing on any error it prints.
   Godot's cache is refreshed only when files changed.
-- Per task (`ship-check`): lint, every headless check (`tools/dev.sh check`: the smoke check loads
-  every script and plays the main scene; any error Godot prints fails a check, even when Godot
-  exits as if all is well; a run where no check ran fails), a play-test, fixes,
-  "To try:" for you, a proposed commit.
+- Per task (`ship-check`): lint, every headless check (`tools/dev.sh check`), a play-test, fixes,
+  "To try:" for you, a proposed commit. The smoke check loads every script outside `addons/` and
+  plays the main scene for about a second; any error Godot prints fails a check, even when Godot
+  exits as if all is well; a run where no check ran fails. `check <name>` runs only the named
+  checks, without the smoke check. It is a floor, not proof the game is fun or right: that's
+  your play-test.
 - At milestones only: the `adversarial-reviewer`, given the intent but never Claude's own
   summary. Obvious fixes happen at once; design questions come to you one at a time.
 - `.githooks/` (on once you run `git config core.hooksPath .githooks`): the same lint plus a

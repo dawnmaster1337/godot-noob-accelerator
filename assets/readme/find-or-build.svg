@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 496" width="1280" height="496" role="img" aria-labelledby="t d">
+<title id="t">Find or build: your call</title>
+<desc id="d">You ask for some trees. Pip, the kit&#x27;s robot, asks: find a ready-made one, or build it here? It recommends neither. Find shows up to five free options, each with its licence, and records the credit of your pick. Build makes it in your project. Your project can answer ahead of time per kind: always find, always build, or ask each time.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#4A5878"/></marker></defs>
+<g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
+<rect x="0" y="0" width="1280" height="496" rx="32" fill="#FFF7EC"/>
+<g transform="translate(0 -64)">
+<rect x="56" y="190" width="300" height="92" rx="46" fill="#D97757"/>
+<text x="206" y="246" font-size="26" font-weight="700" fill="#FFFFFF" text-anchor="middle">&quot;I need some trees&quot;</text>
+<line x1="360" y1="236" x2="420" y2="236" stroke="#4A5878" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+<g transform="translate(430 150) scale(0.8)">
+  <line x1="80" y1="6" x2="80" y2="28" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="80" cy="8" r="11" fill="#D97757"/>
+  <rect x="10" y="26" width="140" height="104" rx="42" fill="#5FA3D6" stroke="#1E2A44" stroke-width="6"/>
+  <rect x="30" y="44" width="100" height="68" rx="28" fill="#FFF8EE"/>
+  <ellipse cx="60" cy="74" rx="10" ry="13" fill="#1E2A44"/><ellipse cx="100" cy="74" rx="10" ry="13" fill="#1E2A44"/>
+  <circle cx="63" cy="69" r="3.5" fill="#FFF"/><circle cx="103" cy="69" r="3.5" fill="#FFF"/>
+  <path d="M62 92 q18 15 36 0" fill="none" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="40" cy="92" r="7" fill="#EE7FA0" opacity=".7"/><circle cx="120" cy="92" r="7" fill="#EE7FA0" opacity=".7"/>
+</g>
+<rect x="570" y="166" width="300" height="140" rx="24" fill="#FFFFFF" stroke="#1E2A44" stroke-width="4"/>
+<text x="594" y="214" font-size="26" font-weight="700" fill="#1E2A44" text-anchor="start">Find a ready-made</text>
+<text x="594" y="250" font-size="26" font-weight="700" fill="#1E2A44" text-anchor="start">one, or build it</text>
+<text x="594" y="286" font-size="26" font-weight="700" fill="#1E2A44" text-anchor="start">here?</text>
+<text x="570" y="346" font-size="22" font-weight="700" fill="#4A5878" text-anchor="start">No recommendation:</text>
+<text x="570" y="376" font-size="22" fill="#4A5878" text-anchor="start">it&#x27;s yours to pick.</text>
+<line x1="874" y1="210" x2="926" y2="176" stroke="#4A5878" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+<line x1="874" y1="262" x2="926" y2="410" stroke="#4A5878" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+<rect x="936" y="96" width="288" height="250" rx="24" fill="#FFFFFF" stroke="#5FA3D6" stroke-width="4"/>
+<g transform="translate(958 112) scale(0.8)" fill="none" stroke="#1E2A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="26" cy="26" r="16"/><path d="M38 38 l16 16"/></g>
+<text x="1018" y="148" font-size="30" font-weight="700" fill="#1E2A44" text-anchor="start">Find</text>
+<text x="960" y="198" font-size="23" fill="#1E2A44" text-anchor="start">Up to five free</text>
+<text x="960" y="230" font-size="23" fill="#1E2A44" text-anchor="start">options, each with</text>
+<text x="960" y="261" font-size="23" fill="#1E2A44" text-anchor="start">its licence. You</text>
+<text x="960" y="293" font-size="23" fill="#1E2A44" text-anchor="start">pick; it records the</text>
+<text x="960" y="325" font-size="23" fill="#1E2A44" text-anchor="start">credit.</text>
+<rect x="936" y="370" width="288" height="150" rx="24" fill="#FFFFFF" stroke="#5CC8A8" stroke-width="4"/>
+<g transform="translate(958 384) scale(0.8)" fill="none" stroke="#1E2A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18 l16 -10 l10 10 l-6 6 l22 26 l-6 6 l-26 -22 l-4 4z"/></g>
+<text x="1018" y="420" font-size="30" font-weight="700" fill="#1E2A44" text-anchor="start">Build</text>
+<text x="960" y="466" font-size="23" fill="#1E2A44" text-anchor="start">Claude makes it in</text>
+<text x="960" y="498" font-size="23" fill="#1E2A44" text-anchor="start">your project.</text>
+<text x="56" y="470" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="start">Your project can answer ahead of time, per kind:</text>
+<text x="56" y="506" font-size="24" fill="#4A5878" text-anchor="start">always find · always build · ask each time</text>
+</g>
+</g>
+</svg>

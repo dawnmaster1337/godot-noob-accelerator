@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 734" width="1280" height="734" role="img" aria-labelledby="t d">
+<title id="t">Checked before you see it</title>
+<desc id="d">Five levels of checks: every edit is formatted and linted; before Claude stops, the stop check asks for the checks; each small step runs its checks and a ten-second headless run; each task runs ship-check with a play-test; each milestone gets a fresh reviewer. Then you play it.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#4A5878"/></marker></defs>
+<g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
+<rect x="0" y="0" width="1280" height="734" rx="32" fill="#FFF7EC"/>
+<g transform="translate(0 -126)">
+<rect x="56" y="170" width="1168" height="92" rx="22" fill="#FFFFFF" stroke="#5CC8A8" stroke-width="4"/>
+<rect x="56" y="170" width="260" height="92" rx="22" fill="#5CC8A8"/>
+<rect x="286" y="170" width="30" height="92" rx="0" fill="#5CC8A8"/>
+<text x="82" y="226" font-size="27" font-weight="700" fill="#123B33" text-anchor="start">Every edit</text>
+<text x="342" y="203" font-size="24" fill="#1E2A44" text-anchor="start">Format and lint, automatically. A problem goes straight back to</text>
+<text x="342" y="236" font-size="24" fill="#1E2A44" text-anchor="start">Claude.</text>
+<rect x="96" y="282" width="1088" height="92" rx="22" fill="#FFFFFF" stroke="#5FA3D6" stroke-width="4"/>
+<rect x="96" y="282" width="260" height="92" rx="22" fill="#5FA3D6"/>
+<rect x="326" y="282" width="30" height="92" rx="0" fill="#5FA3D6"/>
+<text x="122" y="338" font-size="27" font-weight="700" fill="#0E2C44" text-anchor="start">Before it stops</text>
+<text x="382" y="332" font-size="24" fill="#1E2A44" text-anchor="start">The stop check asks for the checks that cover what changed.</text>
+<rect x="136" y="394" width="1008" height="92" rx="22" fill="#FFFFFF" stroke="#F5C24C" stroke-width="4"/>
+<rect x="136" y="394" width="260" height="92" rx="22" fill="#F5C24C"/>
+<rect x="366" y="394" width="30" height="92" rx="0" fill="#F5C24C"/>
+<text x="162" y="450" font-size="27" font-weight="700" fill="#4A3300" text-anchor="start">Each small step</text>
+<text x="422" y="444" font-size="24" fill="#1E2A44" text-anchor="start">The checks for that part, and a ten-second headless run.</text>
+<rect x="176" y="506" width="928" height="92" rx="22" fill="#FFFFFF" stroke="#EE7FA0" stroke-width="4"/>
+<rect x="176" y="506" width="260" height="92" rx="22" fill="#EE7FA0"/>
+<rect x="406" y="506" width="30" height="92" rx="0" fill="#EE7FA0"/>
+<text x="202" y="562" font-size="27" font-weight="700" fill="#4A1024" text-anchor="start">Each task</text>
+<text x="462" y="539" font-size="24" fill="#1E2A44" text-anchor="start">ship-check: every check, a play-test, and &quot;To try&quot;</text>
+<text x="462" y="572" font-size="24" fill="#1E2A44" text-anchor="start">for you.</text>
+<rect x="216" y="618" width="848" height="92" rx="22" fill="#FFFFFF" stroke="#8E7CC3" stroke-width="4"/>
+<rect x="216" y="618" width="260" height="92" rx="22" fill="#8E7CC3"/>
+<rect x="446" y="618" width="30" height="92" rx="0" fill="#8E7CC3"/>
+<text x="242" y="674" font-size="27" font-weight="700" fill="#241A44" text-anchor="start">Each milestone</text>
+<text x="502" y="651" font-size="24" fill="#1E2A44" text-anchor="start">A fresh reviewer that never sees Claude&#x27;s</text>
+<text x="502" y="684" font-size="24" fill="#1E2A44" text-anchor="start">own summary.</text>
+<rect x="456" y="740" width="368" height="80" rx="40" fill="#D97757"/>
+<text x="640" y="791" font-size="30" font-weight="700" fill="#FFFFFF" text-anchor="middle">Then you play it</text>
+</g>
+</g>
+</svg>

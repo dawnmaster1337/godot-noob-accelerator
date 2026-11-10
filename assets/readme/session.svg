@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1288" width="1280" height="1288" role="img" aria-labelledby="t d">
+<title id="t">What a session looks like</title>
+<desc id="d">An illustrated session. You type resume; Claude says it got two changes from your laptop and suggests one task, the wall jump. You say APR to take its suggestions. It asks one question at a time, each with a recommendation. It builds it, says 4 checks passed and what to try. You say it feels floaty; it suggests changing one tuning value. You say yes and save work; it asks before committing, backs up to GitHub and says it&#x27;s safe to clear.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#4A5878"/></marker></defs>
+<g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
+<rect x="0" y="0" width="1280" height="1288" rx="32" fill="#FFFFFF"/>
+<rect x="24" y="24" width="1232" height="1240" rx="28" fill="#EAF4FB" stroke="#1E2A44" stroke-width="5"/>
+<path d="M24 52 a28 28 0 0 1 28 -28 h1176 a28 28 0 0 1 28 28 v40 h-1232z" fill="#1E2A44"/>
+<circle cx="66" cy="66" r="9" fill="#EE7FA0"/><circle cx="96" cy="66" r="9" fill="#F5C24C"/><circle cx="126" cy="66" r="9" fill="#5CC8A8"/>
+<text x="640" y="75" font-size="22" font-weight="700" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#FFF7EC" text-anchor="middle">claude  —  your-game</text>
+<text x="1190" y="128" font-size="20" font-weight="700" fill="#4A5878" text-anchor="end">you type</text>
+<text x="150" y="128" font-size="20" font-weight="700" fill="#4A5878" text-anchor="start">Claude answers  ·  an illustrated example</text>
+<rect x="1037" y="150" width="153" height="58" rx="29" fill="#D97757"/>
+<text x="1114" y="189" font-size="28" font-weight="700" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#FFFFFF" text-anchor="middle">resume</text>
+<g transform="translate(70 226) scale(0.42)">
+  <line x1="80" y1="6" x2="80" y2="28" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="80" cy="8" r="11" fill="#D97757"/>
+  <rect x="10" y="26" width="140" height="104" rx="42" fill="#5FA3D6" stroke="#1E2A44" stroke-width="6"/>
+  <rect x="30" y="44" width="100" height="68" rx="28" fill="#FFF8EE"/>
+  <ellipse cx="60" cy="74" rx="10" ry="13" fill="#1E2A44"/><ellipse cx="100" cy="74" rx="10" ry="13" fill="#1E2A44"/>
+  <circle cx="63" cy="69" r="3.5" fill="#FFF"/><circle cx="103" cy="69" r="3.5" fill="#FFF"/>
+  <path d="M62 92 q18 15 36 0" fill="none" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="40" cy="92" r="7" fill="#EE7FA0" opacity=".7"/><circle cx="120" cy="92" r="7" fill="#EE7FA0" opacity=".7"/>
+</g>
+<rect x="150" y="230" width="900" height="104" rx="22" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="178" y="276" font-size="24" fill="#1E2A44" text-anchor="start">Got 2 changes from your laptop. Last time: the double jump works.</text>
+<text x="178" y="310" font-size="24" fill="#1E2A44" text-anchor="start">Today, one task: the wall jump. Plan it first?</text>
+<rect x="1088" y="356" width="102" height="58" rx="29" fill="#D97757"/>
+<text x="1139" y="395" font-size="28" font-weight="700" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#FFFFFF" text-anchor="middle">APR</text>
+<g transform="translate(70 432) scale(0.42)">
+  <line x1="80" y1="6" x2="80" y2="28" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="80" cy="8" r="11" fill="#D97757"/>
+  <rect x="10" y="26" width="140" height="104" rx="42" fill="#5FA3D6" stroke="#1E2A44" stroke-width="6"/>
+  <rect x="30" y="44" width="100" height="68" rx="28" fill="#FFF8EE"/>
+  <ellipse cx="60" cy="74" rx="10" ry="13" fill="#1E2A44"/><ellipse cx="100" cy="74" rx="10" ry="13" fill="#1E2A44"/>
+  <circle cx="63" cy="69" r="3.5" fill="#FFF"/><circle cx="103" cy="69" r="3.5" fill="#FFF"/>
+  <path d="M62 92 q18 15 36 0" fill="none" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="40" cy="92" r="7" fill="#EE7FA0" opacity=".7"/><circle cx="120" cy="92" r="7" fill="#EE7FA0" opacity=".7"/>
+</g>
+<rect x="150" y="436" width="900" height="138" rx="22" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="178" y="482" font-size="24" fill="#1E2A44" text-anchor="start">Question 1 of 3: should a wall jump push you away from the wall?</text>
+<text x="178" y="516" font-size="24" fill="#1E2A44" text-anchor="start">1. Yes, a little (recommended)</text>
+<text x="178" y="550" font-size="24" fill="#1E2A44" text-anchor="start">2. Straight up</text>
+<rect x="1088" y="596" width="102" height="58" rx="29" fill="#D97757"/>
+<text x="1139" y="635" font-size="28" font-weight="700" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#FFFFFF" text-anchor="middle">APR</text>
+<g transform="translate(70 672) scale(0.42)">
+  <line x1="80" y1="6" x2="80" y2="28" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="80" cy="8" r="11" fill="#D97757"/>
+  <rect x="10" y="26" width="140" height="104" rx="42" fill="#5FA3D6" stroke="#1E2A44" stroke-width="6"/>
+  <rect x="30" y="44" width="100" height="68" rx="28" fill="#FFF8EE"/>
+  <ellipse cx="60" cy="74" rx="10" ry="13" fill="#1E2A44"/><ellipse cx="100" cy="74" rx="10" ry="13" fill="#1E2A44"/>
+  <circle cx="63" cy="69" r="3.5" fill="#FFF"/><circle cx="103" cy="69" r="3.5" fill="#FFF"/>
+  <path d="M62 92 q18 15 36 0" fill="none" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="40" cy="92" r="7" fill="#EE7FA0" opacity=".7"/><circle cx="120" cy="92" r="7" fill="#EE7FA0" opacity=".7"/>
+</g>
+<rect x="150" y="676" width="900" height="104" rx="22" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="178" y="722" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="start">Built it. Checks: 4 passed, 0 failed.</text>
+<text x="178" y="756" font-size="24" fill="#1E2A44" text-anchor="start">To try: open player.tscn, press F5, jump at a wall, then jump again.</text>
+<rect x="886" y="802" width="304" height="58" rx="29" fill="#D97757"/>
+<text x="1038" y="841" font-size="28" font-weight="700" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#FFFFFF" text-anchor="middle">it feels floaty</text>
+<g transform="translate(70 878) scale(0.42)">
+  <line x1="80" y1="6" x2="80" y2="28" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="80" cy="8" r="11" fill="#D97757"/>
+  <rect x="10" y="26" width="140" height="104" rx="42" fill="#5FA3D6" stroke="#1E2A44" stroke-width="6"/>
+  <rect x="30" y="44" width="100" height="68" rx="28" fill="#FFF8EE"/>
+  <ellipse cx="60" cy="74" rx="10" ry="13" fill="#1E2A44"/><ellipse cx="100" cy="74" rx="10" ry="13" fill="#1E2A44"/>
+  <circle cx="63" cy="69" r="3.5" fill="#FFF"/><circle cx="103" cy="69" r="3.5" fill="#FFF"/>
+  <path d="M62 92 q18 15 36 0" fill="none" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="40" cy="92" r="7" fill="#EE7FA0" opacity=".7"/><circle cx="120" cy="92" r="7" fill="#EE7FA0" opacity=".7"/>
+</g>
+<rect x="150" y="882" width="900" height="138" rx="22" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="178" y="928" font-size="24" fill="#1E2A44" text-anchor="start">That&#x27;s a setting, not code: wall_jump_push 220 → 160 in</text>
+<text x="178" y="962" font-size="24" fill="#1E2A44" text-anchor="start">player_tuning.tres.</text>
+<text x="178" y="996" font-size="24" fill="#1E2A44" text-anchor="start">Change it?</text>
+<rect x="903" y="1042" width="287" height="58" rx="29" fill="#D97757"/>
+<text x="1046" y="1081" font-size="28" font-weight="700" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#FFFFFF" text-anchor="middle">yes. save work</text>
+<g transform="translate(70 1118) scale(0.42)">
+  <line x1="80" y1="6" x2="80" y2="28" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="80" cy="8" r="11" fill="#D97757"/>
+  <rect x="10" y="26" width="140" height="104" rx="42" fill="#5FA3D6" stroke="#1E2A44" stroke-width="6"/>
+  <rect x="30" y="44" width="100" height="68" rx="28" fill="#FFF8EE"/>
+  <ellipse cx="60" cy="74" rx="10" ry="13" fill="#1E2A44"/><ellipse cx="100" cy="74" rx="10" ry="13" fill="#1E2A44"/>
+  <circle cx="63" cy="69" r="3.5" fill="#FFF"/><circle cx="103" cy="69" r="3.5" fill="#FFF"/>
+  <path d="M62 92 q18 15 36 0" fill="none" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="40" cy="92" r="7" fill="#EE7FA0" opacity=".7"/><circle cx="120" cy="92" r="7" fill="#EE7FA0" opacity=".7"/>
+</g>
+<rect x="150" y="1122" width="900" height="104" rx="22" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="178" y="1168" font-size="24" fill="#1E2A44" text-anchor="start">Commit &quot;Add the wall jump&quot;?  yes / no</text>
+<text x="178" y="1202" font-size="24" fill="#1E2A44" text-anchor="start">… Saved and backed up to GitHub. Safe to /clear: yes.</text>
+</g>
+</svg>

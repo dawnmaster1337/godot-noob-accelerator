@@ -1,5 +1,7 @@
 # Structure: every file bootstrap writes, and why
 
+<img src="../assets/docs/tree.svg" alt="A file tree of a game with the kit. Claude reads CLAUDE.md, .claude/rules/ and .claude/memory/. You read docs/STATUS.md, docs/plans/, docs/decisions/, docs/known-bugs.md, docs/guides/start-here.md and use inbox/. tools/dev.sh, tests/ and .githooks/ run on their own." width="100%">
+
 Bootstrap writes the **setup** files: about 12 you'll see and about 20 in hidden folders. The
 **first use** files stay in the kit until your game needs them (the first decision, the first
 system page, another agent joining); then the step that needs one copies it from the kit's

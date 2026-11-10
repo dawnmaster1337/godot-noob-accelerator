@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1004" width="1280" height="1004" role="img" aria-labelledby="t d">
+<title id="t">What it adds to your game</title>
+<desc id="d">A file tree of a game with the kit. Claude reads CLAUDE.md, .claude/rules/ and .claude/memory/. You read docs/STATUS.md, docs/plans/, docs/decisions/, docs/known-bugs.md, docs/guides/start-here.md and use inbox/. tools/dev.sh, tests/ and .githooks/ run on their own.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#4A5878"/></marker></defs>
+<g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
+<rect x="0" y="0" width="1280" height="1004" rx="32" fill="#FFF7EC"/>
+<text x="56" y="84" font-size="46" font-weight="700" fill="#1E2A44" text-anchor="start" class="heading">What it adds to your game</text>
+<circle cx="70" cy="140" r="14" fill="#5FA3D6"/>
+<text x="94" y="149" font-size="24" font-weight="700" fill="#4A5878" text-anchor="start">Claude reads it</text>
+<circle cx="340" cy="140" r="14" fill="#F5C24C"/>
+<text x="364" y="149" font-size="24" font-weight="700" fill="#4A5878" text-anchor="start">you read it too</text>
+<circle cx="610" cy="140" r="14" fill="#5CC8A8"/>
+<text x="634" y="149" font-size="24" font-weight="700" fill="#4A5878" text-anchor="start">runs on its own</text>
+<text x="70" y="200" font-size="24" font-weight="700" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">your-game/</text>
+<path d="M86 218 V248 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<text x="114" y="256" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">project.godot</text>
+<text x="640" y="256" font-size="24" fill="#4A5878" text-anchor="start">Godot&#x27;s project file</text>
+<path d="M86 274 V304 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="304" r="11" fill="#5FA3D6"/>
+<text x="148" y="312" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">CLAUDE.md</text>
+<text x="640" y="312" font-size="24" fill="#4A5878" text-anchor="start">Claude&#x27;s instructions, read every session</text>
+<path d="M86 330 V360 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="360" r="11" fill="#5FA3D6"/>
+<text x="148" y="368" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">.claude/rules/</text>
+<text x="640" y="368" font-size="24" fill="#4A5878" text-anchor="start">How Claude works, by topic</text>
+<path d="M86 386 V416 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="416" r="11" fill="#5FA3D6"/>
+<text x="148" y="424" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">.claude/memory/</text>
+<text x="640" y="424" font-size="24" fill="#4A5878" text-anchor="start">What it learned about how you work</text>
+<path d="M86 442 V472 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="472" r="11" fill="#F5C24C"/>
+<text x="148" y="480" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">docs/STATUS.md</text>
+<text x="640" y="480" font-size="24" fill="#4A5878" text-anchor="start">Where you stopped, what&#x27;s next</text>
+<path d="M86 498 V528 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="528" r="11" fill="#F5C24C"/>
+<text x="148" y="536" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">docs/plans/</text>
+<text x="640" y="536" font-size="24" fill="#4A5878" text-anchor="start">The roadmap, a plan per big feature</text>
+<path d="M86 554 V584 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="584" r="11" fill="#F5C24C"/>
+<text x="148" y="592" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">docs/decisions/</text>
+<text x="640" y="592" font-size="24" fill="#4A5878" text-anchor="start">What you decided and why (first use)</text>
+<path d="M86 610 V640 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="640" r="11" fill="#F5C24C"/>
+<text x="148" y="648" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">docs/known-bugs.md</text>
+<text x="640" y="648" font-size="24" fill="#4A5878" text-anchor="start">Bugs found, not fixed yet</text>
+<path d="M86 666 V696 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="696" r="11" fill="#F5C24C"/>
+<text x="148" y="704" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">docs/guides/start-here.md</text>
+<text x="640" y="704" font-size="24" fill="#4A5878" text-anchor="start">Your everyday cheat sheet</text>
+<path d="M86 722 V752 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="752" r="11" fill="#F5C24C"/>
+<text x="148" y="760" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">inbox/</text>
+<text x="640" y="760" font-size="24" fill="#4A5878" text-anchor="start">Your drop box between sessions</text>
+<path d="M86 778 V808 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="808" r="11" fill="#5CC8A8"/>
+<text x="148" y="816" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">tools/dev.sh</text>
+<text x="640" y="816" font-size="24" fill="#4A5878" text-anchor="start">The checks, in one script</text>
+<path d="M86 834 V864 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="864" r="11" fill="#5CC8A8"/>
+<text x="148" y="872" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">tests/</text>
+<text x="640" y="872" font-size="24" fill="#4A5878" text-anchor="start">The checks themselves</text>
+<path d="M86 890 V920 H106" fill="none" stroke="#D8CDBA" stroke-width="3"/>
+<circle cx="124" cy="920" r="11" fill="#5CC8A8"/>
+<text x="148" y="928" font-size="24" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">.githooks/</text>
+<text x="640" y="928" font-size="24" fill="#4A5878" text-anchor="start">Checks at commit time</text>
+</g>
+</svg>

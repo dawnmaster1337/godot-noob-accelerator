@@ -52,6 +52,13 @@ Add a line to [CHANGELOG.md](CHANGELOG.md) under "Unreleased" and bump the versi
 `plugins/godot-accel/.claude-plugin/plugin.json` (or `plugins/godot-sourcing/…` for that plugin)
 when releasing: users only get an update when that version changes.
 
+## Graphics
+
+The README and docs pictures (except the hero, the loop and the buttons) are drawn by
+`assets/src/make_art.py`: change the words or layout there and run it, never edit its SVGs by
+hand. Keep body text at 24 px or more in the 1280-wide canvas (GitHub shrinks it on phones), and
+put every graphic's words on the page too.
+
 ## godot-sourcing
 
 The second plugin holds **where to look and which licences are safe**, never assets. It never

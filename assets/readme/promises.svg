@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 540" width="1280" height="540" role="img" aria-labelledby="t d">
+<title id="t">What it adds to Claude Code</title>
+<desc id="d">Three cards. It remembers: where you stopped, what you decided and why, in notes it reads every session. It checks first: it runs your game&#x27;s checks before you see anything. It asks first: it saves only on your yes and never quietly changes a value you tuned by hand.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#4A5878"/></marker></defs>
+<g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
+<rect x="0" y="0" width="1280" height="540" rx="32" fill="#FFF7EC"/>
+<text x="56" y="84" font-size="46" font-weight="700" fill="#1E2A44" text-anchor="start" class="heading">What it adds to Claude Code</text>
+<text x="56" y="128" font-size="26" fill="#4A5878" text-anchor="start" class="heading">Three habits, kept in every session.</text>
+<rect x="56" y="170" width="368" height="330" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<circle cx="120" cy="236" r="40" fill="#5FA3D6"/>
+<g transform="translate(88 204) scale(1.0)" fill="none" stroke="#1E2A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="40" height="52" rx="6"/><path d="M20 6 v52 M28 20 h16 M28 30 h16 M28 40 h10"/></g>
+<text x="180" y="248" font-size="32" font-weight="700" fill="#1E2A44" text-anchor="start">It remembers</text>
+<text x="88" y="322" font-size="25" fill="#1E2A44" text-anchor="start">Where you stopped, what</text>
+<text x="88" y="356" font-size="25" fill="#1E2A44" text-anchor="start">you decided and why: in</text>
+<text x="88" y="391" font-size="25" fill="#1E2A44" text-anchor="start">notes it reads at the</text>
+<text x="88" y="426" font-size="25" fill="#1E2A44" text-anchor="start">start of every session.</text>
+<rect x="452" y="170" width="368" height="330" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<circle cx="516" cy="236" r="40" fill="#5CC8A8"/>
+<g transform="translate(484 204) scale(1.0)" fill="none" stroke="#1E2A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 l22 8 v16 c0 14 -10 24 -22 28 c-12 -4 -22 -14 -22 -28 v-16z"/><path d="M22 32 l7 7 l13 -14"/></g>
+<text x="576" y="248" font-size="32" font-weight="700" fill="#1E2A44" text-anchor="start">It checks first</text>
+<text x="484" y="322" font-size="25" fill="#1E2A44" text-anchor="start">It runs your game&#x27;s</text>
+<text x="484" y="356" font-size="25" fill="#1E2A44" text-anchor="start">checks before you see</text>
+<text x="484" y="391" font-size="25" fill="#1E2A44" text-anchor="start">anything, and tells you</text>
+<text x="484" y="426" font-size="25" fill="#1E2A44" text-anchor="start">what they said.</text>
+<rect x="848" y="170" width="368" height="330" rx="24" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<circle cx="912" cy="236" r="40" fill="#F5C24C"/>
+<g transform="translate(880 204) scale(1.0)" fill="none" stroke="#1E2A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 22 h44 M10 42 h44"/><circle cx="24" cy="22" r="7"/><circle cx="40" cy="42" r="7"/></g>
+<text x="972" y="248" font-size="32" font-weight="700" fill="#1E2A44" text-anchor="start">It asks first</text>
+<text x="880" y="322" font-size="25" fill="#1E2A44" text-anchor="start">It saves only on your</text>
+<text x="880" y="356" font-size="25" fill="#1E2A44" text-anchor="start">yes, and never quietly</text>
+<text x="880" y="391" font-size="25" fill="#1E2A44" text-anchor="start">changes a value you</text>
+<text x="880" y="426" font-size="25" fill="#1E2A44" text-anchor="start">tuned by hand.</text>
+</g>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 626" width="1280" height="626" role="img" aria-labelledby="t d">
+<title id="t">One home per fact</title>
+<desc id="d">Each kind of fact has one file: where we are and what&#x27;s next, docs/STATUS.md; why it&#x27;s that way, docs/decisions/; what each system does now, docs/systems/; bugs not fixed yet, docs/known-bugs.md; how you like to work, .claude/memory/; rules for Claude, CLAUDE.md and .claude/rules/.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#4A5878"/></marker></defs>
+<g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
+<rect x="0" y="0" width="1280" height="626" rx="32" fill="#FFF7EC"/>
+<g transform="translate(0 -126)">
+<rect x="56" y="170" width="520" height="70" rx="35" fill="#5FA3D6"/>
+<text x="88" y="215" font-size="26" font-weight="700" fill="#0E2C44" text-anchor="start">Where we are, what&#x27;s next</text>
+<line x1="586" y1="205" x2="690" y2="205" stroke="#4A5878" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+<rect x="700" y="170" width="524" height="70" rx="18" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="728" y="215" font-size="26" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">docs/STATUS.md</text>
+<rect x="56" y="262" width="520" height="70" rx="35" fill="#F5C24C"/>
+<text x="88" y="307" font-size="26" font-weight="700" fill="#4A3300" text-anchor="start">Why it&#x27;s that way</text>
+<line x1="586" y1="297" x2="690" y2="297" stroke="#4A5878" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+<rect x="700" y="262" width="524" height="70" rx="18" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="728" y="307" font-size="26" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">docs/decisions/</text>
+<rect x="56" y="354" width="520" height="70" rx="35" fill="#5CC8A8"/>
+<text x="88" y="399" font-size="26" font-weight="700" fill="#123B33" text-anchor="start">What each system does now</text>
+<line x1="586" y1="389" x2="690" y2="389" stroke="#4A5878" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+<rect x="700" y="354" width="524" height="70" rx="18" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="728" y="399" font-size="26" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">docs/systems/</text>
+<rect x="56" y="446" width="520" height="70" rx="35" fill="#EE7FA0"/>
+<text x="88" y="491" font-size="26" font-weight="700" fill="#4A1024" text-anchor="start">Bugs not fixed yet</text>
+<line x1="586" y1="481" x2="690" y2="481" stroke="#4A5878" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+<rect x="700" y="446" width="524" height="70" rx="18" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="728" y="491" font-size="26" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">docs/known-bugs.md</text>
+<rect x="56" y="538" width="520" height="70" rx="35" fill="#8E7CC3"/>
+<text x="88" y="583" font-size="26" font-weight="700" fill="#241A44" text-anchor="start">How you like to work</text>
+<line x1="586" y1="573" x2="690" y2="573" stroke="#4A5878" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+<rect x="700" y="538" width="524" height="70" rx="18" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="728" y="583" font-size="26" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">.claude/memory/</text>
+<rect x="56" y="630" width="520" height="70" rx="35" fill="#D97757"/>
+<text x="88" y="675" font-size="26" font-weight="700" fill="#3D1708" text-anchor="start">Rules for Claude</text>
+<line x1="586" y1="665" x2="690" y2="665" stroke="#4A5878" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+<rect x="700" y="630" width="524" height="70" rx="18" fill="#FFFFFF" stroke="#E6DCCB" stroke-width="3"/>
+<text x="728" y="675" font-size="26" font-family="'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, 'Liberation Mono', monospace" fill="#1E2A44" text-anchor="start">CLAUDE.md, .claude/rules/</text>
+</g>
+</g>
+</svg>

@@ -8,6 +8,10 @@ notes and checks its own work. You play it, react, and decide.
 
 Setting up takes about an hour the first time. After that, every session starts with one word.
 
+<img src="../assets/docs/guide-journey.svg" alt="Your first hour, as a road with ten stops: what it all is, 5 minutes; accounts, 10; install the tools, 30; make the project, 5; start Claude, 5; install the kit, 5; set it up, 10; back it up, 5; make something; every day after." width="100%">
+
+<img src="../assets/docs/three-words.svg" alt="Three words to remember: resume to start a session, save work after each thing you like, wrap up at the end of the day." width="100%">
+
 > [!TIP]
 > **Once you're set up, you only need three words:** **resume** to start, **save work** after
 > each thing you like, **wrap up** at the end of the day. Everything else, Claude asks you.
@@ -88,8 +92,12 @@ Claude also needs to start Godot from the terminal, to run its checks, and the c
 `godot`. The easiest way is to ask Claude once it's installed (3.4):
 
 ```
-Help me make the "godot" command work in my terminal. Godot is installed at <where you put it>.
+Help me make the "godot" command work in my terminal and in scripts (not an alias). Godot is installed at <where you put it>.
 ```
+
+It should be a real command on your PATH: an alias only works when you type it, not in Claude's
+checks. On Windows, point it at the **console** build (`…_console.exe`), which prints to the
+terminal. If that's awkward, setting `GODOT` to Godot's full path works too.
 
 ### 3.3 Git and the GitHub tool
 
@@ -124,7 +132,7 @@ guide uses the terminal because it works the same everywhere.
 Ask Claude to install these later: "install gdtoolkit for me", "install jq for me".
 
 - **gdtoolkit** tidies and checks GDScript code automatically.
-- **jq** helps the kit's automatic checks read their input.
+- **jq** helps the kit's automatic checks read their input (Python 3 works instead, if you have it).
 
 The kit works without them, but those checks are then off. Claude's start-up note says which
 one is missing, so you know.
@@ -222,6 +230,8 @@ Type **APR** ("as per recommendation") and it takes its suggestion. It asks:
 6. Whether you use a "Godot MCP server" (if you don't know what that is: **no**).
 7. How new you are. Be honest: it changes how much it explains.
 8. A few extras (**APR**).
+9. Whether there's a kind of asset you always make yourself (models, art, sound…), so Claude never
+   offers to find one. Not sure: **none**. Claude will ask "find or build?" each time instead.
 
 Then it shows the list of files it will create and waits for your **yes**. It never overwrites a
 file you already have. At the end it runs its checks and tells you what it made. One check, the
@@ -360,6 +370,9 @@ Your project's own `docs/guides/start-here.md` has this table too.
 
 ## Where next
 
+<img src="../assets/docs/docs-map.svg" alt="Five guides: the beginner's guide, how it works, every file the kit adds, making it yours, and companions." width="100%">
+
+- [All the guides](README.md), with pictures.
 - [How it works](how-it-works.md): how the kit runs a project, and the failure behind each habit.
 - [Structure](structure.md): every file the kit creates, and why.
 - [Customising](customising.md): change the rules to fit how you work, as you grow.

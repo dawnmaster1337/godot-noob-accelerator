@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 630" width="1280" height="630" role="img" aria-labelledby="t d">
+<title id="t">Your first hour</title>
+<desc id="d">A road with ten stops: what it all is, 5 minutes; accounts, 10; install the tools, 30; make the project, 5; start Claude, 5; install the kit, 5; set it up, 10; back it up, 5; make something, at your pace; every day after.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#4A5878"/></marker></defs>
+<g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
+<rect x="0" y="0" width="1280" height="630" rx="32" fill="#FFF7EC"/>
+<text x="56" y="84" font-size="46" font-weight="700" fill="#1E2A44" text-anchor="start" class="heading">Your first hour</text>
+<text x="56" y="128" font-size="26" fill="#4A5878" text-anchor="start" class="heading">Ten parts. Each ends with a check, so you know it worked.</text>
+<path d="M140 230 H1140 a120 120 0 0 1 0 240 H140" fill="none" stroke="#D8CDBA" stroke-width="22" stroke-linecap="round"/><path d="M140 230 H1140 a120 120 0 0 1 0 240 H140" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="16 14"/>
+<circle cx="140" cy="230" r="34" fill="#5FA3D6" stroke="#1E2A44" stroke-width="4"/><text x="140" y="241" font-size="30" font-weight="700" fill="#0E2C44" text-anchor="middle">1</text>
+<text x="140" y="306" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="middle">What it all is</text>
+<text x="140" y="338" font-size="22" fill="#4A5878" text-anchor="middle">5 min</text>
+<circle cx="390" cy="230" r="34" fill="#F5C24C" stroke="#1E2A44" stroke-width="4"/><text x="390" y="241" font-size="30" font-weight="700" fill="#4A3300" text-anchor="middle">2</text>
+<text x="390" y="306" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="middle">Accounts</text>
+<text x="390" y="338" font-size="22" fill="#4A5878" text-anchor="middle">10 min</text>
+<circle cx="640" cy="230" r="34" fill="#5CC8A8" stroke="#1E2A44" stroke-width="4"/><text x="640" y="241" font-size="30" font-weight="700" fill="#123B33" text-anchor="middle">3</text>
+<text x="640" y="306" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="middle">Install the tools</text>
+<text x="640" y="338" font-size="22" fill="#4A5878" text-anchor="middle">30 min</text>
+<circle cx="890" cy="230" r="34" fill="#EE7FA0" stroke="#1E2A44" stroke-width="4"/><text x="890" y="241" font-size="30" font-weight="700" fill="#4A1024" text-anchor="middle">4</text>
+<text x="890" y="306" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="middle">Make the project</text>
+<text x="890" y="338" font-size="22" fill="#4A5878" text-anchor="middle">5 min</text>
+<circle cx="1140" cy="230" r="34" fill="#8E7CC3" stroke="#1E2A44" stroke-width="4"/><text x="1140" y="241" font-size="30" font-weight="700" fill="#241A44" text-anchor="middle">5</text>
+<text x="1140" y="306" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="middle">Start Claude</text>
+<text x="1140" y="338" font-size="22" fill="#4A5878" text-anchor="middle">5 min</text>
+<circle cx="1140" cy="470" r="34" fill="#5FA3D6" stroke="#1E2A44" stroke-width="4"/><text x="1140" y="481" font-size="30" font-weight="700" fill="#0E2C44" text-anchor="middle">6</text>
+<text x="1140" y="546" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="middle">Install the kit</text>
+<text x="1140" y="578" font-size="22" fill="#4A5878" text-anchor="middle">5 min</text>
+<circle cx="890" cy="470" r="34" fill="#F5C24C" stroke="#1E2A44" stroke-width="4"/><text x="890" y="481" font-size="30" font-weight="700" fill="#4A3300" text-anchor="middle">7</text>
+<text x="890" y="546" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="middle">Set it up</text>
+<text x="890" y="578" font-size="22" fill="#4A5878" text-anchor="middle">10 min</text>
+<circle cx="640" cy="470" r="34" fill="#5CC8A8" stroke="#1E2A44" stroke-width="4"/><text x="640" y="481" font-size="30" font-weight="700" fill="#123B33" text-anchor="middle">8</text>
+<text x="640" y="546" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="middle">Back it up</text>
+<text x="640" y="578" font-size="22" fill="#4A5878" text-anchor="middle">5 min</text>
+<circle cx="390" cy="470" r="34" fill="#D97757" stroke="#1E2A44" stroke-width="4"/><text x="390" y="481" font-size="30" font-weight="700" fill="#3D1708" text-anchor="middle">9</text>
+<text x="390" y="546" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="middle">Make something</text>
+<text x="390" y="578" font-size="22" fill="#4A5878" text-anchor="middle">your pace</text>
+<circle cx="140" cy="470" r="34" fill="#1E2A44" stroke="#1E2A44" stroke-width="4"/><text x="140" y="481" font-size="30" font-weight="700" fill="#FFF7EC" text-anchor="middle">10</text>
+<text x="140" y="546" font-size="24" font-weight="700" fill="#1E2A44" text-anchor="middle">Every day</text>
+<g transform="translate(20 430) scale(1.1)" fill="none" stroke="#D97757" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 58 v-50 M14 10 h34 l-8 10 l8 10 h-34"/></g>
+</g>
+</svg>
