@@ -1,6 +1,6 @@
 ---
 name: canon-check
-description: Check new writing for a game — dialogue, names, items, places, enemies, quest text, descriptions for art — against the project's canon docs before it is built, when the project keeps a story or world bible. Reports contradictions, tone and naming problems with fixes, and routes new inventions to a canon request.
+description: Check new game writing against the project's story or world bible before it is built — dialogue, names, items, places, quest text. Reports contradictions and tone problems, and routes new inventions to a canon request.
 argument-hint: "[the content, or the file it is in]"
 ---
 

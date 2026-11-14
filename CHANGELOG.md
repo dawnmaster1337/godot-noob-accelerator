@@ -5,8 +5,10 @@ All notable changes. Versions follow the plugin's `version` in
 
 ## Unreleased — checks you can trust
 
-From an adversarial audit of 0.6.1. **Update:** yes, the first fix changes what a passing check
-means. A project gets the new `tools/dev.sh` and pre-commit through **update the kit**.
+From two reviews of 0.6.1. **Update:** yes, the first fix changes what a passing check means. A
+project gets the new `tools/dev.sh`, smoke check and pre-commit through **update the kit**. Until
+it is released, `main` carries this as godot-accel `0.6.2-beta.1` and godot-sourcing
+`0.1.2-beta.1`.
 
 - **A check scene fails on any error Godot prints.** Godot reports a missing node, a failed load
   or a `push_error` as an `ERROR:` line and still exits 0, so a main scene with all three passed
@@ -22,6 +24,28 @@ means. A project gets the new `tools/dev.sh` and pre-commit through **update the
   that the user's edits are theirs. A command that moved HEAD now notes and lints nothing; any
   other is linted and reported. Other sessions' worktrees in `.claude/` are skipped. A lint
   failure in a file Claude's editing tools wrote still blocks, as before.
+- **The smoke check loads what nothing uses yet.** It covered every script and the main scene's
+  first second, so a scene pointing at a deleted file, or a shader that doesn't compile, passed
+  until the game happened to load it. It now loads every script, scene, resource and shader
+  outside `addons/`, and a failure names the file ("while checking res://fx/glow.gdshader:"):
+  Godot's own shader errors don't.
+- **The hooks follow a worktree session.** In a session working in a git worktree (the desktop
+  app's worktree sessions), Claude Code keeps the project folder on the main checkout and passes
+  the worktree as `cwd`. The hooks ignored it: the path guard let an edit to the worktree's
+  `addons/` through, the stop check's list went to the main checkout, where the worktree's check
+  never cleared it, and the start card described the wrong checkout. They now read `cwd`. The
+  path guard also judges a file by the checkout it is in. Tested by simulating the inputs the
+  docs describe, not yet in the desktop app itself.
+- **One memory.** Claude Code's own auto memory is on by default and stays on one machine; the
+  kit's lives in the repo. The suggested settings now set `"autoMemoryEnabled": false`.
+- **Skill descriptions fit the listing.** With many plugins installed (GodotPrompter alone adds
+  66 skills) Claude Code drops descriptions from its skill list, least-used first, and "I want to
+  add…" stopped reaching `plan-feature`. Descriptions are now under 250 characters with the
+  trigger phrases first (3,724 characters down to 1,956), and the CLAUDE.md template maps what
+  the user says to each skill, which always loads.
+- **A version names one set of files.** `main` had three commits of plugin changes still
+  labelled 0.6.1, so installs were told they were up to date. A plugin change now bumps the
+  version in the same commit, and `tests/run.sh` fails when it doesn't.
 - **The path guard covers a game in a subfolder.** `game/addons/` and `game/.godot/` were open to
   the editing tools, and `./` or `../` in a path slipped past. Paths are now folded first and
   checked from both the project root and the game folder; the deny rules add `**/.godot/**`.

@@ -1,6 +1,6 @@
 ---
 name: trim-context
-description: End-of-session review — captures the session's lessons into their one home, then trims the files Claude reads every session (CLAUDE.md, rules, STATUS, the memory index and files) to their character budgets so each new session starts cheap. Runs from save-work's session save, or when the user says "trim", "review the session", "lessons" or worries about token use.
+description: End-of-session review — "trim", "review the session", "lessons", worries about token use, or called by save-work. Files each lesson in its one home, then trims the always-read files to their character budgets.
 allowed-tools: Read Bash(git diff *) Bash(git log *) Bash(tools/dev.sh stale) Bash(tools/dev.sh budget)
 ---
 

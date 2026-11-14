@@ -1,6 +1,6 @@
 ---
 name: bootstrap
-description: Set up a new Godot 4 project to be run with this kit — writes CLAUDE.md, .claude/rules, project memory, the core docs (STATUS, roadmap, known bugs, guides), the inbox, a check runner with a smoke check and git ignores, after a few questions; the other homes (decisions, systems, research…) appear when the game first needs them. Never overwrites an existing file; a project that already has its own docs goes to realign. Run it once per project, by typing it.
+description: Set up a new Godot 4 project for this kit, once, by typing it. Asks a few questions, then writes CLAUDE.md, rules, memory, the core docs, a check runner and git ignores. Never overwrites a file; a project with its own docs goes to realign.
 argument-hint: "[optional: the game's name and a one-line pitch]"
 disable-model-invocation: true
 allowed-tools: Read Glob Grep Bash(ls *) Bash(grep *) Bash(echo *) Bash(git status *) Bash(git rev-parse *) Bash(godot --version)

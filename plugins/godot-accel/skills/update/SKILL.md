@@ -1,6 +1,6 @@
 ---
 name: update
-description: Bring a project set up with an older version of this kit up to date — when the user says "update the kit", "update the accelerator" or "bring this project up to date", or the session-start card says its kit version is behind. Adds new template files, merges new kit lines without replacing the user's wording, re-runs the checks, records the version. A project never set up with the kit goes to realign.
+description: Bring a project up to date with the installed kit — "update the kit", "update the accelerator", or when the session-start card says the kit version is behind. Adds new files and merges new lines, keeping the user's wording.
 argument-hint: "[optional: an area, e.g. rules, docs, tools]"
 ---
 
@@ -31,6 +31,8 @@ version: `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`. The project's versi
    - **Kit 0.6.0:** the hand-over lines of `working-with-user.md` (looks, review, "open X, try
      Y", steps last, final message) moved to `handing-over.md`: move the project's wording with
      them. `tools/dev.sh` from 0.5.0 on clears the stop check's list (older: the check is off).
+   - **Kit 0.6.2:** `"autoMemoryEnabled": false` for `.claude/settings.json` (one memory: the
+     repo's); offer to move what Claude's own memory holds into `.claude/memory/` first.
 4. **Show** one table, under 15 lines: file · add / merge / nothing · what changes. Get a yes.
    Ask one at a time only where a kit line contradicts theirs (recommend theirs).
 5. **Merge:** each new kit line where it belongs in the user's file; never delete or reword theirs.

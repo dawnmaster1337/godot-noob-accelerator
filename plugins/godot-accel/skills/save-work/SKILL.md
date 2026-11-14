@@ -1,6 +1,6 @@
 ---
 name: save-work
-description: Save work safely so nothing is lost between sessions or machines. Task save after every finished task or when the user says "save", "save work" or "commit". Session save when the user says "wrap up", "I'm done", "switching machines" or at the end of a session. Quick save when the user says they are running out of usage or tokens. Each ends by saying whether it is safe to /clear.
+description: Save work — "save", "save work", "commit" (task save); "wrap up", "I'm done", "switching machines" (session save); "running out of usage" (quick save). Runs the checks, commits on yes, says if it is safe to /clear.
 argument-hint: "[what was done] [task|session|quick]"
 allowed-tools: Read Bash(git status *) Bash(git diff *) Bash(git log *) Bash(git remote *) Bash(git rev-list *) Bash(tools/dev.sh *)
 ---

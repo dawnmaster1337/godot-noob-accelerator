@@ -58,7 +58,7 @@ exit code: 0
 
 $ tools/dev.sh check
 FAIL tests/smoke_check.tscn (exit 0, Godot printed errors)
-smoke_check: 0 failed
+while playing the main scene:
 ERROR: Node not found: "HealthBar" (relative to "/root/Main").
 ```
 
@@ -171,11 +171,10 @@ helps you. It works for our own games. It might not work for yours. If it doesn'
 | | |
 |---|---|
 | 🐢 **Slower** | Claude asks questions and runs checks before showing you things |
-| ✅ **What a pass means** | Every script loads and your main scene runs for a second without an error. Not that the game is fun, or finished |
+| ✅ **What a pass means** | Every script, scene, resource and shader loads, and your main scene runs for a second without an error. Not that the game is fun, or finished |
 | 🧪 **Proof** | Our tests show Claude *follows* the process. Nobody has yet measured whether games come out better than with plain Claude Code |
 | 📦 **Files** | About 12 you'll see (notes, a check script, a smoke test) and 20 hidden ones (Claude's rules, git checks). More appear only when your game needs them |
 | 🐧 **Tested on** | Linux so far. Windows and macOS should work; nobody has run the whole kit there yet |
-| 🖥️ **Desktop app** | Don't run the session in its own worktree yet: the kit's automatic checks would watch your main folder instead |
 | 🌐 **Connects to** | `godot-sourcing` connects each session, as it starts, to a free third-party asset search: the [3D Asset Server](https://3d.shep.bot/docs) (no account; [its privacy policy](https://3d.shep.bot/privacy)). It gets your search words only when you choose to find something. It can't be switched off on its own while the kit is on |
 | 💸 **Cost** | The kit is free. Claude Code needs a paid Claude plan |
 

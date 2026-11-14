@@ -68,6 +68,22 @@ if command -v claude >/dev/null 2>&1; then
 	expect 0 "claude plugin validate --strict (godot-sourcing)" claude plugin validate "$SOURCING" --strict
 	expect 0 "claude plugin validate (marketplace)" claude plugin validate "$REPO"
 fi
+expect 0 "suggested settings turn off Claude Code's own memory (the project's is in the repo)" grep -q '"autoMemoryEnabled": false' "$KIT_TEMPLATES/dot-claude/settings.suggested.json"
+# A released version label names one set of plugin files. Once a version is tagged, a change to
+# that plugin needs a new version in the same commit: an install only updates when the version
+# changes, and a project's kit-version stamp can't tell two builds of one number apart.
+tag=$(git -C "$REPO" describe --tags --abbrev=0 2>/dev/null)
+if [ -n "$tag" ]; then
+	reused=$(for p in "$PLUGIN" "$SOURCING"; do
+		rel=${p#"$REPO"/}
+		was=$(git -C "$REPO" show "$tag:$rel/.claude-plugin/plugin.json" 2>/dev/null | sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' | head -1)
+		now=$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "$p/.claude-plugin/plugin.json" | head -1)
+		[ "$was" = "$now" ] && ! git -C "$REPO" diff --quiet "$tag" -- "$rel" && echo "$rel is still $now but differs from $tag"
+	done)
+	[ -z "$reused" ] && ok "no plugin changed under a released version label ($tag)" || bad "plugin files changed without a version bump" "$reused"
+else
+	ok "no release tag in this clone: version labels not compared"
+fi
 # CONTRIBUTING's budget: each skill and agent under 4,000 characters (bootstrap and realign,
 # run once per project, excepted).
 over=$(for f in "$REPO"/plugins/*/skills/*/SKILL.md "$REPO"/plugins/*/agents/*.md; do
@@ -77,6 +93,19 @@ over=$(for f in "$REPO"/plugins/*/skills/*/SKILL.md "$REPO"/plugins/*/agents/*.m
 	[ "$n" -lt 4000 ] || echo "${f#"$REPO"/}: $n characters"
 done)
 [ -z "$over" ] && ok "every skill and agent under 4,000 characters" || bad "skills or agents over budget" "$over"
+# Claude Code drops skill descriptions from its listing when many plugins are installed: short
+# ones, trigger phrases first, survive longest; the CLAUDE.md template maps phrases to skills too.
+long=$(for f in "$REPO"/plugins/*/skills/*/SKILL.md; do
+	n=$(sed -n 's/^description: //p' "$f" | head -1 | wc -m)
+	[ "$n" -le 251 ] || echo "${f#"$REPO"/}: $((n - 1)) characters"
+done)
+[ -z "$long" ] && ok "every skill description is 250 characters or fewer" || bad "skill descriptions too long for the listing" "$long"
+missing=$(for f in "$PLUGIN"/skills/*/SKILL.md; do
+	grep -q '^disable-model-invocation: true' "$f" && continue
+	name=$(basename "$(dirname "$f")")
+	grep -q "| \`$name\` |" "$KIT_TEMPLATES/CLAUDE.md" || echo "$name"
+done)
+[ -z "$missing" ] && ok "CLAUDE.md's phrase table names every skill Claude may start itself" || bad "skills missing from the CLAUDE.md phrase table" "$missing"
 # Every injected skill command must end so it can't exit non-zero: a failing one aborts the skill.
 unsafe=$(grep -hn '^!`' "$REPO"/plugins/*/skills/*/SKILL.md | grep -vE '(; true|\|\| echo "[^"]*")`$')
 [ -z "$unsafe" ] && ok "every skill's ! command ends in '; true' or '|| echo'" || bad "skill ! commands that can fail" "$unsafe"
@@ -155,7 +184,22 @@ expect 0 "an error listed in tests/expected_errors.txt doesn't fail it" tools/de
 rm tests/expected_errors.txt
 printf 'extends Node2D\n\n@onready var hp: Node = $Missing\n\n\nfunc _ready() -> void:\n\tprint(hp)\n' >main.gd
 expect 1 "a missing node fails it" tools/dev.sh check
+expect_out 'while playing the main scene:' "and says it happened while the game played" tools/dev.sh check
 cp "$WORK/main.gd" main.gd
+# What nothing loads yet is checked too: a scene, a resource, a shader.
+printf '[gd_scene format=3]\n\n[ext_resource type="Texture2D" path="res://missing.png" id="1"]\n\n[node name="L2" type="Sprite2D"]\ntexture = ExtResource("1")\n' >level2.tscn
+expect 1 "a scene nothing uses yet, pointing at a missing file, fails it" tools/dev.sh check
+expect_out 'while checking res://level2.tscn:' "and names the scene" tools/dev.sh check
+rm level2.tscn
+mkdir fx
+printf 'shader_type canvas_item;\nvoid fragment() {\n\tCOLOR = vec4(1.0) * nope;\n}\n' >fx/glow.gdshader
+expect 1 "a shader nothing uses yet that doesn't compile fails it" tools/dev.sh check
+expect_out 'while checking res://fx/glow.gdshader:' "and names the shader (Godot's own error doesn't)" tools/dev.sh check
+printf 'shader_type canvas_item;\nvoid fragment() {\n\tCOLOR = vec4(1.0, 0.5, 0.2, 1.0);\n}\n' >fx/glow.gdshader
+printf '[gd_resource type="ShaderMaterial" format=3]\n\n[ext_resource type="Shader" path="res://fx/glow.gdshader" id="1"]\n\n[resource]\nshader = ExtResource("1")\n' >fx/glow.tres
+printf '[gd_scene format=3]\n\n[node name="Spare" type="Node2D"]\n' >fx/spare.tscn
+expect 0 "a sound scene, resource and shader pass" tools/dev.sh check
+rm -r fx
 printf 'extends Node2D\n\n\nfunc _ready() -> void:\n\tvar n = 3\n\tprint(n)\n' >untyped.gd
 expect 1 "an untyped declaration fails it (untyped_declaration = error)" tools/dev.sh check
 rm untyped.gd
@@ -240,6 +284,35 @@ expect_out 'Suggest /godot-accel:update' "session-start: an older project sugges
 echo "${kitv}-beta.1" >.claude/godot-accel/kit-version
 expect_out 'Suggest /godot-accel:update' "session-start: a pre-release stamp is older than its release" hook session-start.sh '{}'
 cp "$WORK/kit-version.bak" .claude/godot-accel/kit-version
+
+# A worktree session (the desktop app's, EnterWorktree): Claude Code keeps CLAUDE_PROJECT_DIR on
+# the main checkout and passes the worktree as "cwd" in the hook input.
+echo "== plugin hooks in a worktree session"
+W=$P/.claude/worktrees/feat
+git worktree add -q "$W" -b feat
+mkdir -p "$W/.godot"
+expect 2 "guard-paths protects the worktree's addons/" hook guard-paths.sh "{\"cwd\":\"$W\",\"tool_input\":{\"file_path\":\"$W/addons/x/y.gd\"}}"
+expect 2 "guard-paths protects another worktree's addons/ from the main session" hook guard-paths.sh "{\"cwd\":\"$P\",\"tool_input\":{\"file_path\":\"$W/addons/x/y.gd\"}}"
+expect 2 "guard-paths protects the main checkout's addons/ from a worktree session" hook guard-paths.sh "{\"cwd\":\"$W\",\"tool_input\":{\"file_path\":\"$P/addons/x/y.gd\"}}"
+expect 0 "guard-paths allows a script in the worktree" hook guard-paths.sh "{\"cwd\":\"$W\",\"tool_input\":{\"file_path\":\"$W/main.gd\"}}"
+expect 2 "a session that cd'd into a subfolder keeps its project" hook guard-paths.sh "{\"cwd\":\"$P/docs\",\"tool_input\":{\"file_path\":\"$P/addons/x/y.gd\"}}"
+printf 'extends Node\n' >"$W/new.gd"
+hook gd-format-lint.sh "{\"cwd\":\"$W\",\"tool_name\":\"Edit\",\"tool_input\":{\"file_path\":\"$W/new.gd\"}}" >/dev/null 2>&1
+if grep -qsx new.gd "$W/.godot/godot-accel-touched" && [ ! -s .godot/godot-accel-touched ]; then
+	ok "an edit in the worktree is noted in the worktree, not the main checkout"
+else
+	bad "worktree edit noted in the wrong place" "main: $(cat .godot/godot-accel-touched 2>&1); worktree: $(cat "$W/.godot/godot-accel-touched" 2>&1)"
+fi
+expect 0 "stop-check stays quiet in the main session" hook stop-check.sh "{\"cwd\":\"$P\"}"
+expect 2 "stop-check asks in the worktree session" hook stop-check.sh "{\"cwd\":\"$W\"}"
+(cd "$W" && tools/dev.sh check >/dev/null 2>&1)
+[ ! -e "$W/.godot/godot-accel-touched" ] && ok "a check run in the worktree answers it" || bad "the worktree's list survives its check"
+echo note >"$W/inbox/wt-note.md"
+expect_out 'wt-note.md' "session-start describes the worktree" hook session-start.sh "{\"cwd\":\"$W\"}"
+if hook session-start.sh "{\"cwd\":\"$P\"}" | grep -q 'wt-note.md'; then bad "the main session's card shows the worktree's inbox"; else ok "and the main session's card describes the main checkout"; fi
+git worktree remove --force "$W"
+git branch -q -D feat
+rm -f .godot/godot-accel-touched*
 
 echo "== git hooks"
 printf '%*s\n' 9000 '' | tr ' ' x >>CLAUDE.md

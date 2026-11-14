@@ -24,5 +24,8 @@ The rule or fact.
   outside the repo.
 - Update an existing memory rather than adding a near-duplicate; delete one that is no longer
   true. Never store secrets, or anything the code, docs or git history already say.
+- **This folder is the project's one memory.** Claude Code's own auto memory stays on one
+  machine, so the project's settings turn it off (`autoMemoryEnabled` in
+  `.claude/settings.json`).
 - **Claude Code loads only `MEMORY.md` at start.** A rule that must never be missed is also
   copied, in one line, into CLAUDE.md "Hard rules".

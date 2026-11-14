@@ -1,6 +1,6 @@
 ---
 name: resume
-description: Start a work session on a project set up with this kit — when the user says "resume", "pick up where we left off", "continue", "what's next" or "pull and resume", or opens a new session after a break or on another machine. Fetches and asks before pulling, reads STATUS, finds half-done work, processes the inbox, checks the tools, and proposes the next step.
+description: Start a work session — "resume", "continue", "pick up where we left off", "what's next", "pull and resume". Fetches and asks before pulling, reads STATUS, finds half-done work, empties the inbox, proposes one task.
 allowed-tools: Read Glob Grep Bash(git status *) Bash(git log *) Bash(git fetch) Bash(git fetch *) Bash(git rev-list *) Bash(git diff *) Bash(ls *) Bash(godot --version)
 ---
 

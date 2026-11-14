@@ -28,7 +28,11 @@ Thanks for helping. The kit improves from what real projects run into.
 - **Hooks must be portable:** no absolute paths; check every tool they call and exit 0 cleanly if
   it's missing; do nothing outside a Godot project.
 - **Bootstrap never overwrites** a user's file.
-- Skill descriptions trigger on how people actually talk ("save work", "I want to add…").
+- Skill descriptions trigger on how people actually talk ("save work", "I want to add…"), put
+  those phrases first and stay under 250 characters (`tests/run.sh` checks). Claude Code gives
+  the list of all installed skills about 1% of its context and drops descriptions, least-used
+  first, when it overflows; the phrase table in the CLAUDE.md template is the backstop, so a new
+  skill gets a row there too.
 
 ## Before opening a PR
 
@@ -48,9 +52,14 @@ Evals live in `plugins/godot-accel/evals/`; they make real model calls, so run t
 you mean to (`claude plugin eval plugins/godot-accel --scaffold --allow-tools Bash Write Edit --runs 1`;
 cases with a `fixture.sh` need `--scaffold`, or they run in an empty folder).
 
-Add a line to [CHANGELOG.md](CHANGELOG.md) under "Unreleased" and bump the version in
-`plugins/godot-accel/.claude-plugin/plugin.json` (or `plugins/godot-sourcing/…` for that plugin)
-when releasing: users only get an update when that version changes.
+Add a line to [CHANGELOG.md](CHANGELOG.md) under "Unreleased".
+
+**A version names one set of plugin files.** The first change to a plugin after a release bumps
+its `version` (`plugins/<plugin>/.claude-plugin/plugin.json`) in the same commit, to the next
+number with a pre-release suffix (`0.6.2-beta.1`); the release drops the suffix. Users only get
+an update when that version changes, and a project's kit-version stamp can't tell two builds of
+one number apart. `tests/run.sh` fails when a plugin differs from the last release tag under the
+same version.
 
 ## Graphics
 

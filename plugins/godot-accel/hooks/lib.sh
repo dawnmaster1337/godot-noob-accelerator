@@ -1,9 +1,61 @@
 #!/usr/bin/env bash
 # Shared helpers for the kit's hooks. Sourced, never run.
 
-# project_root: the project Claude is working in.
+# hook_start: reads the hook's input (JSON on stdin) into HOOK_INPUT and finds the project the
+# hook acts on. Every hook calls it once, first.
+# The project is the folder the session started in (CLAUDE_PROJECT_DIR), except when Claude works
+# in a git worktree of it (a worktree session of the desktop app, EnterWorktree). Claude Code
+# keeps CLAUDE_PROJECT_DIR on the main checkout there and passes the worktree as "cwd" in the
+# input, so the hooks follow cwd: that worktree's files, its notes, its Godot cache.
+hook_start() {
+	HOOK_INPUT=""
+	[ -t 0 ] || HOOK_INPUT=$(cat)
+	KIT_ROOT=${CLAUDE_PROJECT_DIR:-$PWD}
+	local cwd there
+	cwd=$(json_top cwd "$HOOK_INPUT")
+	[ -n "$cwd" ] && [ "$cwd" != "$KIT_ROOT" ] || return 0
+	there=$(project_in "$(norm_path "$cwd")")
+	[ -n "$there" ] && KIT_ROOT=$there
+	return 0
+}
+
+# project_root: the project Claude is working in (hook_start sets it).
 project_root() {
-	printf '%s' "${CLAUDE_PROJECT_DIR:-$PWD}"
+	printf '%s' "${KIT_ROOT:-${CLAUDE_PROJECT_DIR:-$PWD}}"
+}
+
+# checkout_of <path>: the nearest folder at or above path that is the root of a git checkout (it
+# holds .git: a folder in a main checkout, a file in a worktree). Nothing outside git.
+checkout_of() {
+	local d=$1
+	while [ -n "$d" ] && [ ! -e "$d/.git" ]; do
+		case "$d" in */*) d=${d%/*} ;; *) d="" ;; esac
+	done
+	printf '%s' "$d"
+}
+
+# repo_id <checkout root>: the .git folder every checkout of one repository shares; the same for
+# a main checkout and each of its worktrees.
+repo_id() {
+	(cd "$1" 2>/dev/null && common=$(git rev-parse --git-common-dir 2>/dev/null) &&
+		cd "$common" 2>/dev/null && pwd -P)
+}
+
+# project_in <dir>: this project's folder inside the checkout that holds dir, when that checkout
+# belongs to the project's repository (the checkout the session started in, or a worktree of it).
+# Nothing for a dir outside the repository: another repository is not this project.
+project_in() {
+	local start=${CLAUDE_PROJECT_DIR:-$PWD} top here id
+	here=$(checkout_of "$start")
+	top=$(checkout_of "$1")
+	[ -n "$top" ] && [ -n "$here" ] || return 0
+	if [ "$top" = "$here" ]; then
+		printf '%s' "$start"
+		return 0
+	fi
+	id=$(repo_id "$top")
+	[ -n "$id" ] && [ "$id" = "$(repo_id "$here")" ] && printf '%s' "$top${start#"$here"}"
+	return 0
 }
 
 # is_godot_project: true when the project root holds project.godot, or is a git repo with exactly

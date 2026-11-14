@@ -37,6 +37,7 @@
       "Bash(sudo *)"
     ]
   },
+  "autoMemoryEnabled": false,
   "worktree": {
     "baseRef": "head"
   }

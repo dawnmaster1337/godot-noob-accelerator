@@ -1,7 +1,7 @@
 {
   "name": "godot-sourcing",
   "displayName": "Godot Sourcing",
-  "version": "0.1.1",
+  "version": "0.1.2-beta.1",
   "description": "Find or build, your call: before Claude writes a shader, models a mesh or builds a common system, it asks whether you want a ready-made one or one built here. Finding searches free, commercially licensed sources (Godot Shaders, the Asset Store and Asset Library, GitHub, Poly Haven, ambientCG, Kenney and more through the 3D Asset Server), shortlists matches with their licences, waits for your pick, then fetches it and records the credit.",
   "author": {
     "name": "dawnmaster1337"

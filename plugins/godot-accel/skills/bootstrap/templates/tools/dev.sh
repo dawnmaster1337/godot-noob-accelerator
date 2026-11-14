@@ -95,15 +95,25 @@ refresh() {
 	return $fail
 }
 
-# engine_errors <log>: the run's error lines. Godot prints a missing node, a failed load or a
-# push_error as "ERROR:" and still exits 0, so the log decides too. Not counted: leak reports at
-# shutdown ("... at exit"), and lines holding a text from tests/expected_errors.txt (one per line:
-# a check that tests an error path lists the error it expects there).
+# engine_errors <log>: the run's error lines. Godot prints a missing node, a failed load, a
+# push_error or a shader that doesn't compile as an "ERROR:" line and still exits 0, so the log
+# decides too. Not counted: leak reports at shutdown ("... at exit"), and lines holding a text
+# from tests/expected_errors.txt (one per line: a check that tests an error path lists the error
+# it expects there). The smoke check names each file before it loads it; an error after such a
+# line is listed under "while checking <file>:", since Godot's own shader errors name no file.
 engine_errors() {
-	local expected="$GAME/tests/expected_errors.txt"
-	grep -E '^(USER |SCRIPT )?ERROR' "$1" | grep -v 'at exit' | {
-		if [ -f "$expected" ]; then grep -vFf <(grep -vE '^[[:space:]]*(#|$)' "$expected"); else cat; fi
-	}
+	awk -v expected="$GAME/tests/expected_errors.txt" '
+		BEGIN {
+			while ((getline line < expected) > 0)
+				if (line !~ /^[ \t]*(#|$)/) want[line] = 1
+		}
+		/^smoke_check: (checking|playing) / { at = $0; sub(/^smoke_check: /, "", at); next }
+		/^(USER |SCRIPT |SHADER )?ERROR/ && !/at exit/ {
+			for (w in want) if (index($0, w)) next
+			if (at != "" && at != said) { print "while " at ":"; said = at }
+			print
+		}
+	' "$1"
 }
 
 # run_check <tests/x_check.tscn>: prints only a failure; returns 1 on one.
@@ -118,9 +128,10 @@ run_check() {
 		[ -n "$errors" ] && why="$why, Godot printed errors"
 		echo "FAIL $scene ($why)"
 		{
-			grep -E "FAIL|failed" "$log"
+			# The check's own failure lines; Godot's errors follow, each under its file.
+			grep -E "FAIL|failed" "$log" | grep -vE '^(USER |SCRIPT |SHADER )?ERROR|^smoke_check: 0 failed'
 			printf '%s\n' "$errors"
-		} | grep . | head -8
+		} | grep . | head -12
 		rm -f "$log"
 		return 1
 	fi

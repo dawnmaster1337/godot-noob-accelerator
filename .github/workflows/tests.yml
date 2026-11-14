@@ -18,7 +18,10 @@ jobs:
       GUT_TAG: v9.7.1
       GDUNIT_TAG: v6.2.2
     steps:
+      # Full history and tags: tests/run.sh compares the plugins with the last release tag.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Godot
         run: |

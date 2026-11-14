@@ -1,6 +1,6 @@
 ---
 name: project-audit
-description: Health check (writes one report, changes nothing else) of a game project and how it is run with Claude — when the user asks to "audit the project", "check the repo is tidy", "are the docs a mess", "audit our workflow", "why are we using so many tokens", "what keeps going wrong", or at the end of a milestone. Finds files in the wrong place, unused or overgrown code, scattered or stale docs, contradicting rules and token cost; writes a ranked report in plain words; then asks about each fix one at a time.
+description: Health check of a game project — "audit the project", "is the repo tidy", "are the docs a mess", "why so many tokens", "what keeps going wrong", or a milestone's end. Writes one ranked report, then asks about each fix.
 argument-hint: "[focus, e.g. code, docs, tokens, git, the last milestone]"
 allowed-tools: Read Glob Grep Bash(wc *) Bash(git log *) Bash(git status *) Bash(git worktree list) Bash(tools/dev.sh tidy) Bash(tools/dev.sh stale) Bash(tools/dev.sh budget) Bash(tools/dev.sh conform)
 ---

@@ -1,6 +1,6 @@
 ---
 name: harvest-learnings
-description: Turn what this project has learned about working with Claude into feedback for the Godot Noob Accelerator kit — compares the project's CLAUDE.md, rules, docs conventions and memory with the kit's templates, keeps only lessons that would help any project, strips all project content, and writes ready-to-paste GitHub issue bodies. Never posts anything. Run it by typing it.
+description: Turn what this project learned about working with Claude into feedback for the kit, by typing it. Compares the project with the kit's templates, strips project content, writes ready-to-paste GitHub issue bodies. Posts nothing.
 argument-hint: "[optional: an area to focus on, e.g. rules, saving, hooks]"
 disable-model-invocation: true
 allowed-tools: Read Glob Grep Bash(diff *) Bash(git log *) Bash(ls *) Bash(tools/dev.sh conform)

@@ -45,7 +45,7 @@ fill() {
 		s/\{\{PILLAR_1\}\}/*to be agreed in the first planning session*/g;
 		s/\{\{DATE\}\}/2026-11-01/g;
 		s/\{\{PUSH_POLICY\}\}/the user pushes (`git push`) when they want./g;
-		s/\{\{RUN_STEP\}\}/one run of the game (`godot --path .`), reading its output/g;
+		s/\{\{RUN_STEP\}\}/one bounded headless run of the game (`tools\/dev.sh run`), reading its output/g;
 		s/\{\{TEST_COMMAND\}\}/`tools\/dev.sh check <name>` runs one check (`tests\/<name>_check.tscn`)/g;
 		s/\{\{(KIT_NAME)\}\}/godot-accel/g;
 		s/\{\{(KIT_REPO)\}\}/godot-noob-accelerator/g;

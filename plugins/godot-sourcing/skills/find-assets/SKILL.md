@@ -1,6 +1,6 @@
 ---
 name: find-assets
-description: Ask the user first whether to find a ready-made asset or build it here, then do what they choose — for shaders, 3D models, textures and materials, skies and HDRIs, sprites, sounds, fonts, Godot addons and common systems. Use when the user wants something to look or feel better or needs an asset ("make the water look nicer", "I need some trees", "add a skybox", "find a toon shader", "is there an inventory addon"), and before writing a shader, modelling a mesh or building a common system. Finding shortlists free, licence-checked matches and waits for the user's pick.
+description: Find or build — ask the user before making a shader, model, texture, sky, sprite, sound, font or addon ("make the water look nicer", "I need some trees", "find a toon shader"). Finding shortlists free, licence-checked options.
 argument-hint: "[what's needed, in the user's words]"
 ---
 

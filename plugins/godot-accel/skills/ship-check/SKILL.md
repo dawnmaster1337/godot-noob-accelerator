@@ -1,6 +1,6 @@
 ---
 name: ship-check
-description: Pre-commit gate for a Godot project — lints changed GDScript, runs every headless check, play-tests (through the editor MCP's playtester when the project has one), runs the adversarial reviewer only at milestones, fixes what it finds, then proposes a commit. Use when save-work's gate calls for it, or the user asks to check everything before a commit ("ship check", "is it ready to commit?"). Not an export build.
+description: Pre-commit gate for a Godot project — "ship check", "is it ready to commit?", or called by save-work. Lints, runs every check, play-tests, reviews at milestones, fixes what it finds, proposes a commit. Not an export build.
 argument-hint: "[what this change is supposed to do]"
 allowed-tools: Read Bash(git status *) Bash(git diff *) Bash(git ls-files *) Bash(tools/dev.sh *) Bash(gdlint *) Bash(gdformat *)
 ---

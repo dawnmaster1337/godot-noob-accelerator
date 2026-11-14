@@ -11,10 +11,11 @@
 set -u
 # shellcheck source=lib.sh
 . "$(dirname "$0")/lib.sh"
+hook_start
 export PATH="$HOME/.local/bin:$PATH"
 is_godot_project || exit 0
 
-input=$(cat)
+input=$HOOK_INPUT
 root=$(project_root)
 changed=()
 format=1

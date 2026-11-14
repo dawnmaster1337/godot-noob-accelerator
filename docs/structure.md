@@ -40,7 +40,7 @@ when you pick them.
 | `godot-accel/shape.md` | setup | **The project's shape:** each home's path, kind (live, plan, history), headings, entry format, and whether bootstrap makes it or it waits for first use. Add a row for a home of your own |
 | `godot-accel/kit-version` | setup | The kit version the project was set up or last updated with; `update` and the session-start card compare it with the plugin |
 | `protected-paths.txt` | setup | Extra paths the editing-tool guard blocks (`addons/*` …), with `!` exceptions |
-| `settings.json` | setup | The suggested permissions merged in on your yes: **ask** before every commit (and push, unless Claude pushes for you); **deny** reading secrets and any write to Godot's cache, `.import` and `.uid` files, by the editing tools and by shell commands alike |
+| `settings.json` | setup | The suggested permissions merged in on your yes: **ask** before every commit (and push, unless Claude pushes for you); **deny** reading secrets and any write to Godot's cache, `.import` and `.uid` files, by the editing tools, with a guard-rail for the shell commands Claude Code recognises as file writes; Claude Code's machine-local auto memory off, so `.claude/memory/` is the only one; new worktrees start from your local commits |
 | `reminder.md` | first use | Rules you've had to say twice, repeated to Claude with every message you send (under 600 characters) |
 | `start-guard.md` | first use | A short standing reminder shown at every session start (setup when standards are picked) |
 | `agents/playtester.md` *(optional)* | setup | Drives the game through your editor MCP; never edits |
@@ -72,7 +72,7 @@ when you pick them.
 |---|---|---|
 | `inbox/README.md`, `inbox/.gdignore` | setup | The drop box; Godot ignores it, git tracks only the README |
 | `tools/dev.sh` | setup | `check` (refresh when files changed, then every or the named headless checks, GUT or gdUnit4 too; fails when nothing ran), `refresh`, `lint`, `stale`, `conform`, `budget`, `tidy` |
-| `tests/smoke_check.gd`, `.tscn` | setup | Loads every script and plays the main scene for a second; any error Godot prints fails it (a missing node, a failed load, `push_error`). The pattern each system's own check copies; an error a check expects on purpose goes in `tests/expected_errors.txt` |
+| `tests/smoke_check.gd`, `.tscn` | setup | Loads every script, scene, resource and shader, then plays the main scene for a second; any error Godot prints fails it (a missing node, a failed load, a shader that doesn't compile, `push_error`), named by file. The pattern each system's own check copies; an error a check expects on purpose goes in `tests/expected_errors.txt` |
 | `.githooks/` | setup | Do nothing until `git config core.hooksPath .githooks` (per clone). `pre-commit`: lint, format, no `.godot/`, `.env` or key-shaped strings, budgets. `pre-push`: hands over to git-lfs. The identity checks are the maintainer's own tool and run only where `~/.config/identity-guard/` exists (`.githooks/README.md`) |
 
 ## In the plugin (not copied; updated with the plugin)

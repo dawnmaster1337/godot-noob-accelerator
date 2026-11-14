@@ -11,6 +11,7 @@
 set -u
 # shellcheck source=lib.sh
 . "$(dirname "$0")/lib.sh"
+hook_start
 root=$(project_root)
 cd "$root" 2>/dev/null || exit 0
 if ! is_godot_project && [ ! -f docs/STATUS.md ]; then

@@ -84,7 +84,12 @@ project's own file formats. The shape file and `conform` make the structure chec
 imports its index (`@.claude/memory/MEMORY.md`). Only the index loads at start, so any rule that
 must never be missed is also copied, in one line, into CLAUDE.md's **Hard rules**.
 
-**Why:** a binding rule kept only in a memory file was seen as one index line and got skipped.
+Claude Code has a memory of its own, kept on one machine and switched on by default. Two memories
+drift apart, so the project's settings turn that one off (`"autoMemoryEnabled": false`) and this
+folder is the only one.
+
+**Why:** a binding rule kept only in a memory file was seen as one index line and got skipped. A
+rule saved to the machine-local memory never reached the second computer.
 
 ## 5. Checking before you see anything
 
@@ -105,11 +110,12 @@ must never be missed is also copied, in one line, into CLAUDE.md's **Hard rules*
   `tools/dev.sh run`: the game headless for about ten seconds, failing on any error it prints.
   Godot's cache is refreshed only when files changed.
 - Per task (`ship-check`): lint, every headless check (`tools/dev.sh check`), a play-test, fixes,
-  "To try:" for you, a proposed commit. The smoke check loads every script outside `addons/` and
-  plays the main scene for about a second; any error Godot prints fails a check, even when Godot
-  exits as if all is well; a run where no check ran fails. `check <name>` runs only the named
-  checks, without the smoke check. It is a floor, not proof the game is fun or right: that's
-  your play-test.
+  "To try:" for you, a proposed commit. The smoke check loads every script, scene, resource and
+  shader outside `addons/` (also the ones nothing uses yet), then plays the main scene for about
+  a second. Any error Godot prints fails a check, even when Godot exits as if all is well, and
+  the failure names the file it came from. A run where no check ran fails. `check <name>` runs
+  only the named checks, without the smoke check. It is a floor, not proof the game is fun or
+  right: that's your play-test.
 - At milestones only: the `adversarial-reviewer`, given the intent but never Claude's own
   summary. Obvious fixes happen at once; design questions come to you one at a time.
 - `.githooks/` (on once you run `git config core.hooksPath .githooks`): the same lint plus a
@@ -182,6 +188,9 @@ nobody can find their way around.
   editing the bible, so two sessions never overwrite each other.
 - `AGENTS.md` lets any other AI tool or developer pick the project up: the read order and the
   per-task loop.
+- A session that works in a git worktree (the desktop app can start one per session) gets the
+  kit's hooks for that worktree: its files are guarded, its checks are asked for, and its own
+  notes are on the start card. The main checkout is left alone.
 
 ## 11. Feeding back to the kit
 

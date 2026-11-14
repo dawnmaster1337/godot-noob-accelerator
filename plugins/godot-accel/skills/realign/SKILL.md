@@ -1,6 +1,6 @@
 ---
 name: realign
-description: Move an existing Godot project onto the kit's shape — when it was never bootstrapped, was set up by hand or by an older kit, or the session-start card or `tools/dev.sh conform` says it is off the shape. Finds every file doing a kit home's job (status, roadmap, logs, hand-off notes, bug lists, quirks, references, rules), rewrites its facts into the kit's home and form, archives the original and proves nothing was dropped. One home at a time, each on the user's yes. Run it by typing it.
+description: Move an existing Godot project onto the kit's shape, by typing it — never bootstrapped, set up by hand, or off the shape. Rewrites each stray status, plan, bug or rules file into its kit home, one at a time on the user's yes, keeping every fact.
 argument-hint: "[optional: one home, e.g. bugs, roadmap, status]"
 disable-model-invocation: true
 ---

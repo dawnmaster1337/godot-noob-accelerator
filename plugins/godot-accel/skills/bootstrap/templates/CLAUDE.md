@@ -92,11 +92,30 @@ The rules that must never be missed. A rule the user makes binding gets one line
    session with uncommitted work unsaid.
 5. Small commits with imperative messages.
 
+What the user says, and the kit's skill for it (`godot-accel:<name>`). Run it even when your
+skill list shows the name without a description: with many plugins installed, Claude Code
+drops descriptions.
+
+| The user says | Skill |
+|---|---|
+| "resume", "continue", "what's next" | `resume` |
+| wants something new: "I want to add…", "let's add…", "how should X work" | `plan-feature` |
+| "save", "save work", "commit" · "wrap up", "I'm done" · "running out of usage" | `save-work` |
+| "is it ready to commit?", "ship check" | `ship-check` |
+| "trim", "lessons", worried about tokens | `trim-context` |
+| "audit the project", "the repo is a mess" | `project-audit` |
+| "update the kit" | `update` |
+| needs art, a model, a sound, a shader or an addon | `godot-sourcing:find-assets`, when installed |
+{{#CANON}}
+| new dialogue, names or item text | `canon-check` |
+{{/CANON}}
+
 ## Commands
 
 - `tools/dev.sh check [name…]` — refresh Godot's cache if files changed, then run the headless
   checks in `tests/`: all, or only those named (exit 1 = a failure, or none ran). The smoke
-  check loads every script and plays the main scene; each system adds its own check.
+  check loads every script, scene, resource and shader and plays the main scene; each system adds
+  its own check.
 - `tools/dev.sh lint` — gdlint + gdformat on changed `.gd` files.
 - `tools/dev.sh stale` — paths in the live docs that no longer exist.
 - `tools/dev.sh conform` — does the project match `.claude/godot-accel/shape.md` (homes, headings,

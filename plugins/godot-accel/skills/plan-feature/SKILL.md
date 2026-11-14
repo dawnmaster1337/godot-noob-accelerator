@@ -1,6 +1,6 @@
 ---
 name: plan-feature
-description: Plan a new feature, mechanic or system for a Godot game before any code — when the user asks to plan, design or add something new ("I want the player to double jump", "let's add an inventory", "how should saving work", "plan the next milestone"). Asks the open questions one at a time with recommendations, records the answers as a decision, writes a plan with a Done line and tasks, and waits for the user's OK.
+description: Plan something new before any code — "I want to add…", "let's add an inventory", "how should saving work", "plan the next milestone". One question at a time, records the decision, writes a plan, waits for the OK.
 argument-hint: "[the feature in the user's words]"
 ---
 

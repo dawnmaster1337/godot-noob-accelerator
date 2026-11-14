@@ -9,6 +9,7 @@
 set -u
 # shellcheck source=lib.sh
 . "$(dirname "$0")/lib.sh"
+hook_start
 is_godot_project || exit 0
 project_has_own_hook stop-check.sh && exit 0
 grep -qs 'godot-accel-touched' "$(project_root)/tools/dev.sh" || exit 0

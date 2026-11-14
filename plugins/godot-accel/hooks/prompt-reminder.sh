@@ -6,6 +6,7 @@
 set -u
 # shellcheck source=lib.sh
 . "$(dirname "$0")/lib.sh"
+hook_start
 is_godot_project || exit 0
 project_has_own_hook prompt-reminder.sh && exit 0
 file="$(project_root)/.claude/reminder.md"

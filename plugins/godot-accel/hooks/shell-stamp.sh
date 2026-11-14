@@ -8,6 +8,7 @@
 set -u
 # shellcheck source=lib.sh
 . "$(dirname "$0")/lib.sh"
+hook_start
 is_godot_project || exit 0
 stamp=$(bash_stamp)
 [ -d "${stamp%/*}" ] && git -C "$(project_root)" rev-parse -q --verify HEAD >"$stamp" 2>/dev/null
