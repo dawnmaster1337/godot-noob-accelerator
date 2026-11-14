@@ -11,6 +11,8 @@ Kit templates: `${CLAUDE_SKILL_DIR}/../bootstrap/templates/` (`dot-claude/` = `.
 version: `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`. The project's version:
 `.claude/godot-accel/kit-version` (missing = set up before 0.3.0).
 
+!`cat "${CLAUDE_SKILL_DIR}/versions.md" 2>/dev/null; true`
+
 1. **Is it a kit project?** No `.claude/budgets.md` and no `docs/STATUS.md` → offer
    `/godot-accel:realign` (bootstrap if it has no docs); stop. Uncommitted work → `save-work`
    first, so the update is its own commit.
@@ -25,14 +27,12 @@ version: `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`. The project's versi
    memory) are never rewritten: only missing files are added, and a template's new section is
    offered as a heading; their form is `realign`'s job. `shape.md`: kit rows into the first
    table only, with the kit's Made column; "This project's own rows" are theirs.
-   - **Kit 0.5.0:** `tests/smoke_check.*` replaces the `2 + 2` example (delete
-     `example_check.*` if unchanged); new ask and deny rules for `.claude/settings.json`; an
-     `autoMemoryDirectory` pointing at `.claude/memory` loads memory twice: the user removes it.
-   - **Kit 0.6.0:** the hand-over lines of `working-with-user.md` (looks, review, "open X, try
-     Y", steps last, final message) moved to `handing-over.md`: move the project's wording with
-     them. `tools/dev.sh` from 0.5.0 on clears the stop check's list (older: the check is off).
-   - **Kit 0.6.2:** `"autoMemoryEnabled": false` for `.claude/settings.json` (one memory: the
-     repo's); offer to move what Claude's own memory holds into `.claude/memory/` first.
+   - **Version notes** (shown above, from `versions.md`): apply each one newer than the
+     project's version. They name what moved, what was reworded and what a setting replaces.
+   - **A project skill named like a kit skill** (`.claude/skills/<name>/`): show both skills' `!`
+     commands and `allowed-tools` lines side by side. Recommend the kit's, with the project's
+     own steps in `.claude/godot-accel/<name>.md` where the kit's skill reads one; the user
+     decides.
 4. **Show** one table, under 15 lines: file · add / merge / nothing · what changes. Get a yes.
    Ask one at a time only where a kit line contradicts theirs (recommend theirs).
 5. **Merge:** each new kit line where it belongs in the user's file; never delete or reword theirs.

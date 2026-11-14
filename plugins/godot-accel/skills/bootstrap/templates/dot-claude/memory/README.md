@@ -1,7 +1,7 @@
 # Project memory
 
 Working rules learned from the user, kept **in the repo** so every machine and every agent sees
-them. `MEMORY.md` is the index: one line per memory, under 2,000 characters. Each memory is one
+them. `MEMORY.md` is the index: one line per memory, under 3,000 characters. Each memory is one
 file, one fact, under 1,200 characters:
 
 ```markdown

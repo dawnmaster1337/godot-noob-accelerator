@@ -489,6 +489,11 @@ conform() {
 	# A kit placeholder ({{NAME}}) left unfilled in a live doc.
 	report "$(live_docs | while IFS= read -r f; do grep -nHE '\{\{[#/]?[A-Z_]+\}\}' "$f"; done |
 		cut -c1-120 | sed 's/$/ … (an unfilled kit placeholder)/')"
+	# A project skill's injected command (a line starting !`) that exits non-zero stops the whole
+	# skill from loading, usually at the moment it is needed (a budget check when over budget).
+	report "$(grep -nH '^!`' .claude/skills/*/SKILL.md 2>/dev/null |
+		grep -vE '(; true|\|\| echo "[^"]*")`$' | cut -c1-120 |
+		sed 's/$/ … (a ! command that can fail stops the skill loading: end it in "; true")/')"
 	# A doc no row covers is drift: its content belongs in the home that does its job.
 	while IFS= read -r f; do
 		case "$f" in README.md | CHANGELOG.md | CONTRIBUTING.md | LICENSE.md | CODE_OF_CONDUCT.md | SECURITY.md) continue ;; esac
@@ -573,7 +578,7 @@ budget_rules() {
 			while (match(s, /`[^`]+`/)) { print substr(s, RSTART + 1, RLENGTH - 2), n; s = substr(s, RSTART + RLENGTH) }
 		}' .claude/budgets.md
 	else
-		printf '%s\n' "CLAUDE.md 8000" "docs/STATUS.md 5000" ".claude/memory/MEMORY.md 2000" \
+		printf '%s\n' "CLAUDE.md 8000" "docs/STATUS.md 5000" ".claude/memory/MEMORY.md 3000" \
 			".claude/memory/*.md 1200" ".claude/rules/*.md 3000"
 	fi
 }

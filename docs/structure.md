@@ -26,15 +26,15 @@ when you pick them.
 | File | Made | Why |
 |---|---|---|
 | `rules/working-with-user.md` | setup | One question at a time with recommendations, APR, stale question lists, echo requests back, recording answers, paused plans, timeboxed polish, trigger words |
-| `rules/handing-over.md` | setup | Stills and clips, one piece then a review, "open X, try Y", steps for the user last, one runner per command, a final message that stands alone |
+| `rules/handing-over.md` | setup | Stills and clips, cheapest view first; show neutrally, never rate it either way; no redo before the user's verdict; one piece then a review; "open X, try Y", with the user's first action tried first; steps for the user last; one runner per command; a final message that stands alone |
 | `rules/git.md` | setup | Fetch and ask before pulling; commit on yes; stage by path; no blanket destructive commands; secrets never in chat; worktree cleanup |
-| `rules/showing-work.md` | setup | Checks before the user sees anything, quoted; UI seen before "works"; break tests that cross the line; driven input and the ruler doubted; show neutrally, never praise |
+| `rules/showing-work.md` | setup | Checks before the user sees anything, quoted; UI seen before "works"; break tests that cross the line; driven input and the ruler doubted; findings sorted into defects (fixed first) and taste (shown) |
 | `rules/docs.md` (`paths: docs/**` …) | setup | One home per fact, naming, fixing every copy, budgets, one term per thing |
 | `rules/scenes.md` (`paths: *.tscn, *.tres, **/project.godot`) | setup | Engine-owned files, moving a script with its `.uid`, third-party plugins, `.tres` diffs, input actions |
 | `rules/tuning.md` (`paths: *.tres, *.tscn, tuning scripts`) | setup | Feel values in `Tuning` Resources; change the preset, not only the default; the user's hand edits are theirs |
 | `rules/gdscript.md` / `csharp.md` (`paths: *.gd` / `*.cs`) | setup | Language rules, loaded only when Claude touches those files |
 | `rules/godot-mcp.md` *(optional)* | setup | "Never work blind" when an editor MCP server is used |
-| `rules/paid-tools.md` *(optional)* | setup | Spend gate for any paid API; stop spending when approval fails |
+| `rules/paid-tools.md` *(optional)* | setup | Spend gate for any paid API; reuse means the approved result's saved recipe; a predicted failure is never the recommendation; assemble before re-rolling; stop spending when approval fails |
 | `memory/MEMORY.md`, `memory/README.md` | setup | The project's memory index (imported by CLAUDE.md, so it loads on every machine with nothing to set) and its format |
 | `budgets.md` | setup | Character budgets. A commit is refused only for a file read every session that is over; the rest are a warning |
 | `godot-accel/shape.md` | setup | **The project's shape:** each home's path, kind (live, plan, history), headings, entry format, and whether bootstrap makes it or it waits for first use. Add a row for a home of your own |

@@ -110,6 +110,14 @@ done)
 unsafe=$(grep -hn '^!`' "$REPO"/plugins/*/skills/*/SKILL.md | grep -vE '(; true|\|\| echo "[^"]*")`$')
 [ -z "$unsafe" ] && ok "every skill's ! command ends in '; true' or '|| echo'" || bad "skill ! commands that can fail" "$unsafe"
 cmds=$(grep -h '^!`' "$REPO"/plugins/*/skills/*/SKILL.md | sed 's/^!`//; s/`$//')
+expect 0 "update shows its version notes (versions.md) whenever it runs" sh -c "test -s '$PLUGIN/skills/update/versions.md' && grep -q '^!\`cat \"\${CLAUDE_SKILL_DIR}/versions.md\"' '$PLUGIN/skills/update/SKILL.md'"
+# A rule template that starts inside the near-budget band (95% of 3,000) makes every new project
+# warn from its first save, and the project's first added line fails the commit gate.
+near=$(for f in "$KIT_TEMPLATES"/dot-claude/rules/*.md; do
+	n=$(wc -m <"$f")
+	[ "$n" -le 2850 ] || echo "${f##*/}: $n characters"
+done)
+[ -z "$near" ] && ok "no rule template starts within 5% of its budget" || bad "rule templates at or near their 3,000 budget" "$near"
 # godot-sourcing's eval fixtures build a project from scratch: they must run in an empty folder.
 for f in "$SOURCING"/evals/*/fixture.sh "$SOURCING"/evals/lib/*.sh; do
 	expect 0 "bash -n ${f#"$REPO"/}" bash -n "$f"
@@ -146,6 +154,9 @@ for _ in $(seq 49); do printf '%099d\n' 0; done >docs/STATUS.md
 expect_out 'near budget: docs/STATUS.md 4900/5000 characters \(100 left\)' "budget names a file within 5% of its budget" tools/dev.sh budget
 expect 0 "and still passes" tools/dev.sh budget
 git checkout -q docs/STATUS.md
+for _ in $(seq 26); do printf -- '- [A working rule](a-working-rule.md) — %060d\n' 0; done >.claude/memory/MEMORY.md
+if tools/dev.sh budget | grep -q 'MEMORY.md'; then bad "a memory index of 26 lines is over or near its budget"; else ok "a memory index of 26 lines (about 100 characters each) is within budget"; fi
+git checkout -q .claude/memory/MEMORY.md
 stamp=$(stat -c %Y .godot/dev-refresh.stamp)
 sleep 1
 mkdir -p .claude/worktrees/other && printf 'extends Node\n' >.claude/worktrees/other/new.gd
@@ -222,6 +233,14 @@ rm -r docs/decisions
 printf '# Notes\n' >docs/notes.md
 expect 1 "an undeclared doc is drift" tools/dev.sh conform
 rm docs/notes.md
+# A project skill whose ! command can fail stops loading when it does (Claude Code aborts it).
+mkdir -p .claude/skills/trim
+printf -- '---\nname: trim\ndescription: Trim.\n---\n\n!`tools/dev.sh budget`\n' >.claude/skills/trim/SKILL.md
+expect 1 "a project skill's ! command that can fail is a conform problem" tools/dev.sh conform
+expect_out 'skills/trim/SKILL.md:6:.*can fail' "and conform names the line" tools/dev.sh conform
+printf -- '---\nname: trim\ndescription: Trim.\n---\n\n!`tools/dev.sh budget; true`\n' >.claude/skills/trim/SKILL.md
+expect 0 "the same command ending in '; true' passes" tools/dev.sh conform
+rm -r .claude/skills
 printf 'See `docs/gone.md`.\n' >>docs/STATUS.md
 expect 1 "stale still finds a dead path" tools/dev.sh stale
 git checkout -q docs/STATUS.md

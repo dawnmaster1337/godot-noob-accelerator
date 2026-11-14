@@ -11,6 +11,12 @@ a Godot upgrade, re-check the quirks tagged with an older version, or retire the
 
 ## Editor and MCP
 
+- *Seen 2026-11:* a key or server added to a desktop AI app's MCP config is gone after the
+  restart → the app writes its remembered config back when it starts, over edits made while it
+  ran. Quit the app fully, edit the file, then launch. Keep a server's key in the config's `env`
+  block, never inline in the command arguments, and check a key by its shape only (length,
+  prefix), never by printing it.
+
 ## Headless checks
 
 - *Godot 4.x:* a new `class_name` is "not found" in a headless run → `tools/dev.sh refresh`

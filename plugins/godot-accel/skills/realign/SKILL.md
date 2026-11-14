@@ -53,8 +53,10 @@ reword. Afterwards no home has two files.
    - A required heading that doesn't fit: a heading may say more after the shape's words
      (`## 3. Data and behaviour`); never rename content to fit a heading.
    - Over a budget after the move → name file and overage and ask; never trim their content.
-   - A project skill or hook duplicating a kit one: the kit's stands down; the user decides
-     whether to delete theirs.
+   - A project hook duplicating a kit one: the kit's stands down; the user decides whether to
+     delete theirs. A project skill named like a kit skill: show both skills' `!` commands and
+     `allowed-tools` lines side by side and recommend the kit's (`update` step 3); the user
+     decides.
    - `tools/dev.sh conform` and `stale`: that home's problems are gone. Offer a commit for it,
      staged by path; check `git diff --cached --name-status` first (`git mv` stages itself).
    A big project can take one home per session: `conform` shows what is left.

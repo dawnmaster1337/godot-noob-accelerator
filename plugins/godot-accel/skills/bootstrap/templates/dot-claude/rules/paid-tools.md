@@ -9,8 +9,20 @@ paid APIs):
   each paid call, ask what local step could replace it next time.
 - **Iterate small:** change an approved result one thing at a time; never re-roll from scratch
   hoping for better.
-- **Never lose a paid result:** save the output and a ledger row in the same step; after an
-  interruption, check what was paid for and recover it before anything else.
+- **Reuse means the same file:** before the estimate, name the saved recipe of the result the
+  user approved and list every field where the new call differs from it (wording, inputs, size,
+  seed). A look-alike variant is a new experiment: run it once, never as a batch.
+- **A predicted failure is not a recommendation:** if a measurement already shows what a recipe
+  does wrong, do not run it again hoping for a different result. If you can name the likely
+  failure before the call, change the route first. Offer the unchanged call only as the
+  non-recommended option, with the prediction in plain words.
+- **Assemble before re-rolling:** when two paid results each got one needed property right,
+  combine them locally (a script in the repo, so it can be rerun) before paying for another
+  attempt at both in one result. A fault in a part that will be replaced anyway is not a reason
+  to reject the rest.
+- **Never lose a paid result:** save the output, its recipe (the call's exact inputs) and a
+  ledger row naming both in the same step; after an interruption, check what was paid for and
+  recover it before anything else.
 - **Approval failing → stop spending:** two refusals or non-answers in a row from the permission
   check: stop, say what is failing, and ask the user to change the permission mode before any
   further paid call. Never retry one blind: a turn cut between the call and reading its result

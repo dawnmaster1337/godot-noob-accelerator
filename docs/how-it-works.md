@@ -121,12 +121,16 @@ rule saved to the machine-local memory never reached the second computer.
 - `.githooks/` (on once you run `git config core.hooksPath .githooks`): the same lint plus a
   secrets scan at commit time, catching edits made from a shell that the editor hooks miss.
   Optional identity checks run only on a machine set up for them (`.githooks/README.md`).
-- `.claude/rules/showing-work.md`: quote the check output, review every case yourself first, show
-  work neutrally, **never call it good**.
+- `.claude/rules/showing-work.md`: quote the check output, review every case yourself first, and
+  sort every finding: a measurable defect is fixed before you see the work, a matter of taste is
+  yours to call.
+- `.claude/rules/handing-over.md`: show work neutrally, **never rate it for you, good or bad**,
+  and propose no redo before you have judged the result in front of you.
 
 **Why:** "the user was the QA" was the most expensive failure in the source project: defects a
 check would have caught reached the user round after round. Praise for output the user then
-disliked cost trust and money.
+disliked cost trust and money. So did the opposite: twice a measurement failed a generated asset
+and a paid replacement was proposed, and both times the user looked and kept it.
 
 ## 6. Tuning, your hand edits and playtests
 

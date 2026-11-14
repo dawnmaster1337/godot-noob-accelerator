@@ -5,10 +5,10 @@ All notable changes. Versions follow the plugin's `version` in
 
 ## Unreleased — checks you can trust
 
-From two reviews of 0.6.1. **Update:** yes, the first fix changes what a passing check means. A
-project gets the new `tools/dev.sh`, smoke check and pre-commit through **update the kit**. Until
-it is released, `main` carries this as godot-accel `0.6.2-beta.1` and godot-sourcing
-`0.1.2-beta.1`.
+From two reviews of 0.6.1 and a fourth project's harvest. **Update:** yes, the first fix changes
+what a passing check means. A project gets the new `tools/dev.sh`, smoke check, pre-commit and
+rules through **update the kit**. Until it is released, `main` carries this as godot-accel
+`0.6.2-beta.2` and godot-sourcing `0.1.2-beta.1`.
 
 - **A check scene fails on any error Godot prints.** Godot reports a missing node, a failed load
   or a `push_error` as an `ERROR:` line and still exits 0, so a main scene with all three passed
@@ -38,6 +38,27 @@ it is released, `main` carries this as godot-accel `0.6.2-beta.1` and godot-sour
   docs describe, not yet in the desktop app itself.
 - **One memory.** Claude Code's own auto memory is on by default and stays on one machine; the
   kit's lives in the repo. The suggested settings now set `"autoMemoryEnabled": false`.
+- **Work is never rated for the user, in either direction.** The rule only forbade praise. Twice
+  a measurement failed a generated asset and a paid replacement was proposed; both times the user
+  looked and kept it. Now a result that can only be fixed by making it again is shown as it is,
+  and no redo is proposed or priced before the user's verdict. A reviewer's findings are sorted
+  first: a measurable defect is fixed before showing, taste is shown with the number, and a
+  defect is never passed on as an opinion. "Show neutrally" and "Cheapest view first" moved to
+  `handing-over.md`, which keeps `showing-work.md` inside its budget.
+- **More rules from that harvest.** A complaint or a prediction is not a decision: the words are
+  recorded and no plan changes on them. Before saying something is ready in a tool, Claude does
+  the user's first action there itself, save included. Paid tools: reuse means the approved
+  result's saved recipe with every difference listed, a predicted failure is never the
+  recommended option, and two half-right results are joined locally before another paid
+  attempt. New quirk: a desktop app's MCP config edited while the app runs is lost.
+- **The memory index holds about 30 memories.** Its budget is 3,000 characters, up from 2,000,
+  which the kit's own line length filled at 22.
+- **`conform` checks a project's own skills.** A skill's `!` command that exits non-zero stops
+  the skill loading: a project's own trim skill failed exactly when a file was over budget.
+  `tools/dev.sh conform` now fails on one that doesn't end in `; true`, and `update` and
+  `realign` show a project skill named like a kit skill beside the kit's.
+- **Update's version notes have their own file** (`skills/update/versions.md`), shown to Claude
+  whenever the skill runs, so the skill stays under its budget as versions add notes.
 - **Skill descriptions fit the listing.** With many plugins installed (GodotPrompter alone adds
   66 skills) Claude Code drops descriptions from its skill list, least-used first, and "I want to
   add…" stopped reaching `plan-feature`. Descriptions are now under 250 characters with the

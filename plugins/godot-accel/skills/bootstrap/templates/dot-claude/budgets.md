@@ -14,7 +14,7 @@ docs read only when needed (research, registers).
 |---|---|---|
 | `CLAUDE.md` | 8,000 | move detail into rules or the doc it points to; keep rules, not explanations |
 | `docs/STATUS.md` | 5,000 | done items → delete (git keeps them); queues → the plan |
-| `.claude/memory/MEMORY.md` | 2,000 | merge related memories; delete ones the docs now cover |
+| `.claude/memory/MEMORY.md` | 3,000 | over about 30 lines → merge related memories; delete ones the docs now cover |
 | `.claude/memory/*.md` (each) | 1,200 | one fact, its why, how to apply; no diary |
 | `.claude/rules/*.md` (each) | 3,000 | one topic per file. A file holding a generated table: trim the prose, never the rows (the next generate puts them back) |
 | `.claude/reminder.md` | 600 | one or two sentences per rule; a rule the docs now enforce → delete |

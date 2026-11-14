@@ -11,6 +11,8 @@ What the user is asked and how their answers are kept. What they are handed: `ha
   path means it isn't ready to ask.
 - **Echo first:** repeat a multi-part request back as a short list before building it. Separate
   what the user decided from what they are only leaning towards; confirm a lean before recording it.
+  A complaint or a prediction (*example:* "this tool keeps failing us") is not a decision either:
+  record the words, change no plan or status line on it, and ask what comes next.
 - **Plain words:** explain jargon the first time, with an example in this game's own terms.
   {{BEGINNER_LINE}}
 - **Said twice → reminder:** a rule the user has to repeat goes into `.claude/reminder.md` (shown

@@ -24,10 +24,9 @@ The user must never be the QA for defects a check would have caught.
   full run, not that step over old outputs (they hide missing inputs and wrong order).
 - **Delegated work is a claim:** check a subagent's numbers, links and diff before you build on
   them or repeat them to the user.
-- **Cheapest view first:** a screenshot or still before video or long captures; render those only
-  when the user asks, and say how long they take before starting.
-- **Show neutrally:** describe what the output does, beside the approved example it should match.
-  Never call output good, great or done-looking: the user judges.
-- **Judge against our own approved work**, not other games or outside references.
-- Fix defects; don't pre-reject on taste. A taste call (busy, colourful, an angle) is shown with a
-  note, and the user decides.
+- **Sort every finding before showing,** yours and a reviewing agent's. One you can state as a
+  measurement against our own approved work or convention, not other games or outside references
+  (a part missing, two sides that differ, a broken edge, the wrong view), is a **defect**: fix
+  it, then show; never pass it on labelled as an opinion. One about preference (busy, colourful,
+  an angle) is **taste**: show it with the number, and the user decides. A fix that means making
+  the thing again waits for the user: "No redo before the verdict" in `handing-over.md`.

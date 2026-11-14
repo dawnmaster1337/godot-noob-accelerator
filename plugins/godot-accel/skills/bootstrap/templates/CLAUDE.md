@@ -58,7 +58,8 @@ The rules that must never be missed. A rule the user makes binding gets one line
 - **Commit only on the user's yes**, staged by path (the project's settings also make each commit
   prompt); then {{PUSH_POLICY}}
 - **Never claim something works without running it.** Checks before the user sees anything,
-  output quoted; show work neutrally, never call it good (`.claude/rules/showing-work.md`).
+  output quoted; show work neutrally, never rate it for the user, good or bad
+  (`.claude/rules/showing-work.md`, `handing-over.md`).
 - **One question at a time**, each with a recommendation (`.claude/rules/working-with-user.md`).
 - **Never paste or write API keys or tokens**; key commands go in a normal terminal.
 - **The user's hand edits are theirs:** an uncommitted `.tres`, `.tscn` or tuning change you
