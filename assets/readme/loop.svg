@@ -1,55 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 456" width="880" height="456" role="img" aria-labelledby="t d">
 <title id="t">How a session goes</title>
-<desc id="d">A loop of six steps: 1. resume: Picks up where you stopped, on any computer.; 2. one task: One small job for this session.; 3. plan it: New feature? Questions, then a plan.; 4. build + check: Small steps, checked before you see them.; 5. you play it: Try the game, say how it feels.; 6. save work: Saved when you say yes.; then clear and start the next session.</desc>
-<style>.dash { animation: run 1.6s linear infinite; } @keyframes run { to { stroke-dashoffset: -44; } } @media (prefers-reduced-motion: reduce) { .dash { animation: none; } }</style>
-<rect width="1280" height="800" rx="36" fill="#EEF6FC"/>
+<desc id="d">A loop of six steps: resume, one task, plan it, build and check, you play it, save work. Then a fresh session starts the loop again.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#55627F"/></marker></defs>
 <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
-<text x="48" y="70" font-size="38" font-weight="800" fill="#1E2A44">How a session goes</text>
-<text x="48" y="104" font-size="21" fill="#2F3D5C">You talk; Claude does the work and keeps the notes. The bubbles are what you type.</text>
-<rect x="230" y="330" width="820" height="260" rx="130" fill="none" stroke="#C9DDEE" stroke-width="22"/>
-<rect class="dash" x="230" y="330" width="820" height="260" rx="130" fill="none" stroke="#478CBF" stroke-width="6" stroke-dasharray="22 22" stroke-linecap="round"/>
-<text x="640" y="452" text-anchor="middle" font-size="30" font-weight="800" fill="#1E2A44">one task per session</text>
-<text x="640" y="486" text-anchor="middle" font-size="18" fill="#3A4766">small, finished, saved: then start fresh</text>
-<rect x="44" y="432" width="136" height="56" rx="16" fill="#1E2A44"/>
-<text x="112" y="455" text-anchor="middle" font-size="16" font-weight="700" fill="#FFF4E2">/clear, then</text>
-<text x="112" y="476" text-anchor="middle" font-size="16" font-weight="700" fill="#FFF4E2">next session</text>
-<circle cx="230" cy="330" r="44" fill="#5FA3D6" stroke="#1E2A44" stroke-width="5"/>
-<text x="230" y="345" text-anchor="middle" font-size="40" font-weight="800" fill="#0F2A45">1</text>
-<text x="230" y="178" text-anchor="middle" font-size="24" font-weight="800" fill="#1E2A44">resume</text>
-<text x="230" y="204" text-anchor="middle" font-size="17" fill="#3A4766">Picks up where you</text>
-<text x="230" y="226" text-anchor="middle" font-size="17" fill="#3A4766">stopped, on any computer.</text>
-<rect x="185.0" y="240" width="90" height="32" rx="16" fill="#5FA3D6"/>
-<text x="230" y="262" text-anchor="middle" font-size="16" font-weight="700" fill="#0F2A45">“resume”</text>
-<circle cx="640" cy="330" r="44" fill="#F6C453" stroke="#1E2A44" stroke-width="5"/>
-<text x="640" y="345" text-anchor="middle" font-size="40" font-weight="800" fill="#4A3300">2</text>
-<text x="640" y="178" text-anchor="middle" font-size="24" font-weight="800" fill="#1E2A44">one task</text>
-<text x="640" y="204" text-anchor="middle" font-size="17" fill="#3A4766">One small job for this</text>
-<text x="640" y="226" text-anchor="middle" font-size="17" fill="#3A4766">session.</text>
-<rect x="610.0" y="240" width="60" height="32" rx="16" fill="#F6C453"/>
-<text x="640" y="262" text-anchor="middle" font-size="16" font-weight="700" fill="#4A3300">“APR”</text>
-<circle cx="1050" cy="330" r="44" fill="#8E7CC3" stroke="#1E2A44" stroke-width="5"/>
-<text x="1050" y="345" text-anchor="middle" font-size="40" font-weight="800" fill="#21163F">3</text>
-<text x="1050" y="178" text-anchor="middle" font-size="24" font-weight="800" fill="#1E2A44">plan it</text>
-<text x="1050" y="204" text-anchor="middle" font-size="17" fill="#3A4766">New feature? Questions,</text>
-<text x="1050" y="226" text-anchor="middle" font-size="17" fill="#3A4766">then a plan.</text>
-<rect x="965.0" y="240" width="170" height="32" rx="16" fill="#8E7CC3"/>
-<text x="1050" y="262" text-anchor="middle" font-size="16" font-weight="700" fill="#21163F">“I want to add…”</text>
-<circle cx="1050" cy="590" r="44" fill="#5CC8A8" stroke="#1E2A44" stroke-width="5"/>
-<text x="1050" y="605" text-anchor="middle" font-size="40" font-weight="800" fill="#123B33">4</text>
-<text x="1050" y="684" text-anchor="middle" font-size="24" font-weight="800" fill="#1E2A44">build + check</text>
-<text x="1050" y="710" text-anchor="middle" font-size="17" fill="#3A4766">Small steps, checked</text>
-<text x="1050" y="732" text-anchor="middle" font-size="17" fill="#3A4766">before you see them.</text>
-<circle cx="640" cy="590" r="44" fill="#EF7FA0" stroke="#1E2A44" stroke-width="5"/>
-<text x="640" y="605" text-anchor="middle" font-size="40" font-weight="800" fill="#4A1024">5</text>
-<text x="640" y="684" text-anchor="middle" font-size="24" font-weight="800" fill="#1E2A44">you play it</text>
-<text x="640" y="710" text-anchor="middle" font-size="17" fill="#3A4766">Try the game, say how it</text>
-<text x="640" y="732" text-anchor="middle" font-size="17" fill="#3A4766">feels.</text>
-<rect x="555.0" y="746" width="170" height="32" rx="16" fill="#EF7FA0"/>
-<text x="640" y="768" text-anchor="middle" font-size="16" font-weight="700" fill="#4A1024">“let me play it”</text>
-<circle cx="230" cy="590" r="44" fill="#D97757" stroke="#1E2A44" stroke-width="5"/>
-<text x="230" y="605" text-anchor="middle" font-size="40" font-weight="800" fill="#3D1608">6</text>
-<text x="230" y="684" text-anchor="middle" font-size="24" font-weight="800" fill="#1E2A44">save work</text>
-<text x="230" y="710" text-anchor="middle" font-size="17" fill="#3A4766">Saved when you say yes.</text>
-<rect x="170.0" y="724" width="120" height="32" rx="16" fill="#D97757"/>
-<text x="230" y="746" text-anchor="middle" font-size="16" font-weight="700" fill="#3D1608">“save work”</text>
-</g></svg>
+<rect x="1.5" y="1.5" width="877" height="453" rx="28" fill="#FFF7EC" stroke="#F0E2CA" stroke-width="3"/>
+<path d="M160 84 H798 a40 40 0 0 1 40 40 V260 a40 40 0 0 1 -40 40 H160" fill="none" stroke="#DDD0BA" stroke-width="18" stroke-linecap="round"/>
+<path d="M160 84 H798 a40 40 0 0 1 40 40 V260 a40 40 0 0 1 -40 40 H160" fill="none" stroke="#FFF7EC" stroke-width="3" stroke-dasharray="14 12"/>
+<circle cx="160" cy="84" r="38" fill="#5FA3D6" stroke="#1E2A44" stroke-width="4"/>
+<text x="160" y="96" font-size="34" font-weight="700" fill="#0E2C44" text-anchor="middle">1</text>
+<text x="160" y="164" font-size="31" font-weight="700" fill="#1E2A44" text-anchor="middle">resume</text>
+<text x="160" y="198" font-size="25" fill="#55627F" text-anchor="middle">where you stopped</text>
+<circle cx="440" cy="84" r="38" fill="#F5C24C" stroke="#1E2A44" stroke-width="4"/>
+<text x="440" y="96" font-size="34" font-weight="700" fill="#4A3300" text-anchor="middle">2</text>
+<text x="440" y="164" font-size="31" font-weight="700" fill="#1E2A44" text-anchor="middle">one task</text>
+<text x="440" y="198" font-size="25" fill="#55627F" text-anchor="middle">one small job</text>
+<circle cx="720" cy="84" r="38" fill="#8E7CC3" stroke="#1E2A44" stroke-width="4"/>
+<text x="720" y="96" font-size="34" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+<text x="720" y="164" font-size="31" font-weight="700" fill="#1E2A44" text-anchor="middle">plan it</text>
+<text x="720" y="198" font-size="25" fill="#55627F" text-anchor="middle">your OK first</text>
+<circle cx="720" cy="300" r="38" fill="#5CC8A8" stroke="#1E2A44" stroke-width="4"/>
+<text x="720" y="312" font-size="34" font-weight="700" fill="#123B33" text-anchor="middle">4</text>
+<text x="720" y="380" font-size="31" font-weight="700" fill="#1E2A44" text-anchor="middle">build + check</text>
+<text x="720" y="414" font-size="25" fill="#55627F" text-anchor="middle">checks run first</text>
+<circle cx="440" cy="300" r="38" fill="#EE7FA0" stroke="#1E2A44" stroke-width="4"/>
+<text x="440" y="312" font-size="34" font-weight="700" fill="#4A1024" text-anchor="middle">5</text>
+<text x="440" y="380" font-size="31" font-weight="700" fill="#1E2A44" text-anchor="middle">you play it</text>
+<text x="440" y="414" font-size="25" fill="#55627F" text-anchor="middle">say how it feels</text>
+<circle cx="160" cy="300" r="38" fill="#D97757" stroke="#1E2A44" stroke-width="4"/>
+<text x="160" y="312" font-size="34" font-weight="700" fill="#FFFFFF" text-anchor="middle">6</text>
+<text x="160" y="380" font-size="31" font-weight="700" fill="#1E2A44" text-anchor="middle">save work</text>
+<text x="160" y="414" font-size="25" fill="#55627F" text-anchor="middle">only on your yes</text>
+</g>
+</svg>

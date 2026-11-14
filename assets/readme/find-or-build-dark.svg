@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 452" width="880" height="452" role="img" aria-labelledby="t d">
+<title id="t">Find or build: your call</title>
+<desc id="d">You ask for some trees. Pip, the kit&#x27;s robot, asks: find a ready-made one, or build it here? It recommends neither. Find shows up to five free options, each with its licence. Build makes it in your project.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#A9B5C9"/></marker></defs>
+<g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
+<rect x="1.5" y="1.5" width="877" height="449" rx="28" fill="#151B26" stroke="#2B3547" stroke-width="3"/>
+<rect x="40" y="50" width="296" height="68" rx="34" fill="#D97757"/>
+<text x="188" y="95" font-size="27" font-weight="700" fill="#FFFFFF" text-anchor="middle">&quot;I need some trees&quot;</text>
+<line x1="346" y1="84" x2="376" y2="84" stroke="#A9B5C9" stroke-width="5" stroke-linecap="round" marker-end="url(#head)"/>
+<g transform="translate(382 24) scale(0.72)">
+  <line x1="80" y1="6" x2="80" y2="28" stroke="#93A4BF" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="80" cy="10" r="11" fill="#D97757"/>
+  <rect x="10" y="26" width="140" height="104" rx="42" fill="#5FA3D6" stroke="#0A0E15" stroke-width="6"/>
+  <rect x="30" y="44" width="100" height="68" rx="28" fill="#FFF8EE"/>
+  <ellipse cx="60" cy="74" rx="10" ry="13" fill="#1E2A44"/><ellipse cx="100" cy="74" rx="10" ry="13" fill="#1E2A44"/>
+  <circle cx="63" cy="69" r="3.5" fill="#FFF"/><circle cx="103" cy="69" r="3.5" fill="#FFF"/>
+  <path d="M62 92 q18 15 36 0" fill="none" stroke="#1E2A44" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="40" cy="92" r="7" fill="#EE7FA0" opacity=".7"/><circle cx="120" cy="92" r="7" fill="#EE7FA0" opacity=".7"/>
+</g>
+<rect x="508" y="30" width="332" height="108" rx="24" fill="#1F2735" stroke="#EEF2F8" stroke-width="4"/>
+<text x="674" y="76" font-size="26" font-weight="700" fill="#EEF2F8" text-anchor="middle">Find a ready-made one,</text>
+<text x="674" y="112" font-size="26" font-weight="700" fill="#EEF2F8" text-anchor="middle">or build it here?</text>
+<text x="440" y="188" font-size="27" fill="#A9B5C9" text-anchor="middle">It recommends neither. You pick:</text>
+<rect x="40" y="216" width="380" height="196" rx="24" fill="#1F2735" stroke="#5FA3D6" stroke-width="4"/>
+<circle cx="98" cy="272" r="34" fill="#5FA3D6"/>
+<g transform="translate(74 248) scale(0.75)" fill="none" stroke="#1E2A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="26" cy="26" r="16"/><path d="M38 38 l16 16"/></g>
+<text x="148" y="284" font-size="34" font-weight="700" fill="#EEF2F8" text-anchor="start">Find</text>
+<text x="68" y="346" font-size="27" fill="#EEF2F8" text-anchor="start">Up to five free options,</text>
+<text x="68" y="383" font-size="27" fill="#EEF2F8" text-anchor="start">each with its licence.</text>
+<rect x="460" y="216" width="380" height="196" rx="24" fill="#1F2735" stroke="#5CC8A8" stroke-width="4"/>
+<circle cx="518" cy="272" r="34" fill="#5CC8A8"/>
+<g transform="translate(494 248) scale(0.75)" fill="none" stroke="#1E2A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18 l16 -10 l10 10 l-6 6 l22 26 l-6 6 l-26 -22 l-4 4z"/></g>
+<text x="568" y="284" font-size="34" font-weight="700" fill="#EEF2F8" text-anchor="start">Build</text>
+<text x="488" y="346" font-size="27" fill="#EEF2F8" text-anchor="start">Claude makes it in your</text>
+<text x="488" y="383" font-size="27" fill="#EEF2F8" text-anchor="start">project.</text>
+</g>
+</svg>

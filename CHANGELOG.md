@@ -39,11 +39,13 @@ means. A project gets the new `tools/dev.sh` and pre-commit through **update the
   (what it does when enabled) before the user turns it on; the README says the asset server is
   connected in every session while the kit is on.
 - **A redesigned project page and docs.** The README answers "why not plain Claude Code" in its
-  first lines, then shows what a session looks like, a side-by-side with plain Claude Code, who
-  it's for, find-or-build, and an honest-bit table that now names the asset server it connects
-  to. Every graphic's words are also on the page. The docs gain a hub (`docs/README.md`) and
-  pictures: the guide's first hour, the three words, what's inside the kit, one home per fact,
-  the check ladder and the file tree. `assets/src/make_art.py` draws them from one palette.
+  first lines, then shows what a session looks like, real output from the kit's check, a
+  side-by-side with plain Claude Code, who it's for, find-or-build, and an honest-bit table that
+  names the asset server it connects to. Its words are text and its five graphics illustrate:
+  each comes in a light and a dark version (GitHub picks one), on a narrow canvas with large
+  type, so it reads on a phone. The docs gain a hub (`docs/README.md`) and pictures: the guide's
+  first hour, the three words, what's inside the kit, one home per fact, the check ladder and the
+  file tree. `assets/src/make_art.py` draws every graphic.
 - **The kit's own repository:** `.gitattributes` keeps shell scripts LF on Windows clones; CI
   tests GUT 9.7.1 (the release for Godot 4.7).
 

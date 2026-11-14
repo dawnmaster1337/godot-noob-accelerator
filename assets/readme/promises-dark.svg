@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" width="880" height="280" role="img" aria-labelledby="t d">
+<title id="t">Three habits the kit adds</title>
+<desc id="d">Three icons with labels. It remembers where you stopped. It checks first, before you see it. It asks first, before it saves.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#A9B5C9"/></marker></defs>
+<g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif">
+<rect x="1.5" y="1.5" width="877" height="277" rx="28" fill="#151B26" stroke="#2B3547" stroke-width="3"/>
+<circle cx="152" cy="92" r="58" fill="#5FA3D6"/>
+<g transform="translate(115 55) scale(1.16)" fill="none" stroke="#1E2A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="40" height="52" rx="6"/><path d="M20 6 v52 M28 20 h16 M28 30 h16 M28 40 h10"/></g>
+<text x="152" y="200" font-size="38" font-weight="700" fill="#EEF2F8" text-anchor="middle">It remembers</text>
+<text x="152" y="242" font-size="28" fill="#A9B5C9" text-anchor="middle">where you stopped</text>
+<circle cx="440" cy="92" r="58" fill="#5CC8A8"/>
+<g transform="translate(403 55) scale(1.16)" fill="none" stroke="#1E2A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6 l22 8 v16 c0 14 -10 24 -22 28 c-12 -4 -22 -14 -22 -28 v-16z"/><path d="M22 32 l7 7 l13 -14"/></g>
+<text x="440" y="200" font-size="38" font-weight="700" fill="#EEF2F8" text-anchor="middle">It checks first</text>
+<text x="440" y="242" font-size="28" fill="#A9B5C9" text-anchor="middle">before you see it</text>
+<circle cx="728" cy="92" r="58" fill="#F5C24C"/>
+<g transform="translate(691 55) scale(1.16)" fill="none" stroke="#1E2A44" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 22 h44 M10 42 h44"/><circle cx="24" cy="22" r="7"/><circle cx="40" cy="42" r="7"/></g>
+<text x="728" y="200" font-size="38" font-weight="700" fill="#EEF2F8" text-anchor="middle">It asks first</text>
+<text x="728" y="242" font-size="28" fill="#A9B5C9" text-anchor="middle">before it saves</text>
+</g>
+</svg>

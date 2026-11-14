@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Draws the README and docs graphics as SVG, from one palette and one set of type sizes.
+"""Draws every graphic in the README and the docs as SVG.
 
-Run from anywhere: python3 assets/src/make_art.py. It rewrites the files it owns (listed in
-ART at the bottom) and leaves the hand-drawn ones (hero.svg, loop.svg, the buttons) alone.
+Run from anywhere: python3 assets/src/make_art.py. It rewrites the docs graphics below (listed in
+ART at the bottom), then the README's, which live in readme_art.py and come in a light and a
+dark version each. Never edit the SVGs by hand: change the words or the layout here.
 
-The rules every graphic follows (docs/plans/ UX review): 1280 wide; body text at least 24 px
-so it stays readable when GitHub shrinks the image to a phone; the words also appear as text
-on the page; green is the kit's way, pink the problem, yellow a choice that's yours.
+The docs graphics: 1280 wide, body text at least 24 px, their words also on the page as text;
+green is the kit's way, pink the problem, yellow a choice that's yours.
 """
 from __future__ import annotations
 
@@ -150,10 +150,7 @@ def icon(name, x, y, color=INK, s=1.0):
 
 # Graphics placed right under a page heading that says the same: drawn without their own title,
 # shifted up by this many pixels.
-BARE = {"assets/readme/compare.svg": 92, "assets/readme/audience.svg": 92,
-        "assets/readme/install.svg": 112, "assets/readme/find-or-build.svg": 64,
-        "assets/readme/docs-map.svg": 92, "assets/docs/docs-map.svg": 92,
-        "assets/docs/homes.svg": 126, "assets/docs/checks.svg": 126}
+BARE = {"assets/docs/docs-map.svg": 92, "assets/docs/homes.svg": 126, "assets/docs/checks.svg": 126}
 
 
 def svg(path, w, h, title, desc, body, bg=CREAM):
@@ -183,264 +180,9 @@ def heading(title, sub=None, x=56, y=84):
     return out
 
 
-# ---------- README ----------
+# ---------- docs ----------
 
-def promises():
-    cards = [
-        ("notebook", BLUE, "It remembers",
-         "Where you stopped, what you decided and why: in notes it reads at the start of every session."),
-        ("shield", GREEN, "It checks first",
-         "It runs your game's checks before you see anything, and tells you what they said."),
-        ("hand", YELLOW, "It asks first",
-         "It saves only on your yes, and never quietly changes a value you tuned by hand."),
-    ]
-    b = [heading("What it adds to Claude Code", "Three habits, kept in every session.")]
-    cw, gap, x0, y0 = 368, 28, 56, 170
-    for i, (ic, col, t, body) in enumerate(cards):
-        x = x0 + i * (cw + gap)
-        b.append(rect(x, y0, cw, 330, 24, WHITE, LINE))
-        b.append(f'<circle cx="{x + 64}" cy="{y0 + 66}" r="40" fill="{col}"/>')
-        b.append(icon(ic, x + 32, y0 + 34, INK))
-        b.append(text(x + 124, y0 + 78, t, 32, True))
-        p, _ = para(x + 32, y0 + 152, body, cw - 64, 25)
-        b.append(p)
-    svg("assets/readme/promises.svg", 1280, 540, "What it adds to Claude Code",
-        "Three cards. It remembers: where you stopped, what you decided and why, in notes it reads "
-        "every session. It checks first: it runs your game's checks before you see anything. It asks "
-        "first: it saves only on your yes and never quietly changes a value you tuned by hand.",
-        "\n".join(b))
-
-
-def session():
-    """An illustrated session: what the user types (right) and what Claude answers (left)."""
-    turns = [
-        ("you", "resume"),
-        ("claude", "Got 2 changes from your laptop. Last time: the double jump works.\n"
-                   "Today, one task: the wall jump. Plan it first?"),
-        ("you", "APR"),
-        ("claude", "Question 1 of 3: should a wall jump push you away from the wall?\n"
-                   "1. Yes, a little (recommended)\n2. Straight up"),
-        ("you", "APR"),
-        ("claude", "Built it. Checks: 4 passed, 0 failed.\n"
-                   "To try: open player.tscn, press F5, jump at a wall, then jump again."),
-        ("you", "it feels floaty"),
-        ("claude", "That's a setting, not code: wall_jump_push 220 → 160 in player_tuning.tres.\n"
-                   "Change it?"),
-        ("you", "yes. save work"),
-        ("claude", "Commit \"Add the wall jump\"?  yes / no\n"
-                   "… Saved and backed up to GitHub. Safe to /clear: yes."),
-    ]
-    W = 1280
-    b = []
-    y = 150
-    for who, s in turns:
-        if who == "you":
-            pw = len(s) * 28 * 0.6 + 52
-            b.append(rect(round(W - 90 - pw), y, round(pw), 58, 29, ORANGE))
-            b.append(text(round(W - 90 - pw / 2), y + 39, s, 28, True, WHITE, "middle", mono=True))
-            y += 58 + 22
-        else:
-            lines = []
-            for part in s.split("\n"):
-                lines += wrap(part, 860, 24)
-            h = 36 + len(lines) * 34
-            b.append(pip(70, y - 4, 0.42))
-            b.append(rect(150, y, 900, h, 22, WHITE, LINE))
-            for i, ln in enumerate(lines):
-                b.append(text(178, y + 46 + i * 34, ln, 24, i == 0 and ln.startswith("Built"), INK))
-            y += h + 22
-    H = y + 40
-    frame = [rect(24, 24, W - 48, H - 48, 28, SKY, INK, 5),
-             f'<path d="M24 52 a28 28 0 0 1 28 -28 h{W - 104} a28 28 0 0 1 28 28 v40 h-{W - 48}z" fill="{INK}"/>',
-             '<circle cx="66" cy="66" r="9" fill="#EE7FA0"/><circle cx="96" cy="66" r="9" fill="#F5C24C"/>'
-             '<circle cx="126" cy="66" r="9" fill="#5CC8A8"/>',
-             text(W // 2, 75, "claude  —  your-game", 22, True, CREAM, "middle", mono=True),
-             text(W - 90, 128, "you type", 20, True, SOFT, "end"),
-             text(150, 128, "Claude answers  ·  an illustrated example", 20, True, SOFT)]
-    svg("assets/readme/session.svg", W, H, "What a session looks like",
-        "An illustrated session. You type resume; Claude says it got two changes from your laptop "
-        "and suggests one task, the wall jump. You say APR to take its suggestions. It asks one "
-        "question at a time, each with a recommendation. It builds it, says 4 checks passed and what "
-        "to try. You say it feels floaty; it suggests changing one tuning value. You say yes and save "
-        "work; it asks before committing, backs up to GitHub and says it's safe to clear.",
-        "\n".join(frame + b), bg=WHITE)
-
-
-def compare():
-    rows = [
-        ("A new session", "Remembers little. You explain it all again.",
-         "Reads its notes: where you stopped, what's next."),
-        ("\"It works!\"", "Often untested. You find the bugs.",
-         "The checks ran first, and it tells you what they said."),
-        ("Your hand-tuned jump", "Can quietly change it back.",
-         "Treated as yours. It asks before touching it."),
-        ("A big new feature", "Starts coding straight away.",
-         "A few questions, a short plan, then your OK."),
-        ("Two computers", "One can redo what the other already did.",
-         "It fetches first and asks before pulling."),
-    ]
-    lw, cw, x0, y0, rh = 300, 432, 48, 190, 116
-    b = [heading("Plain Claude Code, or with the kit?")]
-    pl, _ = pill(x0 + lw + 24, 118, "Plain Claude Code", 24, PINK)
-    pk, _ = pill(x0 + lw + 24 + cw + 24, 118, "With the kit", 24, GREEN)
-    b += [pl, pk]
-    for i, (lab, a, k) in enumerate(rows):
-        y = y0 + i * (rh + 14)
-        b.append(rect(x0, y, 1280 - 2 * x0, rh, 20, WHITE, LINE))
-        b.append(vpara(x0 + 26, y + rh / 2, lab, lw - 40, 26, True))
-        b.append(cross(x0 + lw + 46, y + rh // 2, 18))
-        b.append(vpara(x0 + lw + 78, y + rh / 2, a, cw - 70, 24, fill=SOFT))
-        xk = x0 + lw + 24 + cw + 24
-        b.append(tick(xk + 22, y + rh // 2, 18))
-        b.append(vpara(xk + 54, y + rh / 2, k, cw - 70, 24))
-    H = y0 + len(rows) * (rh + 14) + 30
-    svg("assets/readme/compare.svg", 1280, H, "Plain Claude Code, or with the kit?",
-        "A comparison in five rows. A new session: plain Claude Code remembers little; with the kit "
-        "it reads its notes. When it says it works: plain, often untested; with the kit, the checks "
-        "ran first. Your hand-tuned jump: plain can change it back; the kit treats it as yours. A big "
-        "feature: plain starts coding; the kit asks a few questions and writes a plan for your OK. "
-        "Two computers: plain can redo work; the kit fetches first and asks before pulling.",
-        "\n".join(b))
-
-
-def audience():
-    cards = [
-        (GREEN, tick, "Never written code", "Made for you. Start with the beginner's guide: about an hour, from nothing installed to something moving on screen."),
-        (GREEN, tick, "Made a few things", "Also for you. Five minutes to install, then say resume each session."),
-        (YELLOW, None, "A game jam or a weekend try", "Plain Claude Code is enough. The kit pays off on a game you'll work on for weeks."),
-        (YELLOW, None, "A seasoned developer", "It may feel slow. Take the parts you like: every rule can be changed or turned off."),
-    ]
-    b = [heading("Is it for you?")]
-    cw, ch, x0, y0 = 568, 250, 56, 140
-    for i, (col, mark, t, body) in enumerate(cards):
-        x = x0 + (i % 2) * (cw + 32)
-        y = y0 + (i // 2) * (ch + 28)
-        b.append(rect(x, y, cw, ch, 24, WHITE, col, 4))
-        if mark:
-            b.append(mark(x + 50, y + 56, 24))
-        else:
-            b.append(f'<circle cx="{x + 50}" cy="{y + 56}" r="24" fill="{YELLOW}"/>'
-                     + text(x + 50, y + 66, "~", 34, True, ON[YELLOW], "middle"))
-        b.append(text(x + 92, y + 66, t, 30, True))
-        p, _ = para(x + 36, y + 126, body, cw - 72, 25)
-        b.append(p)
-    svg("assets/readme/audience.svg", 1280, y0 + 2 * ch + 28 + 40, "Is it for you?",
-        "Four cards. Never written code: made for you, start with the beginner's guide. Made a few "
-        "things: also for you, five minutes to install. A game jam or a weekend try: plain Claude "
-        "Code is enough. A seasoned developer: it may feel slow; take the parts you like.",
-        "\n".join(b))
-
-
-def stories():
-    cards = [
-        (PINK, "again & again", "Bugs it should have caught",
-         "Claude kept handing over work that didn't run. A quick test would have caught it.",
-         "It checks its own work before you see it."),
-        (YELLOW, "875 lines", "The notes got huge",
-         "Its notes grew to 875 lines, all read every session. Slow, and costly.",
-         "Notes have size limits, and a check warns."),
-        (GREEN, "forgot", "It forgot what we decided",
-         "We agreed how something should work. Weeks later, Claude did it differently.",
-         "Decisions are written down and read first."),
-        (BLUE, "29 → 0", "Every game, a different mess",
-         "Three games kept their notes three different ways. Nothing was where you'd look.",
-         "One layout in every game: 29 problems to 0."),
-        (ORANGE, "undone", "Your tweaks, gone",
-         "We tuned a jump by hand in Godot. Claude quietly undid it.",
-         "Your changes are yours. It asks first."),
-        (PURPLE, "twice", "Work done twice",
-         "One computer redid work another computer had already finished.",
-         "Each session checks your other computers first."),
-    ]
-    b = [heading("Real things that went wrong", "From the games that built this kit. Each one is now a rule or a check.")]
-    cw, ch, gap, x0, y0 = 376, 520, 24, 52, 170
-    for i, (col, big, t, body, fix) in enumerate(cards):
-        x = x0 + (i % 3) * (cw + gap)
-        y = y0 + (i // 3) * (ch + gap)
-        b.append(rect(x, y, cw, ch, 24, WHITE, LINE))
-        b.append(f'<path d="M{x} {y + 24} a24 24 0 0 1 24 -24 h{cw - 48} a24 24 0 0 1 24 24 v58 h-{cw}z" fill="{col}"/>')
-        b.append(text(x + 26, y + 60, big, 38, True, ON[col]))
-        tp, th = para(x + 26, y + 124, t, cw - 52, 27, True)
-        b.append(tp)
-        bp, bh = para(x + 26, y + 124 + th + 6, body, cw - 52, 23, fill=SOFT)
-        b.append(bp)
-        fy = y + ch - 168
-        b.append(f'<line x1="{x + 26}" y1="{fy}" x2="{x + cw - 26}" y2="{fy}" stroke="{LINE}" stroke-width="3"/>')
-        b.append(tick(x + 42, fy + 38, 16, col))
-        b.append(text(x + 68, fy + 46, "NOW THE KIT", 19, True, SOFT, extra=' letter-spacing="1.5"'))
-        fp, _ = para(x + 26, fy + 88, fix, cw - 52, 23, True)
-        b.append(fp)
-    H = y0 + 2 * ch + gap + 90
-    b.append(text(640, H - 40, "These help a lot. They don't make Claude perfect: you still play and decide.", 24, False, SOFT, "middle"))
-    svg("assets/readme/stories.svg", 1280, H, "Real things that went wrong",
-        "Six real problems from the games that built this kit, each now a rule or a check: bugs it "
-        "should have caught; notes that grew to 875 lines; Claude forgot what we decided; three games "
-        "with three note layouts; Claude undid a jump we tuned by hand; one computer redid another's "
-        "work. They help, but don't make Claude perfect: you still play and decide.",
-        "\n".join(b))
-
-
-def install():
-    steps = [
-        (BLUE, "box", "Get the tools", "Godot and git (free), and Claude Code (needs a paid Claude plan)."),
-        (YELLOW, "puzzle", "Add the kit", "Two commands inside Claude Code, copied from this page."),
-        (GREEN, "folder", "Open your game", "Start Claude Code in the folder that holds project.godot."),
-        (PINK, "chat", "Say hello", "Type the bootstrap command and answer a few questions. APR takes a suggestion."),
-    ]
-    b = [heading("Install in four steps", "About an hour the first time if all of it is new. Five minutes if not.")]
-    cw, ch, gap, x0, y0 = 276, 390, 28, 52, 172
-    for i, (col, ic, t, body) in enumerate(steps):
-        x = x0 + i * (cw + gap)
-        b.append(rect(x, y0, cw, ch, 24, WHITE, LINE))
-        b.append(badge(x + 52, y0 + 56, 30, col, str(i + 1)))
-        b.append(icon(ic, x + cw - 92, y0 + 22, INK, 0.95))
-        b.append(text(x + 26, y0 + 142, t, 29, True))
-        p, _ = para(x + 26, y0 + 192, body, cw - 52, 23)
-        b.append(p)
-        if i < 3:
-            b.append(arrow(x + cw + 4, y0 + ch // 2, x + cw + gap - 4, y0 + ch // 2, SOFT, 4))
-    svg("assets/readme/install.svg", 1280, y0 + ch + 44, "Install in four steps",
-        "Four steps: get Godot, git and Claude Code; add the kit with two commands; open Claude Code "
-        "in your game's folder; type /godot-accel:bootstrap and answer a few questions.",
-        "\n".join(b))
-
-
-def find_or_build():
-    b = [heading("Find or build: your call", "When something needs an asset, a shader or an addon.")]
-    # the ask
-    b.append(rect(56, 190, 300, 92, 46, ORANGE))
-    b.append(text(206, 246, "\"I need some trees\"", 26, True, WHITE, "middle"))
-    b.append(arrow(360, 236, 420, 236))
-    b.append(pip(430, 150, 0.8))
-    b.append(rect(570, 166, 300, 140, 24, WHITE, INK, 4))
-    q, _ = para(594, 214, "Find a ready-made one, or build it here?", 252, 26, True)
-    b.append(q)
-    b.append(text(570, 346, "No recommendation:", 22, True, SOFT))
-    b.append(text(570, 376, "it's yours to pick.", 22, False, SOFT))
-    # the two paths
-    b.append(arrow(874, 210, 926, 176))
-    b.append(arrow(874, 262, 926, 410))
-    b.append(rect(936, 96, 288, 250, 24, WHITE, BLUE, 4))
-    b.append(icon("magnify", 958, 112, INK, 0.8))
-    b.append(text(1018, 148, "Find", 30, True))
-    p, _ = para(960, 198, "Up to five free options, each with its licence. You pick; it records the credit.", 246, 23)
-    b.append(p)
-    b.append(rect(936, 370, 288, 150, 24, WHITE, GREEN, 4))
-    b.append(icon("hammer", 958, 384, INK, 0.8))
-    b.append(text(1018, 420, "Build", 30, True))
-    p2, _ = para(960, 466, "Claude makes it in your project.", 246, 23)
-    b.append(p2)
-    b.append(text(56, 470, "Your project can answer ahead of time, per kind:", 24, True))
-    b.append(text(56, 506, "always find · always build · ask each time", 24, False, SOFT))
-    svg("assets/readme/find-or-build.svg", 1280, 560, "Find or build: your call",
-        "You ask for some trees. Pip, the kit's robot, asks: find a ready-made one, or build it here? "
-        "It recommends neither. Find shows up to five free options, each with its licence, and records "
-        "the credit of your pick. Build makes it in your project. Your project can answer ahead of "
-        "time per kind: always find, always build, or ask each time.",
-        "\n".join(b))
-
-
-def docs_map(path="assets/readme/docs-map.svg"):
+def docs_map(path="assets/docs/docs-map.svg"):
     cards = [
         (PINK, "flag", "Beginner's guide", "From nothing installed to a moving character. About an hour."),
         (BLUE, "gear", "How it works", "Every habit the kit gives Claude, and the failure behind it."),
@@ -467,8 +209,6 @@ def docs_map(path="assets/readme/docs-map.svg"):
         "(customising); companions. The links are listed below the picture.",
         "\n".join(b))
 
-
-# ---------- docs ----------
 
 def journey():
     stops = [("What it all is", "5 min"), ("Accounts", "10 min"), ("Install the tools", "30 min"),
@@ -653,10 +393,11 @@ def tree():
         "\n".join(b))
 
 
-ART = [promises, session, compare, audience, stories, install, find_or_build, docs_map,
-       journey, three_words, inside, homes, checks, tree]
+ART = [docs_map, journey, three_words, inside, homes, checks, tree]
 
 if __name__ == "__main__":
     for f in ART:
         f()
-    docs_map("assets/docs/docs-map.svg")
+    import readme_art
+
+    readme_art.main()

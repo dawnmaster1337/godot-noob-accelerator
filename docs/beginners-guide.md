@@ -377,4 +377,4 @@ Your project's own `docs/guides/start-here.md` has this table too.
 - [Structure](structure.md): every file the kit creates, and why.
 - [Customising](customising.md): change the rules to fit how you work, as you grow.
 - Found something confusing? That's useful feedback: see "Tell us how it went" in the
-  [README](../README.md#-tell-us-how-it-went).
+  [README](../README.md#tell-us-how-it-went).

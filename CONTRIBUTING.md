@@ -54,10 +54,12 @@ when releasing: users only get an update when that version changes.
 
 ## Graphics
 
-The README and docs pictures (except the hero, the loop and the buttons) are drawn by
-`assets/src/make_art.py`: change the words or layout there and run it, never edit its SVGs by
-hand. Keep body text at 24 px or more in the 1280-wide canvas (GitHub shrinks it on phones), and
-put every graphic's words on the page too.
+Every picture is drawn by `python3 assets/src/make_art.py`: change the words or the layout there
+and run it, never edit an SVG by hand. The README's graphics (`assets/src/readme_art.py`) each come
+in a light and a dark version, switched in the page with `<picture>`. Three rules: a graphic
+illustrates and the page carries every fact as text too; nothing a reader needs is under about
+11 px on a 360 px phone, so canvases are narrow and type is large; one drawing serves both
+themes, and only the `Theme` changes.
 
 ## godot-sourcing
 
